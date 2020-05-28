@@ -15,7 +15,7 @@ class _Screen0State extends State<Screen0> {
           margin: EdgeInsets.only(bottom: 10),
           child: Text(
             'Create a Team',
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),
           ),
         ),
         Padding(

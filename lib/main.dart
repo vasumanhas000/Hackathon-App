@@ -18,6 +18,7 @@ class HackApp extends StatelessWidget {
           accentColor: kConstantPurpleColor,
           textTheme: TextTheme(
               body1: TextStyle(
+                fontFamily: 'Roboto',
                 color: kConstantPurpleColor,
               )
           )

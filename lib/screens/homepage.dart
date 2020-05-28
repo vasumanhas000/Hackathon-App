@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
                 'Hackathons Coming Up',
                 style: TextStyle(
                   fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
