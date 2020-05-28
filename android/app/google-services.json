@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "945327566569",
+    "firebase_url": "https://hackportal-53efe.firebaseio.com",
+    "project_id": "hackportal-53efe",
+    "storage_bucket": "hackportal-53efe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945327566569:android:81d163e8f53d5334658a78",
+        "android_client_info": {
+          "package_name": "vasumanhas.hackapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945327566569-59t8tin8tifv0s0l251sjq7k10u4jmkg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbMNVKXI1RDvb2vtAbMNUck_502WUm2zY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945327566569-59t8tin8tifv0s0l251sjq7k10u4jmkg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
