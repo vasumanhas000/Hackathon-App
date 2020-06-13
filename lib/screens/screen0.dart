@@ -48,7 +48,7 @@ class _Screen0State extends State<Screen0> {
           margin: EdgeInsets.only(left: 250),
           child: Center(child: Text('Finish',style: TextStyle(color: Colors.white,fontSize: 18),)),
           decoration: BoxDecoration(
-            color: kConstantPurpleColor,
+            color: kConstantBlueColor,
           ),
         ),
       ],

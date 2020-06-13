@@ -35,7 +35,7 @@ class _AddUserPageState extends State<AddUserPage> {
                       iconData: Icons.add,
                       iconColor: buttonIndex == 0 ? Colors.white : Colors.black,
                       backgroundColor: buttonIndex == 0
-                          ? kConstantPurpleColor
+                          ? kConstantBlueColor
                           : kConstantBackgroundColor),
                   onTap: () {
                     setState(() {
@@ -48,7 +48,7 @@ class _AddUserPageState extends State<AddUserPage> {
                     iconData: Icons.assignment_ind,
                     iconColor: buttonIndex == 1 ? Colors.white : Colors.black,
                     backgroundColor: buttonIndex == 1
-                        ? kConstantPurpleColor
+                        ? kConstantBlueColor
                         : kConstantBackgroundColor,
                   ),
                   onTap: () {
@@ -62,7 +62,7 @@ class _AddUserPageState extends State<AddUserPage> {
                       iconData: Icons.filter_none,
                       iconColor: buttonIndex == 2 ? Colors.white : Colors.black,
                       backgroundColor: buttonIndex == 2
-                          ? kConstantPurpleColor
+                          ? kConstantBlueColor
                           : kConstantBackgroundColor),
                   onTap: () {
                     setState(

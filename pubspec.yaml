@@ -28,6 +28,9 @@ dependencies:
   firebase_dynamic_links: ^0.5.1
   font_awesome_flutter: ^8.8.1
   flappy_search_bar: 1.4.1
+  http: ^0.12.1
+  flutter_spinkit: ^4.1.2+1
+  circular_check_box: ^1.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,17 +46,36 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Regular.ttf
+    - family: Muli
+      fonts:
+        - asset: fonts/Muli-Regular.ttf
+    - family: Pacifico
+      fonts:
+        - asset: fonts/Pacifico-Regular.ttf
+
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
   assets:
-    - images/background.jpg
-  fonts:
-    - family: Roboto
-      fonts:
-        - asset: fonts/Roboto-Regular.ttf
+    - images/
+
+#  fonts:
+#    - family: Muli
+#      fonts:
+#        - asset: fonts/Muli-Regular.ttf
+#    - family: Montserrat
+#      fonts:
+#        - asset: fonts/Montserrat-Regular.ttf
+#    - family: Pacifico
+#        fonts:
+#            - asset: fonts/Pacifico-Regular.ttf
 
 
   # To add assets to your application, add an assets section, like this:

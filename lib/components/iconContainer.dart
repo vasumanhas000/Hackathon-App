@@ -23,7 +23,7 @@ class IconContainer extends StatelessWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(80),
         border: Border.all(
-          color: kConstantPurpleColor,
+          color: kConstantBlueColor,
           width: 3,
         ),
       ),

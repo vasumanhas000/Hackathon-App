@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'profile.dart';
-import 'search.dart';
 import 'homepage.dart';
-import 'addUser.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'search.dart';
+import 'package:hackapp/constants.dart';
 
 class FlowPage extends StatefulWidget {
   @override
@@ -15,16 +13,15 @@ class _FlowPageState extends State<FlowPage> {
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     SearchPage(),
-    AddUserPage(),
-    ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(child: _widgetOptions.elementAt(_currentIndex)),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Color(0xffEE6C4D),
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xff985F99),
+        backgroundColor: kConstantBackgroundColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

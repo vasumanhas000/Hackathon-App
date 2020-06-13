@@ -11,25 +11,21 @@ class _HomePageState extends State<HomePage> {
     'Lorem Ipsum',
     'Lorem Ipsum',
     'Lorem Ipsum',
-    'Lorem Ipsum',
-    'Lorem Ipsum',
-    'Lorem Ipsum',
-    'Lorem Ipsum',
-    'Lorem Ipsum'
   ];
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Expanded(
-          flex: 1,
-          child: Container(
-            child: Center(
+          flex: 2,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 30, 50, 15),
+            child: Container(
               child: Text(
-                'Hackathons Coming Up',
+                'Hacks happening around you',
                 style: TextStyle(
                   fontSize: 30,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
             ),
@@ -40,14 +36,19 @@ class _HomePageState extends State<HomePage> {
           child: ListView.builder(
             itemCount: hackathons.length,
             itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                height: 150,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(26),
-                  color: Colors.white,
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 25),
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(hackathons[index],style: TextStyle(color: Colors.white),),
+                  ),
+                  height: 190,
+                  decoration: BoxDecoration(
+                    color: Color(0xff98C1D9),
+                    borderRadius: BorderRadius.only(bottomRight:Radius.circular(30),topLeft:Radius.circular(30)  ),
+                  ),
                 ),
-                child: Center(child: Text(hackathons[index])),
               );
             },
           ),
