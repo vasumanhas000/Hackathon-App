@@ -14,8 +14,8 @@ class HackApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       theme: ThemeData(
-          primaryColor: kConstantBackgroundColor,
-          scaffoldBackgroundColor: kConstantBackgroundColor,
+          primaryColor: Colors.white,
+          scaffoldBackgroundColor: Colors.white,
           accentColor: kConstantBlueColor,
           textTheme: TextTheme(
               body1: TextStyle(

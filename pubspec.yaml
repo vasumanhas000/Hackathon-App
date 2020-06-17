@@ -30,7 +30,7 @@ dependencies:
   flappy_search_bar: 1.4.1
   http: ^0.12.1
   flutter_spinkit: ^4.1.2+1
-  circular_check_box: ^1.0.2
+  url_launcher: ^5.4.10
 
 
   # The following adds the Cupertino Icons font to your application.

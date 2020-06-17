@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'homepage.dart';
 import 'search.dart';
-import 'package:hackapp/constants.dart';
+import 'addUsers.dart';
 
 class FlowPage extends StatefulWidget {
   @override
@@ -13,29 +13,32 @@ class _FlowPageState extends State<FlowPage> {
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     SearchPage(),
+    UserScreen(name: 1,),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(child: _widgetOptions.elementAt(_currentIndex)),
       bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         selectedItemColor: Color(0xffEE6C4D),
         type: BottomNavigationBarType.fixed,
-        backgroundColor: kConstantBackgroundColor,
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
+            icon: Icon(Icons.home,),
+            title: Text(''),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            title: Text('Search'),
+            title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.group_add),
-            title: Text('Add'),
+            icon: Icon(Icons.folder_shared),
+            title: Text(''),
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.person),title:Text('Profile'))
+          BottomNavigationBarItem(icon: Icon(Icons.person),title:Text(''))
         ],
         currentIndex: _currentIndex,
         onTap: (index) {
