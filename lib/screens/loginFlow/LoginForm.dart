@@ -252,7 +252,7 @@ class _LoginFormState extends State<LoginForm> {
                     flex: 7,
                     child: Theme(
                       data: ThemeData(
-                        canvasColor: kConstantBackgroundColor,
+                        canvasColor: Colors.white,
                         primaryColor: Colors.green,
                       ),
                       child: Stepper(
