@@ -37,9 +37,10 @@ class _LoginFormState extends State<LoginForm> {
         isActive: true,
         title: Text(''),
         content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 195, 30),
+              margin: EdgeInsets.fromLTRB(18, 0, 0, 30),
               child: Text(
                 'Personal',
                 style: TextStyle(
@@ -49,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 245, 0),
+              margin: EdgeInsets.fromLTRB(18, 10, 0, 0),
               child: Text(
                 'Name:',
                 style: TextStyle(color: Colors.black, fontSize: 18),
@@ -65,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 156, 0),
+              margin: EdgeInsets.fromLTRB(18, 10, 0, 0),
               child: Text(
                 'Contact Number:',
                 style: TextStyle(color: Colors.black, fontSize: 18),
@@ -78,7 +79,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 156, 0),
+              margin: EdgeInsets.fromLTRB(18, 10, 0, 0),
               child: Text(
                 'University Name:',
                 style: TextStyle(color: Colors.black, fontSize: 18),
@@ -91,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 157, 0),
+              margin: EdgeInsets.fromLTRB(18, 10, 0, 0),
               child: Text(
                 'Year Studying In:',
                 style: TextStyle(color: Colors.black, fontSize: 18),
@@ -110,9 +111,10 @@ class _LoginFormState extends State<LoginForm> {
         isActive: currentStep >= 1 ? true : false,
         title: Text(''),
         content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 234, 30),
+              margin: EdgeInsets.fromLTRB(18, 0, 0, 30),
               child: Text(
                 'Skills',
                 style: TextStyle(
@@ -122,7 +124,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 13, 55, 0),
+              margin: EdgeInsets.fromLTRB(18, 13, 0, 0),
               child: Text(
                 'Brief description about yourself:',
                 style: TextStyle(color: Colors.black, fontSize: 16),
@@ -162,9 +164,10 @@ class _LoginFormState extends State<LoginForm> {
         isActive: currentStep == 2 ? true : false,
         title: Text(''),
         content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 180, 0),
+              margin: EdgeInsets.fromLTRB(18, 0, 0, 0),
               child: Text(
                 'Personal',
                 style: TextStyle(
@@ -174,7 +177,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 132, 30),
+              margin: EdgeInsets.fromLTRB(18, 0, 0, 30),
               child: Text(
                 '(you can skip this section)',
                 style: TextStyle(
@@ -185,7 +188,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 240, 0),
+              margin: EdgeInsets.fromLTRB(18, 10, 0, 0),
               child: Text(
                 'Github:',
                 style: TextStyle(color: Colors.black, fontSize: 18),
@@ -198,7 +201,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 168, 0),
+              margin: EdgeInsets.fromLTRB(18, 10, 0, 0),
               child: Text(
                 'Stack Overflow:',
                 style: TextStyle(color: Colors.black, fontSize: 18),
@@ -211,7 +214,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 183, 0),
+              margin: EdgeInsets.fromLTRB(18, 10, 0, 0),
               child: Text(
                 'Your Website:',
                 style: TextStyle(color: Colors.black, fontSize: 18),
@@ -252,7 +255,7 @@ class _LoginFormState extends State<LoginForm> {
                     flex: 7,
                     child: Theme(
                       data: ThemeData(
-                        canvasColor: kConstantBackgroundColor,
+                        canvasColor: Colors.white,
                         primaryColor: Colors.green,
                       ),
                       child: Stepper(
