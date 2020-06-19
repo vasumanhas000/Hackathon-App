@@ -9,72 +9,59 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
-
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            Stack(
+        body: ListView.builder(
+          itemCount: 1,
+          itemBuilder: (BuildContext context, int index) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(18, 52, 0, 0),
-                  height: 116,
-                  width: 116,
-                  decoration: BoxDecoration(
-                    color: Color(0xff98C1D9),
+                    margin: EdgeInsets.only(left: 40),
+                    child: Image(
+                      image: AssetImage('images/LoginPageImage.png'),
+                      fit: BoxFit.contain,
+                      height: SizeConfig.safeBlockVertical * 60,
+                      width: SizeConfig.safeBlockHorizontal * 80,
+                    )),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(15, 10, 0, 0),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      'Hack Portal',
+                      style: TextStyle(
+                          fontFamily: 'Muli',
+                          fontSize: 40,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(301, 361, 0, 0),
-                  height: 75,
-                  width: 75,
-                  decoration: BoxDecoration(
-                    color: Color(0xffEE6C4D),
+                  margin: EdgeInsets.fromLTRB(15, 30, 90, 0),
+                  child: Text(
+                    'Find teams and projects to collaborate during Hackathons',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: kConstantTextColor, fontSize: 20),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(66, 120, 0, 0),
-                  height: 272,
-                  width: 270,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage('images/Login-Image.png'),
-                    fit: BoxFit.cover,
-                  )),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/form');
+                  },
+                  child: Container(
+                    child: Text('Login'),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                    ),
+                  ),
                 ),
               ],
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 30, 150, 0),
-              child: Text(
-                'Hack Portal',
-                style: TextStyle(
-                    fontFamily: 'Muli',
-                    fontSize: 40,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(15, 30, 90, 0),
-              child: Text(
-                'Find teams and projects to collaborate during Hackathons',
-                textAlign: TextAlign.left,
-                style: TextStyle(color: kConstantTextColor, fontSize: 20),
-              ),
-            ),
-            GestureDetector(
-              onTap: (){
-                Navigator.pushNamed(context, '/form');
-              },
-              child: Container(
-                child: Text('Login'),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                ),
-              ),
-            ),
-          ],
+            );
+          }
         ),
       ),
     );

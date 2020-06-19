@@ -15,9 +15,10 @@ class _Page2State extends State<Page2> {
     return Padding(
       padding: const EdgeInsets.only(top: 35),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 120, 0),
+            padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
             child: Container(
               child: Text(
                 'Send Email Invite',
@@ -52,7 +53,7 @@ class _Page2State extends State<Page2> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0,30,105,0),
+            padding: const EdgeInsets.fromLTRB(8,30,0,0),
             child: Container(
               child: Text('View Applications',style: TextStyle(
                   fontSize: 32,

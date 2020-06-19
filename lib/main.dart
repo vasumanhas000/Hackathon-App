@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
-import 'screens/loginFlow/LoginForm.dart';
+import 'screens/loginFlow/loginFormPages/form0.dart';
 import 'screens/loginFlow/loginPage.dart';
 import 'screens/mainFlow/flow.dart';
 import 'screens/boiler.dart';
+import 'screens/mainFlow/homepage.dart';
+import 'homepage_components/detailspage.dart';
 void main() {
   runApp(HackApp());
 }
@@ -28,7 +30,9 @@ class HackApp extends StatelessWidget {
         '/':(context)=>BoilerPage(),
         '/first':(context)=>FlowPage(),
         '/login':(context)=>LoginPage(),
-        '/form':(context)=>LoginForm(),
+        '/form':(context)=>Form0(),
+        '/hackpage':(context)=>HomePage(),
+        '/details':(context)=>HackDetails(),
       },
     );
   }

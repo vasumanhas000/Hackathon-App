@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hackapp/screens/addUserspages/page0.dart';
 import 'package:hackapp/screens/addUserspages/page1.dart';
 import 'package:hackapp/screens/addUserspages/page2.dart';
@@ -24,19 +23,16 @@ class _UserScreenState extends State<UserScreen> {
     }
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-            child: GestureDetector(
-              onTap: () {
-                _dismissKeyboard(context);
-              },
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    maxHeight: 800),
-                child: SafeArea(
-                  child: Scaffold(
-                    body: Container(
+    return  GestureDetector(
+            onTap: () {
+              _dismissKeyboard(context);
+            },
+            child: SafeArea(
+              child: Scaffold(
+                body: ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
                       child: Column(
                         children: [
                           Padding(
@@ -123,13 +119,12 @@ class _UserScreenState extends State<UserScreen> {
                           _screens[name],
                         ],
                       ),
-                    ),
-                  ),
+                    );
+                  }
                 ),
               ),
             ),
           );
         }
-    );
-  }
+
 }
