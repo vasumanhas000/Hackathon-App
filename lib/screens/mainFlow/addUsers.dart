@@ -48,13 +48,14 @@ class _UserScreenState extends State<UserScreen> {
                                       border:
                                       Border.all(color: name == 0
                                           ? Color(0xff3d5a80)
-                                          : Color(0xff98c1d9), width: 4),
-                                      borderRadius: BorderRadius.circular(30)),
+                                          : Color(0xff98c1d9), width: 4,),
+                                      borderRadius: BorderRadius.circular(30),),
                                   child: IconButton(
                                       icon: Icon(
                                         Icons.add,
                                         color: name == 0 ? Colors.white : Color(
                                             0xff98c1d9),
+                                        size: name==0?32:26,
                                       ),
                                       onPressed: () {
                                         setState(
@@ -62,8 +63,8 @@ class _UserScreenState extends State<UserScreen> {
                                               name = 0;
                                             });
                                       }),
-                                  height: 50,
-                                  width: 50,
+                                  height: name==0?60:50,
+                                  width: name==0?60:50,
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
@@ -78,6 +79,7 @@ class _UserScreenState extends State<UserScreen> {
                                   child: IconButton(
                                       icon: Icon(
                                         Icons.assignment_ind,
+                                        size: name==1?32:26,
                                         color: name == 1 ? Colors.white : Color(
                                             0xff98c1d9),
                                       ),
@@ -86,8 +88,8 @@ class _UserScreenState extends State<UserScreen> {
                                           name = 1;
                                         });
                                       }),
-                                  height: 50,
-                                  width: 50,
+                                  height: name==1?60:50,
+                                  width: name==1?60:50,
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
@@ -102,6 +104,7 @@ class _UserScreenState extends State<UserScreen> {
                                   child: IconButton(
                                       icon: Icon(
                                         Icons.mail,
+                                        size: name==2?30:26,
                                         color: name == 2 ? Colors.white : Color(
                                             0xff98c1d9),
                                       ),
@@ -110,8 +113,8 @@ class _UserScreenState extends State<UserScreen> {
                                           name = 2;
                                         });
                                       }),
-                                  height: 50,
-                                  width: 50,
+                                  height: name==2?60:50,
+                                  width: name==2?60:50,
                                 ),
                               ],
                             ),

@@ -148,15 +148,20 @@ class _Form0State extends State<Form0> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        IconButton(
-                            icon: FaIcon(
-                              FontAwesomeIcons.arrowCircleRight,
-                              color: kConstantBlueColor,
-                              size: 40,
-                            ),
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Form1()));
-                            }),
+                       GestureDetector(
+                         onTap: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>Form1()));
+                         },
+                         child: Container(
+                           height: 50,
+                           width: 50,
+                           decoration: BoxDecoration(
+                             borderRadius: BorderRadius.circular(40),
+                             color: kConstantBlueColor,
+                           ),
+                           child: Icon(Icons.arrow_forward,color: Colors.white,size: 28,),
+                         ),
+                       ),
                       ],
                     ),
                   ),

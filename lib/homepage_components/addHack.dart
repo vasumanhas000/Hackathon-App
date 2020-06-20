@@ -11,12 +11,12 @@ class AddHack extends StatefulWidget {
 
 class _AddHackState extends State<AddHack> {
   Future postHack(String name, String start, String end, String venue,
-      String description, String link) async {
+      String description, String link,String min,String max) async {
     Map<String, String> headers = {
       "Content-Type": "application/json",
       "authtoken": "test"
     };
-    String url = 'https://hackportal.herokuapp.com/hackathons/sethackathon';
+    String url = 'https://hackportal.herokuapp.com/events/setevent';
     var response = await http.post(url,
         headers: headers,
         body: jsonEncode(<String, String>{
@@ -25,13 +25,15 @@ class _AddHackState extends State<AddHack> {
           "endDate": end,
           "location": venue,
           "description": description,
-          "eventUrl": link
+          "eventUrl": link,
+          "minimumTeamSize":min,
+          "maximumTeamSize":max,
         }));
     print(response.statusCode);
     return response.statusCode;
   }
 
-  String name, startDate, endDate, venue, description, link;
+  String name, startDate, endDate, venue, description, link,min,max;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -108,6 +110,48 @@ class _AddHackState extends State<AddHack> {
                 margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                 child: Text(
                   'End Date',
+                  style: TextStyle(color: Colors.black, fontSize: 18),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  decoration: kTextFieldDecoration,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Montserrat',
+                  ),
+                  onChanged: (value) {
+                    min = value;
+                  },
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                child: Text(
+                  'Minimum Team Size',
+                  style: TextStyle(color: Colors.black, fontSize: 18),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  decoration: kTextFieldDecoration,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Montserrat',
+                  ),
+                  onChanged: (value) {
+                    max = value;
+                  },
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                child: Text(
+                  'Maximum Team Size',
                   style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
@@ -204,7 +248,7 @@ class _AddHackState extends State<AddHack> {
                     RaisedButton(
                       onPressed: () async {
                         if (await postHack(name, startDate, endDate, venue,
-                                description, link) ==
+                                description, link,min,max) ==
                             201) {
                           final snackBar = SnackBar(
                             content: Text(

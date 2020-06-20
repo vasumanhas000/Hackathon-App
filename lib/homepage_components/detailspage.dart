@@ -78,7 +78,7 @@ class _HackDetailsState extends State<HackDetails> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
+                padding: const EdgeInsets.fromLTRB(30, 40, 10, 0),
                 child: FittedBox(
                   fit: BoxFit.contain,
                   child: Text(
@@ -91,7 +91,7 @@ class _HackDetailsState extends State<HackDetails> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(31, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(31, 30, 10, 0),
                 child: FittedBox(
                   fit: BoxFit.contain,
                   child: Text(
@@ -142,7 +142,7 @@ class _HackDetailsState extends State<HackDetails> {
                 padding: const EdgeInsets.fromLTRB(31,0,0, 0),
                 child: GestureDetector(
                   onTap: (){
-                    launch('https://vit.ac.in/school-computer-science-and-engineering-scope/hack4cause');
+                    launch(hackathon.url);
                   },
                   child: Text(
                     hackathon.url,

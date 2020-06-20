@@ -130,13 +130,18 @@ class _Form2State extends State<Form2> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          IconButton(
-                              icon: FaIcon(
-                                FontAwesomeIcons.solidCheckCircle,
+                          GestureDetector(
+                            onTap: (){},
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40),
                                 color: kConstantBlueColor,
-                                size: 40,
                               ),
-                              onPressed: () {}),
+                              child: Icon(Icons.check,color: Colors.white,size: 30,),
+                            ),
+                          ),
                         ],
                       ),
                     ),

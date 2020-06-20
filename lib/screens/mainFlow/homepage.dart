@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   Future<List<Hackathon>> getHacks() async {
     Map<String, String> headers = {"authtoken": "test"};
     var response = await http.get(
-        "https://hackportal.herokuapp.com/hackathons/gethackathon",
+        "https://hackportal.herokuapp.com/events/getevent",
         headers: headers);
     List<Hackathon> hacks = [];
     if (response.statusCode == 200) {
@@ -115,9 +115,9 @@ around you''',
                                 padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(6, 0, 0, 35),
+                                padding: const EdgeInsets.fromLTRB(6, 0, 0, 16),
                                 child: Text(
-                                  "seen all around the web; on templates, websites, and stock designs. Use our generator to get your own, or read on for the authoritative history of lorem ipsum.",
+                                  snapshot.data[index].description,
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 14),
                                 ),
