@@ -87,6 +87,33 @@ class _Page0State extends State<Page0> {
                   decoration: kTextFieldDecoration,
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 14),
+                      child: RaisedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Cancel'),
+                        color: Colors.white,
+                      ),
+                    ),
+                    RaisedButton(
+                      onPressed: () async {
+                      },
+                      child: Text(
+                        'Confirm',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: kConstantBlueColor,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         );

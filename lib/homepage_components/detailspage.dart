@@ -68,7 +68,7 @@ class _HackDetailsState extends State<HackDetails> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => CreateTeam(),
+                                      builder: (context) => CreateTeam(id: hackathon.id,),
                                     ));
                               }),
                         )
@@ -78,7 +78,7 @@ class _HackDetailsState extends State<HackDetails> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(30, 40, 10, 0),
+                padding: const EdgeInsets.fromLTRB(20, 40, 10, 0),
                 child: FittedBox(
                   fit: BoxFit.contain,
                   child: Text(
@@ -91,7 +91,7 @@ class _HackDetailsState extends State<HackDetails> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(31, 30, 10, 0),
+                padding: const EdgeInsets.fromLTRB(21, 30, 10, 0),
                 child: FittedBox(
                   fit: BoxFit.contain,
                   child: Text(
@@ -105,7 +105,7 @@ class _HackDetailsState extends State<HackDetails> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(31, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(21, 30, 0, 0),
                 child: FittedBox(
                   fit: BoxFit.contain,
                   child: Text(
@@ -119,7 +119,7 @@ class _HackDetailsState extends State<HackDetails> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(31, 30, 10, 0),
+                padding: const EdgeInsets.fromLTRB(21, 30, 10, 0),
                 child: Text(
                  hackathon.description,
                   style: TextStyle(
@@ -129,7 +129,7 @@ class _HackDetailsState extends State<HackDetails> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(31, 30, 10, 0),
+                padding: const EdgeInsets.fromLTRB(21, 30, 10, 3),
                 child: Text(
                   'Link:',
                   style: TextStyle(
@@ -139,7 +139,7 @@ class _HackDetailsState extends State<HackDetails> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(31,0,0, 0),
+                padding: const EdgeInsets.fromLTRB(21,0,0, 0),
                 child: GestureDetector(
                   onTap: (){
                     launch(hackathon.url);

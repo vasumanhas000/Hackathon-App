@@ -1,12 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hackapp/constants.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:hackapp/screens/boiler.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:ui';
 class Form2 extends StatefulWidget {
+  final String name,college,year,bio;
+  final List skillList;
+  Form2({this.year,this.college,this.name,this.bio,this.skillList});
   @override
-  _Form2State createState() => _Form2State();
+  _Form2State createState() => _Form2State(this.year,this.college,this.name,this.bio,this.skillList);
 }
 class _Form2State extends State<Form2> {
+  final auth = FirebaseAuth.instance;
+ Future postForm(String bio,String name,String year,String college,String github,String stack,String website,List skillList)async{
+   FirebaseUser user = await auth.currentUser();
+   String Token= await user.getIdToken().then((result) {
+     token = result.token;
+     return token;
+   });
+   Map<String, String> headers = {
+     "Content-Type": "application/json",
+     "authtoken": Token,
+   };
+   String url = 'https://hackportal.herokuapp.com/users/setprofile';
+   var response = await http.post(url,
+       headers: headers,
+       body: jsonEncode({
+         "name":name,
+         "college":college,
+         "expectedGraduation":year,
+         "bio":bio,
+         "skills":skillList,
+         "githubLink":github,
+         "stackOverflowLink":stack,
+         "externalLink":website,
+       }));
+   return response.statusCode;
+ }
+
+  _Form2State(this.year,this.college,this.name,this.bio,this.skillList);
+  String bio,name,year,college,github='',stack='',website='',token;
+  List skillList;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -92,6 +128,11 @@ class _Form2State extends State<Form2> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextField(
+                    onChanged: (val){
+                      setState(() {
+                        github=val;
+                      });
+                    },
                     decoration: kTextFieldDecoration,
                   ),
                 ),
@@ -105,6 +146,11 @@ class _Form2State extends State<Form2> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextField(
+                    onChanged: (val){
+                      setState(() {
+                        stack=val;
+                      });
+                    },
                     decoration: kTextFieldDecoration,
                   ),
                 ),
@@ -118,6 +164,11 @@ class _Form2State extends State<Form2> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextField(
+                    onChanged: (val){
+                      setState(() {
+                        website=val;
+                      });
+                    },
                     decoration: kTextFieldDecoration,
                   ),
                 ),
@@ -131,7 +182,11 @@ class _Form2State extends State<Form2> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
-                            onTap: (){},
+                            onTap: ()async{
+                             if(await postForm(bio, name, year, college, github, stack, website, skillList)==200){
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=>BoilerPage()));
+                             };
+                            },
                             child: Container(
                               height: 50,
                               width: 50,

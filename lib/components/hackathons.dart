@@ -1,9 +1,7 @@
-class Hackathon{
-  String name,start,end,location,description,url;
-  Hackathon({this.description,this.name,this.end,this.location,this.start,this.url});
+import 'package:flutter/cupertino.dart';
 
-  Map toJson() => {
-    'name': name,
-    'description': description,
-  };
+class Hackathon{
+  String name,start,end,location,description,url,id;
+  Hackathon({this.description,this.name,this.end,this.location,this.start,this.url,@required this.id});
+
 }

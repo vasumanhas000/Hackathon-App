@@ -14,7 +14,7 @@ class _UserScreenState extends State<UserScreen> {
     int name;
     _UserScreenState(this.name);
     List<Widget> _screens=[
-      Page0(),
+//      Page0(),
       Page1(),
       Page2(),
     ];
@@ -40,32 +40,32 @@ class _UserScreenState extends State<UserScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: name == 0
-                                          ? Color(0xff3d5a80)
-                                          : Colors.white,
-                                      border:
-                                      Border.all(color: name == 0
-                                          ? Color(0xff3d5a80)
-                                          : Color(0xff98c1d9), width: 4,),
-                                      borderRadius: BorderRadius.circular(30),),
-                                  child: IconButton(
-                                      icon: Icon(
-                                        Icons.add,
-                                        color: name == 0 ? Colors.white : Color(
-                                            0xff98c1d9),
-                                        size: name==0?32:26,
-                                      ),
-                                      onPressed: () {
-                                        setState(
-                                                () {
-                                              name = 0;
-                                            });
-                                      }),
-                                  height: name==0?60:50,
-                                  width: name==0?60:50,
-                                ),
+//                                Container(
+//                                  decoration: BoxDecoration(
+//                                      color: name == 0
+//                                          ? Color(0xff3d5a80)
+//                                          : Colors.white,
+//                                      border:
+//                                      Border.all(color: name == 0
+//                                          ? Color(0xff3d5a80)
+//                                          : Color(0xff98c1d9), width: 4,),
+//                                      borderRadius: BorderRadius.circular(30),),
+//                                  child: IconButton(
+//                                      icon: Icon(
+//                                        Icons.add,
+//                                        color: name == 0 ? Colors.white : Color(
+//                                            0xff98c1d9),
+//                                        size: name==0?32:26,
+//                                      ),
+//                                      onPressed: () {
+//                                        setState(
+//                                                () {
+//                                              name = 0;
+//                                            });
+//                                      }),
+//                                  height: name==0?60:50,
+//                                  width: name==0?60:50,
+//                                ),
                                 Container(
                                   decoration: BoxDecoration(
                                       color: name == 1
@@ -119,7 +119,7 @@ class _UserScreenState extends State<UserScreen> {
                               ],
                             ),
                           ),
-                          _screens[name],
+                          _screens[name-1],
                         ],
                       ),
                     );

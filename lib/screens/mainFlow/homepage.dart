@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   Future<List<Hackathon>> getHacks() async {
     Map<String, String> headers = {"authtoken": "test"};
     var response = await http.get(
-        "https://hackportal.herokuapp.com/events/getevent",
+        "https://hackportal.herokuapp.com/events/getevents",
         headers: headers);
     List<Hackathon> hacks = [];
     if (response.statusCode == 200) {
@@ -30,7 +30,8 @@ class _HomePageState extends State<HomePage> {
             end: u['endDate'],
             start: u['startDate'],
             url: u['eventUrl'],
-            name: u['nameOfEvent']);
+            name: u['nameOfEvent'],
+            id: u['_id']);
         hacks.add(hack);
       }
     }
@@ -97,59 +98,62 @@ around you''',
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
-                        padding: EdgeInsets.fromLTRB(13, 15, 13, 5),
+                        padding: EdgeInsets.fromLTRB(10, 15, 13, 5),
                         child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                child: FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Text(
-                                    snapshot.data[index].name,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 35),
-                                  ),
-                                ),
-                                padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(6, 0, 0, 16),
-                                child: Text(
-                                  snapshot.data[index].description,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 14),
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => HackDetails(
-                                            hackathon: snapshot.data[index],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        'Learn More',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 16),
-                                      ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(5,0,5,0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  child: FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: Text(
+                                      snapshot.data[index].name,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 35),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
+                                  padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(6, 0, 0, 16),
+                                  child: Text(
+                                    snapshot.data[index].description,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => HackDetails(
+                                              hackathon: snapshot.data[index],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'Learn More',
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                          height: 230,
+                          height: 242,
                           decoration: BoxDecoration(
                             color: kConstantBlueColor,
                             borderRadius: BorderRadius.only(

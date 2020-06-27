@@ -4,15 +4,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hackapp/screens/loginFlow/loginFormPages/form1.dart';
 
 class Form0 extends StatefulWidget {
-  final String text;
-  Form0({this.text});
+  Form0();
   @override
-  _Form0State createState() => _Form0State(this.text);
+  _Form0State createState() => _Form0State();
 }
 
 class _Form0State extends State<Form0> {
-  String text1;
-  _Form0State(this.text1);
+String name,college,year;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -92,27 +90,27 @@ class _Form0State extends State<Form0> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 child: TextField(
-                  decoration: kTextFieldDecoration,
-                  onChanged: (text) {
-                    print(text);
-                    text1 = text;
-                    print(text1);
+                  onChanged: (val){
+                    setState(() {
+                      name=val;
+                    });
                   },
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                child: Text(
-                  'Contact Number:',
-                  style: TextStyle(color: Colors.black, fontSize: 18),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                child: TextField(
                   decoration: kTextFieldDecoration,
                 ),
               ),
+//              Container(
+//                margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+//                child: Text(
+//                  'Contact Number:',
+//                  style: TextStyle(color: Colors.black, fontSize: 18),
+//                ),
+//              ),
+//              Padding(
+//                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+//                child: TextField(
+//                  decoration: kTextFieldDecoration,
+//                ),
+//              ),
               Container(
                 margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                 child: Text(
@@ -123,6 +121,11 @@ class _Form0State extends State<Form0> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 child: TextField(
+                  onChanged: (val){
+                    setState(() {
+                      college=val;
+                    });
+                  },
                   decoration: kTextFieldDecoration,
                 ),
               ),
@@ -136,6 +139,10 @@ class _Form0State extends State<Form0> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 child: TextField(
+                  keyboardType: TextInputType.datetime,
+                  onChanged: (val){
+                    year=val;
+                  },
                   decoration: kTextFieldDecoration,
                 ),
               ),
@@ -150,7 +157,7 @@ class _Form0State extends State<Form0> {
                       children: [
                        GestureDetector(
                          onTap: (){
-                           Navigator.push(context, MaterialPageRoute(builder: (context)=>Form1()));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>Form1(name: name,year: year,college: college,)));
                          },
                          child: Container(
                            height: 50,

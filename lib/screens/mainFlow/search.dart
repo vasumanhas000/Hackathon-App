@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/sizeConfig.dart';
+import 'package:hackapp/screens/mainFlow/searchResults.dart';
+
 
 class SearchPage extends StatefulWidget {
   @override
@@ -9,8 +11,19 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  int selectWeb,
+      selectMobile,
+      selectDevOps,
+      selectML,
+      selectAI,
+      selectDesign,
+      selectManagement,
+      selectBlock,
+      selectCyber;
+  List skillList = [];
+  var toRemove = [];
   String _selectedRadio;
-  int selected;
+  int selected=1;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -23,147 +36,286 @@ class _SearchPageState extends State<SearchPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 32),
-                      child: Text(
-                        '''Choose a skill
+                child: Padding(
+                  padding: const EdgeInsets.only(top:20 ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8,0,0,25),
+                        child: Text(
+                          '''Choose a skill
 you are looking for''',
-                        style: TextStyle(
-                            fontSize: 29, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontSize: 29, fontWeight: FontWeight.w600),
+                        ),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 35),
+                        child: Image(
+                          image: AssetImage('images/vector.png'),
+                          height: SizeConfig.safeBlockVertical * 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(45, 40, 0, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: Icon(
+                        Icons.fiber_manual_record,
+                        size: 26,
+                        color: selectWeb==1?kConstantBlueColor:Color(0xffD8D8D8),
+                      ),
+                      onTap: (){
+                        setState(() {
+                          if(selectWeb!=1){
+                            selectWeb=1;}
+                          else{
+                            selectWeb=0;
+                          }
+                        });
+                      },),
                     Padding(
-                      padding: const EdgeInsets.only(top: 35),
-                      child: Image(
-                        image: AssetImage('images/vector.png'),
-                        height: SizeConfig.safeBlockVertical * 15,
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        child: Text('Web Development',style: TextStyle(fontSize: 20),),
                       ),
                     ),
                   ],
                 ),
               ),
-              ListTile(
-                title: const Text('Web Development',style: TextStyle(color: Color(0xff293241),fontFamily: 'Montserrat',fontSize: 19),),
-                leading: Radio(
-                  value: 'Web',
-                  groupValue: _selectedRadio,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedRadio = value;
-                      selected=1;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Mobile App Development',style: TextStyle(color: Color(0xff293241),fontFamily: 'Montserrat',fontSize: 19),),
-                leading: Radio(
-                  value: 'Mobile',
-                  groupValue: _selectedRadio,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedRadio = value;
-                      selected=1;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('DevOps',style: TextStyle(color: Color(0xff293241),fontFamily: 'Montserrat',fontSize: 19),),
-                leading: Radio(
-                  value: 'DevOps',
-                  groupValue: _selectedRadio,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedRadio = value;
-                      selected=1;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Machine Learning',style: TextStyle(color: Color(0xff293241),fontFamily: 'Montserrat',fontSize: 19),),
-                leading: Radio(
-                  value: 'ML',
-                  groupValue: _selectedRadio,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedRadio = value;
-                      selected=1;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Artificial Intelligence',style: TextStyle(color: Color(0xff293241),fontFamily: 'Montserrat',fontSize: 19),),
-                leading: Radio(
-                  value: 'AI',
-                  groupValue: _selectedRadio,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedRadio = value;
-                      selected=1;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Design - UI/UX',style: TextStyle(color: Color(0xff293241),fontFamily: 'Montserrat',fontSize: 19),),
-                leading: Radio(
-                  value: 'Design',
-                  groupValue: _selectedRadio,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedRadio = value;
-                      selected=1;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Management skills',style: TextStyle(color: Color(0xff293241),fontFamily: 'Montserrat',fontSize: 19),),
-                leading: Radio(
-                  value: 'Management',
-                  groupValue: _selectedRadio,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedRadio = value;
-                      selected=1;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Blockchain and Cryptocurrency',style: TextStyle(color: Color(0xff293241),fontFamily: 'Montserrat',fontSize: 19),),
-                leading: Radio(
-                  value: 'Block',
-                  groupValue: _selectedRadio,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedRadio = value;
-                      selected=1;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('CyberSecurity',style: TextStyle(color: Color(0xff293241),fontFamily: 'Montserrat',fontSize: 19),),
-                leading: Radio(
-                  value: 'Cyber',
-                  groupValue: _selectedRadio,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedRadio = value;
-                      selected=1;
-                    });
-                  },
+              Padding(
+                padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: Icon(
+                        Icons.fiber_manual_record,
+                        size: 26,
+                        color: selectMobile==1?kConstantBlueColor:Color(0xffD8D8D8),
+                      ),
+                      onTap: (){
+                        setState(() {
+                          if(selectMobile!=1){
+                            selectMobile=1;}
+                          else{
+                            selectMobile=0;
+                          }
+                        });
+                      },),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        child: Text('Mobile App Development',style: TextStyle(fontSize: 20)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 18),
+                padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: Icon(
+                        Icons.fiber_manual_record,
+                        size: 26,
+                        color: selectDevOps==1?kConstantBlueColor:Color(0xffD8D8D8),
+                      ),
+                      onTap: (){
+                        setState(() {
+                          if(selectDevOps!=1){
+                            selectDevOps=1;}
+                          else{
+                            selectDevOps=0;
+                          }
+                        });
+                      },),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        child: Text('Devops',style: TextStyle(fontSize: 20)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: Icon(
+                        Icons.fiber_manual_record,
+                        size: 26,
+                        color: selectML==1?kConstantBlueColor:Color(0xffD8D8D8),
+                      ),
+                      onTap: (){
+                        setState(() {
+                          if(selectML!=1){
+                            selectML=1;}
+                          else{
+                            selectML=0;
+                          }
+                        });
+                      },),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        child: Text('Machine Learning',style: TextStyle(fontSize: 20)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: Icon(
+                        Icons.fiber_manual_record,
+                        size: 26,
+                        color: selectAI==1?kConstantBlueColor:Color(0xffD8D8D8),
+                      ),
+                      onTap: (){
+                        setState(() {
+                          if(selectAI!=1){
+                            selectAI=1;}
+                          else{
+                            selectAI=0;
+                          }
+                        });
+                      },),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        child: Text('Artificial Intelligence',style: TextStyle(fontSize: 20)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: Icon(
+                        Icons.fiber_manual_record,
+                        size: 26,
+                        color: selectDesign==1?kConstantBlueColor:Color(0xffD8D8D8),
+                      ),
+                      onTap: (){
+                        setState(() {
+                          if(selectDesign!=1){
+                            selectDesign=1;}
+                          else{
+                            selectDesign=0;
+                          }
+                        });
+                      },),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        child: Text('Design - UI/UX',style: TextStyle(fontSize: 20)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: Icon(
+                        Icons.fiber_manual_record,
+                        size: 26,
+                        color: selectManagement==1?kConstantBlueColor:Color(0xffD8D8D8),
+                      ),
+                      onTap: (){
+                        setState(() {
+                          if(selectManagement!=1){
+                            selectManagement=1;}
+                          else{
+                            selectManagement=0;
+                          }
+                        });
+                      },),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        child: Text('Management skills',style: TextStyle(fontSize: 20)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: Icon(
+                        Icons.fiber_manual_record,
+                        size: 26,
+                        color: selectBlock==1?kConstantBlueColor:Color(0xffD8D8D8),
+                      ),
+                      onTap: (){
+                        setState(() {
+                          if(selectBlock!=1){
+                            selectBlock=1;}
+                          else{
+                            selectBlock=0;
+                          }
+                        });
+                      },),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        child: Text('Blockchain',style: TextStyle(fontSize: 20)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: Icon(
+                        Icons.fiber_manual_record,
+                        size: 26,
+                        color: selectCyber==1?kConstantBlueColor:Color(0xffD8D8D8),
+                      ),
+                      onTap: (){
+                        setState(() {
+                          if(selectCyber!=1){
+                            selectCyber=1;}
+                          else{
+                            selectCyber=0;
+                          }
+                        });
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        child: Text('CyberSecurity',style: TextStyle(fontSize: 20)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 45),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -172,12 +324,175 @@ you are looking for''',
                       height: 46,
                       child: RaisedButton(
                         onPressed: () {
-                          if(selected==1){
-                          print(_selectedRadio);}
+                          if(selectWeb==1){
+                            var count=0;
+                            for(var i in skillList){
+                              if(i=='Web Dev'){
+                                count+=1;
+                              }
+                            }
+                            if(count==0){
+                              skillList.add('Web Dev');
+                            }
+                          }
+                          if(selectMobile==1){
+                            var count=0;
+                            for(var i in skillList){
+                              if(i=='App Dev'){
+                                count+=1;
+                              }
+                            }
+                            if(count==0){
+                              skillList.add('App Dev');
+                            }
+                          }
+                          if(selectDevOps==1){
+                            var count=0;
+                            for(var i in skillList){
+                              if(i=='DevOps'){
+                                count+=1;
+                              }
+                            }
+                            if(count==0){
+                              skillList.add('DevOps');
+                            }
+                          }
+                          if(selectML==1){
+                            var count=0;
+                            for(var i in skillList){
+                              if(i=='Machine Learning'){
+                                count+=1;
+                              }
+                            }
+                            if(count==0){
+                              skillList.add('Machine Learning');
+                            }
+                          }
+                          if(selectAI==1){
+                            var count=0;
+                            for(var i in skillList){
+                              if(i=='AI'){
+                                count+=1;
+                              }
+                            }
+                            if(count==0){
+                              skillList.add('AI');
+                            }
+                          }
+                          if(selectDesign==1){
+                            var count=0;
+                            for(var i in skillList){
+                              if(i=='Design'){
+                                count+=1;
+                              }
+                            }
+                            if(count==0){
+                              skillList.add('Design');
+                            }
+
+                          }
+                          if(selectManagement==1){
+                            var count=0;
+                            for(var i in skillList){
+                              if(i=='Management'){
+                                count+=1;
+                              }
+                            }
+                            if(count==0){
+                              skillList.add('Management');
+                            }
+                          }
+                          if(selectBlock==1){
+                            var count=0;
+                            for(var i in skillList){
+                              if(i=='BlockChain'){
+                                count+=1;
+                              }
+                            }
+                            if(count==0){
+                              skillList.add('BlockChain');
+                            }
+                          }
+                          if(selectCyber==1){
+                            var count=0;
+                            for(var i in skillList){
+                              if(i=='CyberSecurity'){
+                                count+=1;
+                              }
+                            }
+                            if(count==0){
+                              skillList.add('CyberSecurity');
+                            }
+                          }
+                          if(selectWeb!=1){
+                            for(var i in skillList){
+                              if(i=='Web Dev'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectMobile!=1){
+                            for(var i in skillList){
+                              if(i=='App Dev'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectDevOps!=1){
+                            for(var i in skillList){
+                              if(i=='DevOps'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectML!=1){
+                            for(var i in skillList){
+                              if(i=='Machine Learning'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectAI!=1){
+                            for(var i in skillList){
+                              if(i=='AI'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectDesign!=1){
+                            for(var i in skillList){
+                              if(i=='Design'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectManagement!=1){
+                            for(var i in skillList){
+                              if(i=='Management'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectBlock!=1){
+                            for(var i in skillList){
+                              if(i=='BlockChain'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectCyber!=1){
+                            for(var i in skillList){
+                              if(i=='CyberSecurity'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          skillList.removeWhere( (e) => toRemove.contains(e));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ResultsPage(list: skillList)));
                         },
                         child: Text('Search',style: TextStyle(fontSize: 22,fontFamily: 'Muli',color: selected==1?Colors.white:kConstantBlueColor,fontWeight: FontWeight.w600),),
                         color: selected==1?kConstantBlueColor:Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22),side: BorderSide(color: kConstantBlueColor,width: 3)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6),side: BorderSide(color: kConstantBlueColor,width: 3)),
                       ),
                     ),
                   ],

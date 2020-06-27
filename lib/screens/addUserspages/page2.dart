@@ -55,7 +55,7 @@ class _Page2State extends State<Page2> {
           Padding(
             padding: const EdgeInsets.fromLTRB(8,30,0,0),
             child: Container(
-              child: Text('View Applications',style: TextStyle(
+              child: Text('View Invites',style: TextStyle(
                   fontSize: 32,
                   fontFamily: 'Muli',
                   fontWeight: FontWeight.w600),),

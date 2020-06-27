@@ -236,7 +236,7 @@ class _AddHackState extends State<AddHack> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(right: 14),
                       child: RaisedButton(
                         onPressed: () {
                           Navigator.pop(context);
