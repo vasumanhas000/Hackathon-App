@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hackapp/constants.dart';
-import 'package:hackapp/screens/boiler.dart';
+import 'package:hackapp/screens/mainFlow/flow.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:ui';
@@ -184,7 +184,7 @@ class _Form2State extends State<Form2> {
                           GestureDetector(
                             onTap: ()async{
                              if(await postForm(bio, name, year, college, github, stack, website, skillList)==200){
-                               Navigator.push(context, MaterialPageRoute(builder: (context)=>BoilerPage()));
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=>FlowPage()));
                              };
                             },
                             child: Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hackapp/constants.dart';
 import 'teamcreate.dart';
 import 'package:hackapp/components/hackathons.dart';
 import 'package:hackapp/components/sizeConfig.dart';
@@ -64,12 +65,15 @@ class _HackDetailsState extends State<HackDetails> {
                                 color: Colors.white,
                                 size: 30,
                               ),
-                              onPressed: () {
-                                Navigator.push(
+                              onPressed: () async{
+                           final result= await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => CreateTeam(id: hackathon.id,),
                                     ));
+                                Scaffold.of(context)
+                                  ..removeCurrentSnackBar()
+                                  ..showSnackBar(SnackBar(content: Text("$result",style: TextStyle(fontFamily: 'Montserrat',color:kConstantBlueColor),),backgroundColor: result!=null?Colors.white:kConstantBlueColor,));
                               }),
                         )
                       ],

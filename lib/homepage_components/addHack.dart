@@ -3,6 +3,9 @@ import 'package:hackapp/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:ui';
+import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http_parser/http_parser.dart';
 
 class AddHack extends StatefulWidget {
   @override
@@ -10,32 +13,40 @@ class AddHack extends StatefulWidget {
 }
 
 class _AddHackState extends State<AddHack> {
-  Future postHack(String name, String start, String end, String venue,
-      String description, String link,String min,String max) async {
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "authtoken": "test"
-    };
-    String url = 'https://hackportal.herokuapp.com/events/setevent';
-    var response = await http.post(url,
-        headers: headers,
-        body: jsonEncode(<String, String>{
-          "nameOfEvent": name,
-          "startDate": start,
-          "endDate": end,
-          "location": venue,
-          "description": description,
-          "eventUrl": link,
-          "minimumTeamSize":min,
-          "maximumTeamSize":max,
-        }));
-    print(response.statusCode);
-    return response.statusCode;
-  }
-
+  PickedFile image;
+  final picker = ImagePicker();
   String name, startDate, endDate, venue, description, link,min,max;
   @override
   Widget build(BuildContext context) {
+    Future getImage() async {
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      setState(() {
+        image = pickedFile;
+      });
+    }
+    Future postHack(String name, String start, String end, String venue,
+        String description, String link,String min,String max,PickedFile image) async {
+      var dio = Dio();
+      Map<String, String> headers = {
+        "Content-Type":"multipart/form-data",
+        "authtoken": "vaibhav"
+      };
+      String fileName = image.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "startDate": start,
+        "endDate": end,
+        "eventImage": await MultipartFile.fromFile(image.path,filename: fileName,contentType: MediaType('image', 'dynamic')),
+        "minimumTeamSize":min,
+        "maximumTeamSize":max,
+        "location":venue,
+        "description":description,
+        "nameOfEvent":name,
+      });
+      String url = 'https://hackportal.herokuapp.com/events/setevent';
+      Response response = await dio.post(url,data: formData,options: Options(headers: headers));
+      print(response.statusCode);
+    }
+
     return SafeArea(
       child: Scaffold(
         body: ListView.builder(
@@ -106,6 +117,16 @@ class _AddHackState extends State<AddHack> {
                   },
                 ),
               ),
+              Container(
+                margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                child: Text(
+                  'Add Image',
+                  style: TextStyle(color: Colors.black, fontSize: 18),
+                ),
+              ),
+              RaisedButton(onPressed: ()async{
+                    getImage();
+              }),
               Container(
                 margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                 child: Text(
@@ -247,8 +268,7 @@ class _AddHackState extends State<AddHack> {
                     ),
                     RaisedButton(
                       onPressed: () async {
-                        if (await postHack(name, startDate, endDate, venue,
-                                description, link,min,max) ==
+                        if (await postHack(name, startDate, endDate, venue, description, link, min, max, image) ==
                             201) {
                           final snackBar = SnackBar(
                             content: Text(

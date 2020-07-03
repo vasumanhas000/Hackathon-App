@@ -34,6 +34,7 @@ class _UserScreenState extends State<UserScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 40),

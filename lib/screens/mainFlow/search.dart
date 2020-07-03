@@ -51,7 +51,7 @@ you are looking for''',
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 35),
+                        padding: const EdgeInsets.fromLTRB(0,35,5,0),
                         child: Image(
                           image: AssetImage('images/vector.png'),
                           height: SizeConfig.safeBlockVertical * 10,
@@ -376,7 +376,7 @@ you are looking for''',
                               }
                             }
                             if(count==0){
-                              skillList.add('AI');
+                              skillList.add('Artificial Intelligence');
                             }
                           }
                           if(selectDesign==1){

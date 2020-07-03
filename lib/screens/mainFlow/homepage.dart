@@ -16,13 +16,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<List<Hackathon>> getHacks() async {
+    int end=0;
+    int i=1;
+    List<Hackathon> hacks = [];
+    while(end==0){
     Map<String, String> headers = {"authtoken": "test"};
     var response = await http.get(
-        "https://hackportal.herokuapp.com/events/getevents",
+        "https://hackportal.herokuapp.com/events/getevents/$i",
         headers: headers);
-    List<Hackathon> hacks = [];
     if (response.statusCode == 200) {
       var hackathonsJson = jsonDecode(response.body);
+      if(response.body!='[]'){
       for (var u in hackathonsJson) {
         Hackathon hack = Hackathon(
             description: u['description'],
@@ -34,8 +38,15 @@ class _HomePageState extends State<HomePage> {
             id: u['_id']);
         hacks.add(hack);
       }
+      i++;
+      print(i);
     }
-    return (hacks);
+      else{
+        end=1;
+      }
+    }
+  }
+    return hacks;
   }
 
   @override
@@ -47,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         Expanded(
           flex: 2,
           child: Padding(
-            padding: const EdgeInsets.only(right: 5),
+            padding: const EdgeInsets.fromLTRB(2,0,8,0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

@@ -4,7 +4,7 @@ import 'screens/loginFlow/loginFormPages/form0.dart';
 import 'screens/loginFlow/loginPage.dart';
 import 'screens/mainFlow/flow.dart';
 import 'screens/boiler.dart';
-import 'screens/mainFlow/homepage.dart';
+import 'homepage_components/addHack.dart';
 import 'homepage_components/detailspage.dart';
 void main() {
   runApp(HackApp());
@@ -31,8 +31,8 @@ class HackApp extends StatelessWidget {
         '/first':(context)=>FlowPage(),
         '/login':(context)=>LoginPage(),
         '/form':(context)=>Form0(),
-        '/hackpage':(context)=>HomePage(),
         '/details':(context)=>HackDetails(),
+        '/addHack':(context)=>AddHack(),
       },
     );
   }

@@ -24,11 +24,12 @@ class _CreateTeamState extends State<CreateTeam> {
   String id;
   String name, description;
   List skillList = [];
+  var toRemove=[];
   Future postTeam(
-      String name, String description, String id,List skills) async {
+      String name, String description, String id, List skills) async {
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "authtoken": "test"
+      "authtoken": "vaibhav"
     };
     String url = 'https://hackportal.herokuapp.com/teams/setteam';
     var response = await http.post(url,
@@ -37,10 +38,11 @@ class _CreateTeamState extends State<CreateTeam> {
           "eventId": id,
           "teamName": name,
           "description": description,
-          "skillsRequired":skills,
+          "skillsRequired": skills,
         }));
     print(response.body);
     print(response.statusCode);
+    return response.statusCode;
   }
 
   _CreateTeamState(this.id);
@@ -97,9 +99,9 @@ class _CreateTeamState extends State<CreateTeam> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
                   child: TextField(
-                    onChanged: (val){
+                    onChanged: (val) {
                       setState(() {
-                        name=val;
+                        name = val;
                       });
                     },
                     decoration: kTextFieldDecoration,
@@ -117,9 +119,9 @@ class _CreateTeamState extends State<CreateTeam> {
                   child: TextField(
                     maxLines: 6,
                     decoration: kTextFieldDecoration,
-                    onChanged: (val){
+                    onChanged: (val) {
                       setState(() {
-                        description=val;
+                        description = val;
                       });
                     },
                   ),
@@ -139,17 +141,20 @@ class _CreateTeamState extends State<CreateTeam> {
                         child: Icon(
                           Icons.fiber_manual_record,
                           size: 20,
-                          color: selectWeb==1?kConstantBlueColor:Color(0xffD8D8D8),
+                          color: selectWeb == 1
+                              ? kConstantBlueColor
+                              : Color(0xffD8D8D8),
                         ),
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            if(selectWeb!=1){
-                              selectWeb=1;}
-                            else{
-                              selectWeb=0;
+                            if (selectWeb != 1) {
+                              selectWeb = 1;
+                            } else {
+                              selectWeb = 0;
                             }
                           });
-                        },),
+                        },
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Container(
@@ -167,17 +172,20 @@ class _CreateTeamState extends State<CreateTeam> {
                         child: Icon(
                           Icons.fiber_manual_record,
                           size: 20,
-                          color: selectMobile==1?kConstantBlueColor:Color(0xffD8D8D8),
+                          color: selectMobile == 1
+                              ? kConstantBlueColor
+                              : Color(0xffD8D8D8),
                         ),
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            if(selectMobile!=1){
-                              selectMobile=1;}
-                            else{
-                              selectMobile=0;
+                            if (selectMobile != 1) {
+                              selectMobile = 1;
+                            } else {
+                              selectMobile = 0;
                             }
                           });
-                        },),
+                        },
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Container(
@@ -195,17 +203,20 @@ class _CreateTeamState extends State<CreateTeam> {
                         child: Icon(
                           Icons.fiber_manual_record,
                           size: 20,
-                          color: selectDevOps==1?kConstantBlueColor:Color(0xffD8D8D8),
+                          color: selectDevOps == 1
+                              ? kConstantBlueColor
+                              : Color(0xffD8D8D8),
                         ),
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            if(selectDevOps!=1){
-                              selectDevOps=1;}
-                            else{
-                              selectDevOps=0;
+                            if (selectDevOps != 1) {
+                              selectDevOps = 1;
+                            } else {
+                              selectDevOps = 0;
                             }
                           });
-                        },),
+                        },
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Container(
@@ -223,17 +234,20 @@ class _CreateTeamState extends State<CreateTeam> {
                         child: Icon(
                           Icons.fiber_manual_record,
                           size: 20,
-                          color: selectML==1?kConstantBlueColor:Color(0xffD8D8D8),
+                          color: selectML == 1
+                              ? kConstantBlueColor
+                              : Color(0xffD8D8D8),
                         ),
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            if(selectML!=1){
-                              selectML=1;}
-                            else{
-                              selectML=0;
+                            if (selectML != 1) {
+                              selectML = 1;
+                            } else {
+                              selectML = 0;
                             }
                           });
-                        },),
+                        },
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Container(
@@ -251,17 +265,20 @@ class _CreateTeamState extends State<CreateTeam> {
                         child: Icon(
                           Icons.fiber_manual_record,
                           size: 20,
-                          color: selectAI==1?kConstantBlueColor:Color(0xffD8D8D8),
+                          color: selectAI == 1
+                              ? kConstantBlueColor
+                              : Color(0xffD8D8D8),
                         ),
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            if(selectAI!=1){
-                              selectAI=1;}
-                            else{
-                              selectAI=0;
+                            if (selectAI != 1) {
+                              selectAI = 1;
+                            } else {
+                              selectAI = 0;
                             }
                           });
-                        },),
+                        },
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Container(
@@ -279,17 +296,20 @@ class _CreateTeamState extends State<CreateTeam> {
                         child: Icon(
                           Icons.fiber_manual_record,
                           size: 20,
-                          color: selectDesign==1?kConstantBlueColor:Color(0xffD8D8D8),
+                          color: selectDesign == 1
+                              ? kConstantBlueColor
+                              : Color(0xffD8D8D8),
                         ),
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            if(selectDesign!=1){
-                              selectDesign=1;}
-                            else{
-                              selectDesign=0;
+                            if (selectDesign != 1) {
+                              selectDesign = 1;
+                            } else {
+                              selectDesign = 0;
                             }
                           });
-                        },),
+                        },
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Container(
@@ -307,17 +327,20 @@ class _CreateTeamState extends State<CreateTeam> {
                         child: Icon(
                           Icons.fiber_manual_record,
                           size: 20,
-                          color: selectManagement==1?kConstantBlueColor:Color(0xffD8D8D8),
+                          color: selectManagement == 1
+                              ? kConstantBlueColor
+                              : Color(0xffD8D8D8),
                         ),
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            if(selectManagement!=1){
-                              selectManagement=1;}
-                            else{
-                              selectManagement=0;
+                            if (selectManagement != 1) {
+                              selectManagement = 1;
+                            } else {
+                              selectManagement = 0;
                             }
                           });
-                        },),
+                        },
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Container(
@@ -332,20 +355,23 @@ class _CreateTeamState extends State<CreateTeam> {
                   child: Row(
                     children: [
                       GestureDetector(
-                          child: Icon(
-                        Icons.fiber_manual_record,
-                        size: 20,
-                        color: selectBlock==1?kConstantBlueColor:Color(0xffD8D8D8),
+                        child: Icon(
+                          Icons.fiber_manual_record,
+                          size: 20,
+                          color: selectBlock == 1
+                              ? kConstantBlueColor
+                              : Color(0xffD8D8D8),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            if (selectBlock != 1) {
+                              selectBlock = 1;
+                            } else {
+                              selectBlock = 0;
+                            }
+                          });
+                        },
                       ),
-                      onTap: (){
-                            setState(() {
-                              if(selectBlock!=1){
-                              selectBlock=1;}
-                              else{
-                                selectBlock=0;
-                              }
-                            });
-                      },),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: Container(
@@ -363,14 +389,16 @@ class _CreateTeamState extends State<CreateTeam> {
                         child: Icon(
                           Icons.fiber_manual_record,
                           size: 20,
-                          color: selectCyber==1?kConstantBlueColor:Color(0xffD8D8D8),
+                          color: selectCyber == 1
+                              ? kConstantBlueColor
+                              : Color(0xffD8D8D8),
                         ),
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            if(selectCyber!=1){
-                              selectCyber=1;}
-                            else{
-                              selectCyber=0;
+                            if (selectCyber != 1) {
+                              selectCyber = 1;
+                            } else {
+                              selectCyber = 0;
                             }
                           });
                         },
@@ -393,42 +421,121 @@ class _CreateTeamState extends State<CreateTeam> {
                         padding: const EdgeInsets.only(right: 14),
                         child: RaisedButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.pop(
+                                context, 'Team creation was cancelled.');
                           },
                           child: Text('Cancel'),
                           color: Colors.white,
                         ),
                       ),
                       RaisedButton(
-                        onPressed: () async{
-                          if(selectWeb==1){
+                        onPressed: () async {
+                          if (selectWeb == 1) {
                             skillList.add('Web Dev');
                           }
-                          if(selectMobile==1){
+                          if (selectMobile == 1) {
                             skillList.add('App Dev');
                           }
-                          if(selectDevOps==1){
+                          if (selectDevOps == 1) {
                             skillList.add('DevOps');
                           }
-                          if(selectML==1){
+                          if (selectML == 1) {
                             skillList.add('Machine Learning');
                           }
-                          if(selectAI==1){
+                          if (selectAI == 1) {
                             skillList.add('AI');
                           }
-                          if(selectDesign==1){
+                          if (selectDesign == 1) {
                             skillList.add('Design');
                           }
-                          if(selectManagement==1){
+                          if (selectManagement == 1) {
                             skillList.add('Management');
                           }
-                          if(selectBlock==1){
+                          if (selectBlock == 1) {
                             skillList.add('BlockChain');
                           }
-                          if(selectCyber==1){
+                          if (selectCyber == 1) {
                             skillList.add('CyberSecurity');
                           }
-                        await postTeam(name, description, id, skillList);
+                          if(selectWeb!=1){
+                            for(var i in skillList){
+                              if(i=='Web Dev'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectMobile!=1){
+                            for(var i in skillList){
+                              if(i=='App Dev'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectDevOps!=1){
+                            for(var i in skillList){
+                              if(i=='DevOps'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectML!=1){
+                            for(var i in skillList){
+                              if(i=='Machine Learning'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectAI!=1){
+                            for(var i in skillList){
+                              if(i=='AI'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectDesign!=1){
+                            for(var i in skillList){
+                              if(i=='Design'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectManagement!=1){
+                            for(var i in skillList){
+                              if(i=='Management'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectBlock!=1){
+                            for(var i in skillList){
+                              if(i=='BlockChain'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          if(selectCyber!=1){
+                            for(var i in skillList){
+                              if(i=='CyberSecurity'){
+                                toRemove.add(i);
+                              }
+                            }
+                          }
+                          skillList.removeWhere( (e) => toRemove.contains(e));
+                          if (await postTeam(
+                                  name, description, id, skillList) ==
+                              200) {
+                            Navigator.pop(
+                                context, 'Your team was successfully created.');
+                          } else {
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'Error.Please try again later',style: TextStyle(color: Colors.purple),
+                              ),
+                              action:
+                                  SnackBarAction(label: '', onPressed: () {}),
+                            );
+                            Scaffold.of(context).showSnackBar(snackBar);
+                          }
                         },
                         child: Text(
                           'Confirm',

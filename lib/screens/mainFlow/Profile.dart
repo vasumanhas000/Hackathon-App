@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -13,7 +14,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   Future<User> getUser() async {
-    Map<String, String> headers = {"authtoken": "test"};
+    Map<String, String> headers = {"authtoken": "vaibhav"};
     var response = await http.get(
         "https://hackportal.herokuapp.com/users/getuserprofile",
         headers: headers);
@@ -28,6 +29,8 @@ class _ProfilePageState extends State<ProfilePage> {
         github: usersJson['githubLink'],
         stack: usersJson['stackOverflowLink'],
         link: usersJson['externalLink'],
+        id: usersJson["_id"],
+        skills: usersJson["skills"],
       );
       return (user);
     }
@@ -61,53 +64,56 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Image(
                                 image: AssetImage('images/Top-Rectangle.png')),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text('Edit',
-                                              style: TextStyle(
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(8,0,8,0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text('Edit',
+                                                style: TextStyle(
+                                                    color: kConstantBlueColor,
+                                                    fontSize: 22)),
+                                            IconButton(
+                                                icon: Icon(
+                                                  Icons.edit,
                                                   color: kConstantBlueColor,
-                                                  fontSize: 22)),
-                                          IconButton(
-                                              icon: Icon(
-                                                Icons.edit,
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              EditUser(user:snapshot.data)));
+                                                })
+                                          ],
+                                        ),
+                                        Text('Sign out',
+                                            style: TextStyle(
                                                 color: kConstantBlueColor,
-                                              ),
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            EditUser(user:snapshot.data)));
-                                              })
-                                        ],
-                                      ),
-                                      Text('Sign out',
+                                                fontSize: 22)),
+                                      ],
+                                    ),
+                                  ),
+                                  FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(5, 18, 0, 0),
+                                      child: Text(snapshot.data.name,
                                           style: TextStyle(
-                                              color: kConstantBlueColor,
-                                              fontSize: 22)),
-                                    ],
+                                              color: Colors.white, fontSize: 30)),
+                                    ),
                                   ),
-                                ),
-                                FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(5, 18, 0, 0),
-                                    child: Text(snapshot.data.name,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 30)),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -116,10 +122,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             'Email:',
                             style: TextStyle(color: Colors.black),
                           ),
-                          padding: EdgeInsets.fromLTRB(10, 30, 0, 5),
+                          padding: EdgeInsets.fromLTRB(15, 30, 0, 5),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 5),
+                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
                           child: FittedBox(
                               fit: BoxFit.contain,
                               child: Text(
@@ -132,10 +138,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             'University Name:',
                             style: TextStyle(color: Colors.black),
                           ),
-                          padding: EdgeInsets.fromLTRB(10, 20, 0, 5),
+                          padding: EdgeInsets.fromLTRB(15, 20, 0, 5),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 5),
+                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
                           child: FittedBox(
                             fit: BoxFit.contain,
                             child: Text(
@@ -149,10 +155,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             'Year of graduation',
                             style: TextStyle(color: Colors.black),
                           ),
-                          padding: EdgeInsets.fromLTRB(10, 20, 0, 5),
+                          padding: EdgeInsets.fromLTRB(15, 20, 0, 5),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 5),
+                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
                           child: Text(
                             snapshot.data.year,
                             style: TextStyle(fontSize: 22),
@@ -163,10 +169,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             'Description',
                             style: TextStyle(color: Colors.black),
                           ),
-                          padding: EdgeInsets.fromLTRB(10, 25, 0, 5),
+                          padding: EdgeInsets.fromLTRB(15, 25, 0, 5),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
+                          padding: const EdgeInsets.fromLTRB(15, 0, 10, 5),
                           child: Text(
                             snapshot.data.bio,
                             style: TextStyle(fontSize: 17),
