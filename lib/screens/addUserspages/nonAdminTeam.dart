@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/Team.dart';
-import 'package:hackapp/screens/addUserspages/teamInvites.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class TeamDetails extends StatefulWidget {
+class NTeamDetails extends StatefulWidget {
   final String id;
-  TeamDetails({this.id});
+  NTeamDetails({this.id});
   @override
-  _TeamDetailsState createState() => _TeamDetailsState(this.id);
+  _NTeamDetailsState createState() => _NTeamDetailsState(this.id);
 }
 
-class _TeamDetailsState extends State<TeamDetails> {
-  _TeamDetailsState(this.id);
+class _NTeamDetailsState extends State<NTeamDetails> {
+  _NTeamDetailsState(this.id);
   String id;
   Future<Team> getTeam(String id)async{
     Map<String, String> headers = {"authtoken": "vaibhav"};
@@ -25,14 +24,13 @@ class _TeamDetailsState extends State<TeamDetails> {
     if(response.statusCode==200){
       var teamsJson=jsonDecode(response.body);
       Team team= Team(
-        creatorId: teamsJson["creatorId"],
-        teamName: teamsJson["teamName"],
-        eventId: teamsJson["eventId"],
-        description: teamsJson["description"],
-        skills: teamsJson["skillsRequired"],
-        members: teamsJson["membersInfo"],
-        eventName: teamsJson["nameOfEvent"],
-        pendingRequests: teamsJson["pendingRequestsInfo"]
+          creatorId: teamsJson["creatorId"],
+          teamName: teamsJson["teamName"],
+          eventId: teamsJson["eventId"],
+          description: teamsJson["description"],
+          skills: teamsJson["skillsRequired"],
+          members: teamsJson["membersInfo"],
+          eventName: teamsJson["nameOfEvent"]
       );
       return team;
     }
@@ -44,72 +42,39 @@ class _TeamDetailsState extends State<TeamDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: kConstantBlueColor,
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(8,20,8,0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: FaIcon(
-                        FontAwesomeIcons.arrowCircleLeft,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: Row(
-                        children: [
-                          FittedBox(
-                            fit: BoxFit.contain,
-                            child: Container(
-                              child: Text(
-                                'View Invites',
-                                style: TextStyle(fontSize: 20, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          FittedBox(
-                            fit: BoxFit.contain,
-                            child: IconButton(
-                                icon: Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                                onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>TeamInvites(id:id,)));
-                                }),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+      backgroundColor: kConstantBlueColor,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8,20,8,0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IconButton(
+                icon: FaIcon(
+                  FontAwesomeIcons.arrowCircleLeft,
+                  color: Colors.white,
+                  size: 35,
                 ),
-                FutureBuilder(
-                  future: getTeam(id),
-                    builder: (BuildContext context, AsyncSnapshot snapshot){
-                      if (snapshot.data == null) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 200),
-                          child: Container(
-                            child: SpinKitFoldingCube(
-                              size: 50,
-                              color: Colors.white,
-                            ),
-                          ),
-                        );
-                      }
-                      else{
-                        return ListView.builder(itemCount: 1,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              FutureBuilder(
+                future: getTeam(id),
+                builder: (BuildContext context, AsyncSnapshot snapshot){
+                  if (snapshot.data == null) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 200),
+                      child: Container(
+                        child: SpinKitFoldingCube(
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }
+                  else{
+                    return ListView.builder(itemCount: 1,
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index){
                           return Padding(
@@ -142,10 +107,10 @@ class _TeamDetailsState extends State<TeamDetails> {
                                   child: ListView.builder(itemCount: snapshot.data.skills.length,
                                       shrinkWrap: true,
                                       itemBuilder: (BuildContext context, int index){
-                                       return Padding(
-                                         padding: const EdgeInsets.only(top: 3),
-                                         child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 17),),
-                                       );
+                                        return Padding(
+                                          padding: const EdgeInsets.only(top: 3),
+                                          child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 17),),
+                                        );
                                       }),
                                 ),
                                 Padding(
@@ -167,13 +132,13 @@ class _TeamDetailsState extends State<TeamDetails> {
                             ),
                           );
                         });
-                      }
-                    },
-                ),
-              ],
-            ),
+                  }
+                },
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
 import 'package:hackapp/screens/mainFlow/Profile.dart';
+import 'package:hackapp/screens/mainFlow/flow.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -115,7 +116,7 @@ class _EditUserState extends State<EditUser> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(icon: Icon(Icons.arrow_back,color: kConstantBlueColor,size: 42,), onPressed: (){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 3,)));
                           }),
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
@@ -285,7 +286,7 @@ class _EditUserState extends State<EditUser> {
                               }
                               skillList.removeWhere( (e) => toRemove.contains(e));
                               if(await updateProfile(name.text, university.text, bio.text, year.text, github.text, stack.text, link.text, skillList)==200){
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex:3,)));
                               }else{
                               final snackBar = SnackBar(
                               content: Text(

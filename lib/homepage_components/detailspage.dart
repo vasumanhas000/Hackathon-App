@@ -73,7 +73,7 @@ class _HackDetailsState extends State<HackDetails> {
                                     ));
                                 Scaffold.of(context)
                                   ..removeCurrentSnackBar()
-                                  ..showSnackBar(SnackBar(content: Text("$result",style: TextStyle(fontFamily: 'Montserrat',color:kConstantBlueColor),),backgroundColor: result!=null?Colors.white:kConstantBlueColor,));
+                                  ..showSnackBar(SnackBar(content: Text("$result",style: TextStyle(fontFamily: 'Montserrat',color: kConstantBlueColor),),backgroundColor: result!=null?Colors.white:kConstantBlueColor,));
                               }),
                         )
                       ],

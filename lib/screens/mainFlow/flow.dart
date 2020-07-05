@@ -5,15 +5,18 @@ import 'addUsers.dart';
 import 'Profile.dart';
 
 class FlowPage extends StatefulWidget {
+  final int currentIndex;
+  FlowPage({this.currentIndex});
   @override
-  _FlowPageState createState() => _FlowPageState();
+  _FlowPageState createState() => _FlowPageState(this.currentIndex);
 }
 
 class _FlowPageState extends State<FlowPage> {
   _dismissKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
-  int _currentIndex = 0;
+  _FlowPageState(this.currentIndex);
+  int currentIndex;
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     SearchPage(),
@@ -28,7 +31,7 @@ class _FlowPageState extends State<FlowPage> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: SafeArea(child: _widgetOptions.elementAt(_currentIndex)),
+        body: SafeArea(child: _widgetOptions.elementAt(currentIndex)),
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
@@ -50,10 +53,10 @@ class _FlowPageState extends State<FlowPage> {
             ),
             BottomNavigationBarItem(icon: Icon(Icons.person),title:Text(''))
           ],
-          currentIndex: _currentIndex,
+          currentIndex: currentIndex,
           onTap: (index) {
             setState(() {
-              _currentIndex = index;
+              currentIndex = index;
             });
           },
         ),

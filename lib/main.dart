@@ -28,7 +28,7 @@ class HackApp extends StatelessWidget {
       ),
       routes: {
         '/':(context)=>BoilerPage(),
-        '/first':(context)=>FlowPage(),
+        '/first':(context)=>FlowPage(currentIndex: 0,),
         '/login':(context)=>LoginPage(),
         '/form':(context)=>Form0(),
         '/details':(context)=>HackDetails(),

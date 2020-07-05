@@ -1,25 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
 import 'package:hackapp/components/sizeConfig.dart';
+import 'package:hackapp/screens/addUserspages/page2.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class UserInvite extends StatefulWidget {
   final List admin;
-  UserInvite({this.admin});
+  final String email;
+  UserInvite({this.admin,this.email});
   @override
-  _UserInviteState createState() => _UserInviteState(this.admin);
+  _UserInviteState createState() => _UserInviteState(this.admin,this.email);
 }
 
 class _UserInviteState extends State<UserInvite> {
-  String _selectedRadio;
-  _UserInviteState(this.admin);
+  String _selectedRadio,email;
+  Future sendInvite(String email,String id)async{
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "authtoken": "vaibhav"
+    };
+    String url = 'https://hackportal.herokuapp.com/teams/sendinvite';
+    var response = await http.post(url,
+        headers: headers,
+        body: jsonEncode({
+          "inviteeEmail":email,
+          "teamId":id,
+        }));
+    print(response.body);
+    print(response.statusCode);
+    return response.statusCode;
+  }
+  _UserInviteState(this.admin,this.email);
   List admin;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: ListView.builder(
+    return Scaffold(
+      body: SafeArea(
+        child: ListView.builder(
           itemCount: 1,
           itemBuilder: (BuildContext context, int index)=>
            Padding(
@@ -62,7 +83,7 @@ class _UserInviteState extends State<UserInvite> {
                      itemBuilder: (BuildContext context, int index)=>
                          Row(
                            children: [
-                             Radio(value: admin[index]['teamName'], groupValue: _selectedRadio, onChanged: (val){
+                             Radio(value: admin[index]['_id'], groupValue: _selectedRadio, onChanged: (val){
                                setState(() {
                                  _selectedRadio=val;
                                });
@@ -79,8 +100,29 @@ class _UserInviteState extends State<UserInvite> {
                    child: Row(
                      mainAxisAlignment: MainAxisAlignment.end,
                      children: [
-                       RaisedButton(onPressed: (){
-                         print(_selectedRadio); 
+                       RaisedButton(onPressed: ()async{
+                         if(await sendInvite(email, _selectedRadio)==200){
+                           print('success');
+                           Navigator.pop(context,'Invite was successfully sent.');
+                         }
+                         else if(await sendInvite(email, _selectedRadio)==400){
+                           final snackBar = SnackBar(
+                             content: Text(
+                               'User has already been invited to the selected team.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                             ),
+                             backgroundColor:Color(0xff98c1d9) ,
+                           );
+                           await Scaffold.of(context).showSnackBar(snackBar);
+                         }
+                         else{
+                           final snackBar = SnackBar(
+                             content: Text(
+                               'Error.Please try again later.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                             ),
+                             backgroundColor:Color(0xff98c1d9) ,
+                           );
+                           await Scaffold.of(context).showSnackBar(snackBar);
+                         }
                        },child: Text('Send',style: TextStyle(color: Colors.white),),color: kConstantBlueColor,),
                      ],
                    ),
