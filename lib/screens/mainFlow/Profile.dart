@@ -1,9 +1,13 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'editUser.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:hackapp/components/sizeConfig.dart';
+import 'package:hackapp/screens/addUserspages/nonAdminTeam.dart';
+import 'package:hackapp/screens/addUserspages/teamDetails.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
@@ -16,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<User> getUser() async {
     Map<String, String> headers = {"authtoken": "vaibhav"};
     var response = await http.get(
-        "https://hackportal.herokuapp.com/users/getuserprofile",
+        "https://hackportal.azurewebsites.net/users/getuserprofile",
         headers: headers);
     if (response.statusCode == 200) {
       var usersJson = jsonDecode(response.body);
@@ -38,6 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     getUser();
     return SafeArea(
       child: Scaffold(
@@ -60,72 +65,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Stack(
-                          children: [
-                            Image(
-                                image: AssetImage('images/Top-Rectangle.png')),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8,0,8,0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text('Edit',
-                                                style: TextStyle(
-                                                    color: kConstantBlueColor,
-                                                    fontSize: 22)),
-                                            IconButton(
-                                                icon: Icon(
-                                                  Icons.edit,
-                                                  color: kConstantBlueColor,
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              EditUser(user:snapshot.data)));
-                                                })
-                                          ],
-                                        ),
-                                        Text('Sign out',
-                                            style: TextStyle(
-                                                color: kConstantBlueColor,
-                                                fontSize: 22)),
-                                      ],
-                                    ),
-                                  ),
-                                  FittedBox(
-                                    fit: BoxFit.contain,
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(5, 18, 0, 0),
-                                      child: Text(snapshot.data.name,
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 30)),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(22,32,8,0),
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(snapshot.data.name,
+                                style: TextStyle(fontSize: 32)),
+                          ),
                         ),
                         Padding(
                           child: Text(
-                            'Email:',
-                            style: TextStyle(color: Colors.black),
+                            'Email :',
+                            style: TextStyle(color: Colors.black,fontSize: 22),
                           ),
-                          padding: EdgeInsets.fromLTRB(15, 30, 0, 5),
+                          padding: EdgeInsets.fromLTRB(22, 30, 8, 5),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
+                          padding: const EdgeInsets.fromLTRB(22, 0, 8, 5),
                           child: FittedBox(
                               fit: BoxFit.contain,
                               child: Text(
@@ -135,13 +91,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Padding(
                           child: Text(
-                            'University Name:',
-                            style: TextStyle(color: Colors.black),
+                            'University Name :',
+                            style: TextStyle(color: Colors.black,fontSize: 22),
                           ),
-                          padding: EdgeInsets.fromLTRB(15, 20, 0, 5),
+                          padding: EdgeInsets.fromLTRB(22, 20, 8, 5),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
+                          padding: const EdgeInsets.fromLTRB(22, 0, 8, 5),
                           child: FittedBox(
                             fit: BoxFit.contain,
                             child: Text(
@@ -152,13 +108,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Padding(
                           child: Text(
-                            'Year of graduation',
-                            style: TextStyle(color: Colors.black),
+                            'Year of graduation :',
+                            style: TextStyle(color: Colors.black,fontSize: 22),
                           ),
-                          padding: EdgeInsets.fromLTRB(15, 20, 0, 5),
+                          padding: EdgeInsets.fromLTRB(22, 20, 8, 5),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
+                          padding: const EdgeInsets.fromLTRB(22, 0, 8, 5),
                           child: Text(
                             snapshot.data.year,
                             style: TextStyle(fontSize: 22),
@@ -166,16 +122,67 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Padding(
                           child: Text(
-                            'Description',
-                            style: TextStyle(color: Colors.black),
+                            'Description :',
+                            style: TextStyle(color: Colors.black,fontSize: 22),
                           ),
-                          padding: EdgeInsets.fromLTRB(15, 25, 0, 5),
+                          padding: EdgeInsets.fromLTRB(22, 20, 0, 8),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 10, 5),
-                          child: Text(
+                          padding: const EdgeInsets.fromLTRB(22, 0, 8, 8),
+                          child: AutoSizeText(
                             snapshot.data.bio,
-                            style: TextStyle(fontSize: 17),
+                            style: TextStyle(fontSize: 16),
+                            maxLines: 6,
+                          ),
+                        ),
+                        Padding(
+                          child: Text(
+                            'Skills :',
+                            style: TextStyle(color: Colors.black,fontSize: 22),
+                          ),
+                          padding: EdgeInsets.fromLTRB(22, 20, 0, 0),
+                        ),
+                        ListView.builder(
+                            itemCount: snapshot.data.skills.length,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index1) {
+                              if (snapshot.data.skills.length == 0) {
+                                return Padding(
+                                  padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                                  child: Text('No Skills'),
+                                );
+                              } else {
+                                return Padding(
+                                  padding: const EdgeInsets.fromLTRB(22, 8, 0, 0),
+                                  child: Text(
+                                    snapshot.data.skills[index1],
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                );
+                              }
+                            }),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0,48,24,0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 16),
+                                child: RaisedButton(onPressed: (){
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>EditUser(user: snapshot.data)));
+                                },color: Colors.white,child: Row(
+                                  children: [
+                                    Text('Edit'),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5),
+                                      child: Icon(Icons.edit,size: 16,),
+                                    ),
+                                  ],
+                                ),
+                                ),
+                              ),
+                              RaisedButton(onPressed: (){},color: kConstantBlueColor,child: Text('Sign Out',style: TextStyle(color: Colors.white),),),
+                            ],
                           ),
                         ),
                       ],

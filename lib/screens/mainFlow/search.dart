@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
@@ -35,34 +36,30 @@ class _SearchPageState extends State<SearchPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: Padding(
-                  padding: const EdgeInsets.only(top:20 ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8,0,0,25),
+                padding: const EdgeInsets.fromLTRB(16,24,16,0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      child: FittedBox(
+                        fit: BoxFit.contain,
                         child: Text(
-                          '''Choose a skill
-you are looking for''',
+                          'Choose skills',
                           style: TextStyle(
-                              fontSize: 29, fontWeight: FontWeight.w600),
+                              fontSize: 30, fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0,35,5,0),
-                        child: Image(
-                          image: AssetImage('images/vector.png'),
-                          height: SizeConfig.safeBlockVertical * 10,
-                        ),
-                      ),
-                    ],
-                  ),
+                      width:200,
+                    ),
+                    Image(
+                      image: AssetImage('images/stc.png'),
+                      height: SizeConfig.safeBlockVertical * 3.15,
+                    ),
+                  ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(45, 40, 0, 0),
+                padding: const EdgeInsets.fromLTRB(45, 60, 0, 0),
                 child: Row(
                   children: [
                     GestureDetector(
@@ -82,8 +79,12 @@ you are looking for''',
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Container(
-                        child: Text('Web Development',style: TextStyle(fontSize: 20),),
+                      child: SizedBox(
+                      width: 200,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text('Web Development',style: TextStyle(fontSize: 20),),
+                        ),
                       ),
                     ),
                   ],
@@ -110,8 +111,12 @@ you are looking for''',
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Container(
-                        child: Text('Mobile App Development',style: TextStyle(fontSize: 20)),
+                      child: SizedBox(
+                        width: 265,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text('Mobile App Development',style: TextStyle(fontSize: 20)),
+                        ),
                       ),
                     ),
                   ],
@@ -138,8 +143,12 @@ you are looking for''',
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Container(
-                        child: Text('Devops',style: TextStyle(fontSize: 20)),
+                      child: SizedBox(
+                        width: 78,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text('Devops',style: TextStyle(fontSize: 20)),
+                        ),
                       ),
                     ),
                   ],
@@ -166,8 +175,12 @@ you are looking for''',
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Container(
-                        child: Text('Machine Learning',style: TextStyle(fontSize: 20)),
+                      child: SizedBox(
+                        width: 190,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text('Machine Learning',style: TextStyle(fontSize: 20)),
+                        ),
                       ),
                     ),
                   ],
@@ -194,8 +207,12 @@ you are looking for''',
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Container(
-                        child: Text('Artificial Intelligence',style: TextStyle(fontSize: 20)),
+                      child: SizedBox(
+                        width: 210,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text('Artificial Intelligence',style: TextStyle(fontSize: 20)),
+                        ),
                       ),
                     ),
                   ],
@@ -222,8 +239,12 @@ you are looking for''',
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Container(
-                        child: Text('Design - UI/UX',style: TextStyle(fontSize: 20)),
+                      child: SizedBox(
+                        width: 150,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text('Design - UI/UX',style: TextStyle(fontSize: 20)),
+                        ),
                       ),
                     ),
                   ],
@@ -250,8 +271,12 @@ you are looking for''',
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Container(
-                        child: Text('Management skills',style: TextStyle(fontSize: 20)),
+                      child: SizedBox(
+                        width: 195,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text('Management skills',style: TextStyle(fontSize: 20)),
+                        ),
                       ),
                     ),
                   ],
@@ -278,8 +303,12 @@ you are looking for''',
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Container(
-                        child: Text('Blockchain',style: TextStyle(fontSize: 20)),
+                      child: SizedBox(
+                        width: 117,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text('Blockchain',style: TextStyle(fontSize: 20)),
+                        ),
                       ),
                     ),
                   ],
@@ -306,9 +335,13 @@ you are looking for''',
                       },
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Container(
-                        child: Text('CyberSecurity',style: TextStyle(fontSize: 20)),
+                      padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                      child: SizedBox(
+                        width: 140,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text('CyberSecurity',style: TextStyle(fontSize: 20)),
+                        ),
                       ),
                     ),
                   ],

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:ffi';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hackapp/constants.dart';
@@ -16,150 +19,124 @@ class HackDetails extends StatefulWidget {
 class _HackDetailsState extends State<HackDetails> {
   _HackDetailsState(this.hackathon);
   Hackathon hackathon;
+  Uint8List _bytesImage;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Color(0xff3d5a80),
-        body: ListView.builder(
+    return Scaffold(
+      backgroundColor: Color(0xff3d5a80),
+      body: SafeArea(
+        child: ListView.builder(
           itemCount: 1,
-          itemBuilder: (BuildContext context, int index)=>
-           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(8, 13, 0, 0),
-                    child: IconButton(
-                      icon: FaIcon(
-                        FontAwesomeIcons.arrowCircleLeft,
-                        color: Colors.white,
-                        size: 35,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-                    child: Row(
-                      children: [
-                        FittedBox(
-                          fit: BoxFit.contain,
-                          child: Container(
-                            child: Text(
-                              'Create a team',
-                              style: TextStyle(fontSize: 20, color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        FittedBox(
-                          fit: BoxFit.contain,
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                                size: 30,
-                              ),
-                              onPressed: () async{
-                           final result= await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CreateTeam(id: hackathon.id,),
-                                    ));
-                                Scaffold.of(context)
-                                  ..removeCurrentSnackBar()
-                                  ..showSnackBar(SnackBar(content: Text("$result",style: TextStyle(fontFamily: 'Montserrat',color: kConstantBlueColor),),backgroundColor: result!=null?Colors.white:kConstantBlueColor,));
-                              }),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 10, 0),
-                child: FittedBox(
+          itemBuilder: (BuildContext context, int index) => Padding(
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FittedBox(
                   fit: BoxFit.contain,
                   child: Text(
                     hackathon.name,
                     style: TextStyle(
-                        fontFamily: 'Muli',
-                        fontSize: 39,
-                        color: Colors.white),
+                        fontFamily: 'Muli', fontSize: 39, color: Colors.white),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(21, 30, 10, 0),
-                child: FittedBox(
-                  fit: BoxFit.contain,
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      hackathon.location,
+                      style: TextStyle(
+                          fontFamily: 'Muli',
+                          fontSize: 28,
+                          color: Colors.white),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      hackathon.start + '-' + hackathon.end,
+                      style: TextStyle(
+                          fontFamily: 'Muli',
+                          fontSize: 26,
+                          color: Colors.white),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
                   child: Text(
-                    hackathon.location,
-                    style: TextStyle(
-                        fontFamily: 'Muli',
-                        fontSize: 28,
-                        color: Colors.white),
+                    hackathon.description,
+                    style: TextStyle(fontSize: 18, color: Colors.white),
                     textAlign: TextAlign.left,
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(21, 30, 0, 0),
-                child: FittedBox(
-                  fit: BoxFit.contain,
+                Padding(
+                  padding: EdgeInsets.only(top: 16),
                   child: Text(
-                    hackathon.start + '-' + hackathon.end,
-                    style: TextStyle(
-                        fontFamily: 'Muli',
-                        fontSize: 26,
-                        color: Colors.white),
+                    'Link:',
+                    style: TextStyle(fontSize: 19, color: Colors.white),
                     textAlign: TextAlign.left,
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(21, 30, 10, 0),
-                child: Text(
-                 hackathon.description,
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(21, 30, 10, 3),
-                child: Text(
-                  'Link:',
-                  style: TextStyle(
-                      fontSize: 19,
-                      color: Colors.white),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(21,0,0, 0),
-                child: GestureDetector(
-                  onTap: (){
+                GestureDetector(
+                  onTap: () {
                     launch(hackathon.url);
                   },
-                  child: Text(
-                    hackathon.url,
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontSize: 16,
-                        color: Colors.white),
-                    textAlign: TextAlign.left,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 2),
+                    child: Text(
+                      "sample link",
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 16,
+                          color: Colors.white),
+                      textAlign: TextAlign.left,
+                    ),
                   ),
                 ),
-              ),
-
-            ],
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 48, 8, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () async {
+                          final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateTeam(
+                                  id: hackathon.id,
+                                ),
+                              ));
+                          Scaffold.of(context)
+                            ..removeCurrentSnackBar()
+                            ..showSnackBar(SnackBar(
+                              content: Text(
+                                "$result",
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: kConstantBlueColor),
+                              ),
+                              backgroundColor: result != null
+                                  ? Colors.white
+                                  : kConstantBlueColor,
+                            ));
+                        },
+                        color: Colors.white,
+                        child: Text('Create Team'),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

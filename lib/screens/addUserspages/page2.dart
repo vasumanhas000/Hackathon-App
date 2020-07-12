@@ -16,7 +16,7 @@ class _Page2State extends State<Page2> {
   Future getUser() async {
     Map<String, String> headers = {"authtoken": "test"};
     var response = await http.get(
-        "https://hackportal.herokuapp.com/users/getuserprofile",
+        "https://hackportal.azurewebsites.net/users/getuserprofile",
         headers: headers);
     if (response.statusCode == 200) {
       var usersJson = jsonDecode(response.body);
@@ -39,77 +39,78 @@ class _Page2State extends State<Page2> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 1,
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) => Padding(
-        padding: const EdgeInsets.fromLTRB(10, 30, 0, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Text(
-                'View Invites',
-                style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 30),
-              child: FutureBuilder(
-                  future: getUser(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.data == null) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 80),
-                          child: Container(
-                            child: SpinKitFoldingCube(
-                              size: 50,
-                              color: kConstantBlueColor,
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                    else if (snapshot.data.teamInvites.length == 0) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 80),
-                        child: Center(
-                          child: Text(
-                            'You have no pending invites',
-                          ),
-                        ),
-                      );
-                    }
-                    else{
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(15,0,25,10),
-                        child: GestureDetector(
-                          onTap: (){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AcceptInvite(id:snapshot.data.teamInvites[index]["_id"])));
-                          },
-                          child: Container(
-                            height: 45,
-                            width: 350,
-                            color: Color.fromRGBO(41, 50, 65, 0.1),
+    return Scaffold(
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: 1,
+          shrinkWrap: true,
+          itemBuilder: (BuildContext context, int index) => Padding(
+            padding: const EdgeInsets.fromLTRB(16, 24, 8, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'View Invites',
+                  style: TextStyle(fontSize: 28,fontWeight: FontWeight.w600),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: FutureBuilder(
+                      future: getUser(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.data == null) {
+                          return Center(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(snapshot.data.teamInvites[index]['teamName'],style: TextStyle(fontSize: 20),),
-                                ],
+                              padding: const EdgeInsets.only(top: 200),
+                              child: Container(
+                                child: SpinKitFoldingCube(
+                                  size: 50,
+                                  color: kConstantBlueColor,
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
-                    }
-                  }),
+                          );
+                        }
+                        else if (snapshot.data.teamInvites.length == 0) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 200),
+                            child: Center(
+                              child: Text(
+                                'You have no pending invites',
+                              ),
+                            ),
+                          );
+                        }
+                        else{
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(16,14,0,10),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AcceptInvite(id:snapshot.data.teamInvites[index]["_id"])));
+                              },
+                              child: Container(
+                                height: 45,
+                                width: 350,
+                                color: Color.fromRGBO(41, 50, 65, 0.1),
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(8,0,8,0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Center(child: FittedBox(fit: BoxFit.contain,child: Text(snapshot.data.teamInvites[index]['teamName'],style: TextStyle(fontSize: 20),))),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

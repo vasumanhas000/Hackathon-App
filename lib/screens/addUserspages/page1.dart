@@ -14,7 +14,7 @@ class Page1 extends StatefulWidget {
 class _Page1State extends State<Page1> {
   Future getTeams()async{
     Map<String, String> headers = {"authtoken": "vaibhav"};
-    final String url= "https://hackportal.herokuapp.com/users/getuserprofile";
+    final String url= "https://hackportal.azurewebsites.net/users/getuserprofile";
     var response = await http.get(
         url, headers: headers);
     if(response.statusCode==200){

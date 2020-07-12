@@ -1,20 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hackapp/components/Team.dart';
+import 'package:hackapp/screens/addUserspages/teamDetails.dart';
 import 'package:hackapp/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:ui';
-import 'package:hackapp/components/sizeConfig.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class CreateTeam extends StatefulWidget {
-  final String id;
-  CreateTeam({@required this.id});
+class EditTeam extends StatefulWidget {
+  final Team team;
+  EditTeam({this.team});
   @override
-  _CreateTeamState createState() => _CreateTeamState(this.id);
+  _EditTeamState createState() => _EditTeamState(this.team);
 }
 
-class _CreateTeamState extends State<CreateTeam> {
+class _EditTeamState extends State<EditTeam> {
+  bool _isInAsyncCall = false;
+  Future updateTeam(String id, String name, String bio, List skills) async {
+    Map<String, String> headers = {
+      "authtoken": "vaibhav",
+      "Content-Type": "application/json"
+    };
+    var response = await http.post(
+        "https://hackportal.azurewebsites.net/teams/updateteam/$id",
+        headers: headers,
+        body: jsonEncode({
+          "teamName": name,
+          "description": bio,
+          "skillsRequired": skills,
+        }));
+    print(response.body);
+    print(response.statusCode);
+    return response.statusCode;
+  }
+
   int selectWeb,
       selectMobile,
       selectDevOps,
@@ -24,117 +43,132 @@ class _CreateTeamState extends State<CreateTeam> {
       selectManagement,
       selectBlock,
       selectCyber;
-  String id;
-  String name, description;
   List skillList = [];
-  var toRemove=[];
-  Future postTeam(
-      String name, String description, String id, List skills) async {
-    Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "authtoken": "vaibhav"
-    };
-    String url = 'https://hackportal.azurewebsites.net/teams/setteam';
-    var response = await http.post(url,
-        headers: headers,
-        body: jsonEncode({
-          "eventId": id,
-          "teamName": name,
-          "description": description,
-          "skillsRequired": skills,
-        }));
-    print(response.body);
-    print(response.statusCode);
-    return response.statusCode;
-  }
-
-  _CreateTeamState(this.id);
-  bool _isInAsyncCall = false;
-
+  var toRemove = [];
+  Team team;
+  _EditTeamState(this.team);
   _dismissKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 
+  void _moveToSignInScreen(BuildContext context) => Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => TeamDetails(id: team.teamId)));
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    List userSkills = team.skills;
+    print(userSkills);
+    for (var i in userSkills) {
+      if (i.toString().toLowerCase() == 'Web Development'.toLowerCase()) {
+        selectWeb = 1;
+      }
+      if (i.toString().toLowerCase() == 'App Development'.toLowerCase()) {
+        selectMobile = 1;
+      }
+      if (i.toString().toLowerCase() == 'DevOps'.toLowerCase()) {
+        selectDevOps = 1;
+      }
+      if (i.toString().toLowerCase() == 'Machine Learning'.toLowerCase()) {
+        selectML = 1;
+      }
+      if (i.toString().toLowerCase() ==
+          'Artificial Intelligence'.toLowerCase()) {
+        selectAI = 1;
+      }
+      if (i.toString().toLowerCase() == 'Design'.toLowerCase()) {
+        selectDesign = 1;
+      }
+      if (i.toString().toLowerCase() == 'Management'.toLowerCase()) {
+        selectManagement = 1;
+      }
+      if (i.toString().toLowerCase() == 'BlockChain'.toLowerCase()) {
+        selectBlock = 1;
+      }
+      if (i.toString().toLowerCase() == 'CyberSecurity'.toLowerCase()) {
+        selectCyber = 1;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+    final name = TextEditingController(text: team.teamName);
+    final bio = TextEditingController(text: team.description);
     return GestureDetector(
       onTap: () {
         _dismissKeyboard(context);
       },
-      child: Scaffold(
-        body: ModalProgressHUD(
-          inAsyncCall: _isInAsyncCall,
-          opacity: 0.5,
-          progressIndicator: SpinKitFoldingCube(
-            color: kConstantBlueColor,
-          ),
-          child: SafeArea(
-            child: ListView.builder(
-              itemCount: 1,
-              itemBuilder: (BuildContext context, int index) => Column(
+      child: WillPopScope(
+        onWillPop: () {
+          _moveToSignInScreen(context);
+        },
+        child: Scaffold(
+          body: ModalProgressHUD(
+            inAsyncCall: _isInAsyncCall,
+            opacity: 0.5,
+            progressIndicator: SpinKitFoldingCube(
+              color: kConstantBlueColor,
+            ),
+            child: SafeArea(
+              child: ListView.builder(
+                itemCount: 1,
+                itemBuilder: (BuildContext context, int index) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(16,24,16,0),
+                      padding: const EdgeInsets.fromLTRB(16, 32, 8, 0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            child: Text(
-                              'Create Your Team',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: 'Muli',
-                              ),
-                            ),
-                          ),
-                          Image(image: AssetImage('images/stc.png'),fit: BoxFit.contain,height: SizeConfig.safeBlockVertical*3.15,)
+                          Text(
+                            'Edit your team',
+                            style: TextStyle(fontFamily: 'Muli', fontSize: 30),
+                          )
                         ],
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
                       child: Text(
-                        'Team name:',
-                        style: TextStyle(color: Color(0xff293241), fontSize: 18),
+                        'Team Name :',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
-                        onChanged: (val) {
-                          setState(() {
-                            name = val;
-                          });
-                        },
+                        style: TextStyle(
+                            color: kConstantBlueColor,
+                            fontFamily: 'Montserrat',
+                            fontSize: 15),
+                        controller: name,
                         decoration: kTextFieldDecoration,
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
-                        'Project Description:',
-                        style: TextStyle(color: Color(0xff293241), fontSize: 18),
+                        'Project Description :',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
                         maxLines: 6,
+                        style: TextStyle(
+                            color: kConstantBlueColor,
+                            fontFamily: 'Montserrat',
+                            fontSize: 15),
+                        controller: bio,
                         decoration: kTextFieldDecoration,
-                        onChanged: (val) {
-                          setState(() {
-                            description = val;
-                          });
-                        },
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
-                        'Skills required:',
-                        style: TextStyle(color: Color(0xff293241), fontSize: 18),
+                        'Skills:',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                     ),
                     Padding(
@@ -162,14 +196,17 @@ class _CreateTeamState extends State<CreateTeam> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Container(
-                              child: Text('Web Development',style: TextStyle(fontSize: 16),),
+                              child: Text(
+                                'Web Development',
+                                style: TextStyle(fontSize: 18),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
                       child: Row(
                         children: [
                           GestureDetector(
@@ -193,14 +230,15 @@ class _CreateTeamState extends State<CreateTeam> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Container(
-                              child: Text('Mobile App Development',style: TextStyle(fontSize: 16),),
+                              child: Text('Mobile App Development',
+                                  style: TextStyle(fontSize: 18)),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
                       child: Row(
                         children: [
                           GestureDetector(
@@ -224,14 +262,15 @@ class _CreateTeamState extends State<CreateTeam> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Container(
-                              child: Text('DevOps',style: TextStyle(fontSize: 16),),
+                              child:
+                                  Text('Devops', style: TextStyle(fontSize: 18)),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
                       child: Row(
                         children: [
                           GestureDetector(
@@ -255,14 +294,15 @@ class _CreateTeamState extends State<CreateTeam> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Container(
-                              child: Text("Machine Learning",style: TextStyle(fontSize: 16),),
+                              child: Text('Machine Learning',
+                                  style: TextStyle(fontSize: 18)),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
                       child: Row(
                         children: [
                           GestureDetector(
@@ -286,14 +326,15 @@ class _CreateTeamState extends State<CreateTeam> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Container(
-                              child: Text('Artificial Intelligence',style: TextStyle(fontSize: 16),),
+                              child: Text('Artificial Intelligence',
+                                  style: TextStyle(fontSize: 18)),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
                       child: Row(
                         children: [
                           GestureDetector(
@@ -317,14 +358,15 @@ class _CreateTeamState extends State<CreateTeam> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Container(
-                              child: Text('Design - UI/UX',style: TextStyle(fontSize: 16),),
+                              child: Text('Design - UI/UX',
+                                  style: TextStyle(fontSize: 18)),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
                       child: Row(
                         children: [
                           GestureDetector(
@@ -348,14 +390,15 @@ class _CreateTeamState extends State<CreateTeam> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Container(
-                              child: Text('Management Skills',style: TextStyle(fontSize: 16),),
+                              child: Text('Management skills',
+                                  style: TextStyle(fontSize: 18)),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
                       child: Row(
                         children: [
                           GestureDetector(
@@ -379,14 +422,15 @@ class _CreateTeamState extends State<CreateTeam> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Container(
-                              child: Text('Blockchain',style: TextStyle(fontSize: 16),),
+                              child: Text('Blockchain',
+                                  style: TextStyle(fontSize: 18)),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
                       child: Row(
                         children: [
                           GestureDetector(
@@ -410,7 +454,8 @@ class _CreateTeamState extends State<CreateTeam> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Container(
-                              child: Text('CyberSecurity',style: TextStyle(fontSize: 16),),
+                              child: Text('CyberSecurity',
+                                  style: TextStyle(fontSize: 18)),
                             ),
                           ),
                         ],
@@ -422,11 +467,14 @@ class _CreateTeamState extends State<CreateTeam> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(right: 14),
+                            padding: const EdgeInsets.only(right: 16),
                             child: RaisedButton(
                               onPressed: () {
-                                Navigator.pop(
-                                    context, 'Team creation was cancelled.');
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            TeamDetails(id: team.teamId)));
                               },
                               child: Text('Cancel'),
                               color: Colors.white,
@@ -437,191 +485,196 @@ class _CreateTeamState extends State<CreateTeam> {
                               setState(() {
                                 _isInAsyncCall=true;
                               });
-                              if(selectWeb==1){
-                                var count=0;
-                                for(var i in skillList){
-                                  if(i=='Web Development'){
-                                    count+=1;
+                              if (selectWeb == 1) {
+                                var count = 0;
+                                for (var i in skillList) {
+                                  if (i == 'Web Development') {
+                                    count += 1;
                                   }
                                 }
-                                if(count==0){
+                                if (count == 0) {
                                   skillList.add('Web Development');
                                 }
                               }
-                              if(selectMobile==1){
-                                var count=0;
-                                for(var i in skillList){
-                                  if(i=='App Development'){
-                                    count+=1;
+                              if (selectMobile == 1) {
+                                var count = 0;
+                                for (var i in skillList) {
+                                  if (i == 'App Development') {
+                                    count += 1;
                                   }
                                 }
-                                if(count==0){
+                                if (count == 0) {
                                   skillList.add('App Development');
                                 }
                               }
-                              if(selectDevOps==1){
-                                var count=0;
-                                for(var i in skillList){
-                                  if(i=='DevOps'){
-                                    count+=1;
+                              if (selectDevOps == 1) {
+                                var count = 0;
+                                for (var i in skillList) {
+                                  if (i == 'DevOps') {
+                                    count += 1;
                                   }
                                 }
-                                if(count==0){
+                                if (count == 0) {
                                   skillList.add('DevOps');
                                 }
                               }
-                              if(selectML==1){
-                                var count=0;
-                                for(var i in skillList){
-                                  if(i=='Machine Learning'){
-                                    count+=1;
+                              if (selectML == 1) {
+                                var count = 0;
+                                for (var i in skillList) {
+                                  if (i == 'Machine Learning') {
+                                    count += 1;
                                   }
                                 }
-                                if(count==0){
+                                if (count == 0) {
                                   skillList.add('Machine Learning');
                                 }
                               }
-                              if(selectAI==1){
-                                var count=0;
-                                for(var i in skillList){
-                                  if(i=='Artificial Intelligence'){
-                                    count+=1;
+                              if (selectAI == 1) {
+                                var count = 0;
+                                for (var i in skillList) {
+                                  if (i == 'Artificial Intelligence') {
+                                    count += 1;
                                   }
                                 }
-                                if(count==0){
+                                if (count == 0) {
                                   skillList.add('Artificial Intelligence');
                                 }
                               }
-                              if(selectDesign==1){
-                                var count=0;
-                                for(var i in skillList){
-                                  if(i=='Design'){
-                                    count+=1;
+                              if (selectDesign == 1) {
+                                var count = 0;
+                                for (var i in skillList) {
+                                  if (i == 'Design') {
+                                    count += 1;
                                   }
                                 }
-                                if(count==0){
+                                if (count == 0) {
                                   skillList.add('Design');
                                 }
-
                               }
-                              if(selectManagement==1){
-                                var count=0;
-                                for(var i in skillList){
-                                  if(i=='Management'){
-                                    count+=1;
+                              if (selectManagement == 1) {
+                                var count = 0;
+                                for (var i in skillList) {
+                                  if (i == 'Management') {
+                                    count += 1;
                                   }
                                 }
-                                if(count==0){
+                                if (count == 0) {
                                   skillList.add('Management');
                                 }
                               }
-                              if(selectBlock==1){
-                                var count=0;
-                                for(var i in skillList){
-                                  if(i=='BlockChain'){
-                                    count+=1;
+                              if (selectBlock == 1) {
+                                var count = 0;
+                                for (var i in skillList) {
+                                  if (i == 'BlockChain') {
+                                    count += 1;
                                   }
                                 }
-                                if(count==0){
+                                if (count == 0) {
                                   skillList.add('BlockChain');
                                 }
                               }
-                              if(selectCyber==1){
-                                var count=0;
-                                for(var i in skillList){
-                                  if(i=='CyberSecurity'){
-                                    count+=1;
+                              if (selectCyber == 1) {
+                                var count = 0;
+                                for (var i in skillList) {
+                                  if (i == 'CyberSecurity') {
+                                    count += 1;
                                   }
                                 }
-                                if(count==0){
+                                if (count == 0) {
                                   skillList.add('CyberSecurity');
                                 }
                               }
-                              if(selectWeb!=1){
-                                for(var i in skillList){
-                                  if(i=='Web Development'){
+                              if (selectWeb != 1) {
+                                for (var i in skillList) {
+                                  if (i == 'Web Development') {
                                     toRemove.add(i);
                                   }
                                 }
                               }
-                              if(selectMobile!=1){
-                                for(var i in skillList){
-                                  if(i=='App Development'){
+                              if (selectMobile != 1) {
+                                for (var i in skillList) {
+                                  if (i == 'App Development') {
                                     toRemove.add(i);
                                   }
                                 }
                               }
-                              if(selectDevOps!=1){
-                                for(var i in skillList){
-                                  if(i=='DevOps'){
+                              if (selectDevOps != 1) {
+                                for (var i in skillList) {
+                                  if (i == 'DevOps') {
                                     toRemove.add(i);
                                   }
                                 }
                               }
-                              if(selectML!=1){
-                                for(var i in skillList){
-                                  if(i=='Machine Learning'){
+                              if (selectML != 1) {
+                                for (var i in skillList) {
+                                  if (i == 'Machine Learning') {
                                     toRemove.add(i);
                                   }
                                 }
                               }
-                              if(selectAI!=1){
-                                for(var i in skillList){
-                                  if(i=='Artificial Intelligence'){
+                              if (selectAI != 1) {
+                                for (var i in skillList) {
+                                  if (i == 'Artificial Intelligence') {
                                     toRemove.add(i);
                                   }
                                 }
                               }
-                              if(selectDesign!=1){
-                                for(var i in skillList){
-                                  if(i=='Design'){
+                              if (selectDesign != 1) {
+                                for (var i in skillList) {
+                                  if (i == 'Design') {
                                     toRemove.add(i);
                                   }
                                 }
                               }
-                              if(selectManagement!=1){
-                                for(var i in skillList){
-                                  if(i=='Management'){
+                              if (selectManagement != 1) {
+                                for (var i in skillList) {
+                                  if (i == 'Management') {
                                     toRemove.add(i);
                                   }
                                 }
                               }
-                              if(selectBlock!=1){
-                                for(var i in skillList){
-                                  if(i=='BlockChain'){
+                              if (selectBlock != 1) {
+                                for (var i in skillList) {
+                                  if (i == 'BlockChain') {
                                     toRemove.add(i);
                                   }
                                 }
                               }
-                              if(selectCyber!=1){
-                                for(var i in skillList){
-                                  if(i=='CyberSecurity'){
+                              if (selectCyber != 1) {
+                                for (var i in skillList) {
+                                  if (i == 'CyberSecurity') {
                                     toRemove.add(i);
                                   }
                                 }
                               }
-                              skillList.removeWhere( (e) => toRemove.contains(e));
-                              if (await postTeam(
-                                      name, description, id, skillList) ==
+                              skillList.removeWhere((e) => toRemove.contains(e));
+                              if (await updateTeam(team.teamId, team.teamName,
+                                      team.description, team.skills) ==
                                   200) {
                                 setState(() {
                                   _isInAsyncCall=false;
                                 });
-                                Navigator.pop(
-                                    context, 'Your team was successfully created.');
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            TeamDetails(id: team.teamId)));
                               } else {
                                 setState(() {
                                   _isInAsyncCall=false;
                                 });
                                 final snackBar = SnackBar(
+                                  backgroundColor: kConstantBlueColor,
                                   content: Text(
-                                    'Error.Please try again later',style: TextStyle(color: kConstantBlueColor),
+                                    'Error.Please try again later',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                   action:
                                       SnackBarAction(label: '', onPressed: () {}),
                                 );
                                 Scaffold.of(context).showSnackBar(snackBar);
                               }
+                              ;
                             },
                             child: Text(
                               'Confirm',
@@ -634,6 +687,7 @@ class _CreateTeamState extends State<CreateTeam> {
                     ),
                   ],
                 ),
+              ),
             ),
           ),
         ),

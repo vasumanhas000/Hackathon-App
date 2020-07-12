@@ -19,7 +19,7 @@ class _NTeamDetailsState extends State<NTeamDetails> {
   Future<Team> getTeam(String id)async{
     Map<String, String> headers = {"authtoken": "vaibhav"};
     var response = await http.get(
-        "https://hackportal.herokuapp.com/teams/getteaminfo/$id",
+        "https://hackportal.azurewebsites.net/teams/getteaminfo/$id",
         headers: headers);
     if(response.statusCode==200){
       var teamsJson=jsonDecode(response.body);
@@ -45,98 +45,85 @@ class _NTeamDetailsState extends State<NTeamDetails> {
       backgroundColor: kConstantBlueColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(8,20,8,0),
+          padding: const EdgeInsets.fromLTRB(16,16,8,0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: FaIcon(
-                  FontAwesomeIcons.arrowCircleLeft,
-                  color: Colors.white,
-                  size: 35,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              FutureBuilder(
-                future: getTeam(id),
-                builder: (BuildContext context, AsyncSnapshot snapshot){
-                  if (snapshot.data == null) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 200),
-                      child: Container(
-                        child: SpinKitFoldingCube(
-                          size: 50,
-                          color: Colors.white,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FutureBuilder(
+                  future: getTeam(id),
+                  builder: (BuildContext context, AsyncSnapshot snapshot){
+                    if (snapshot.data == null) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 200),
+                        child: Container(
+                          child: SpinKitFoldingCube(
+                            size: 50,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                  else{
-                    return ListView.builder(itemCount: 1,
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index){
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(8,30,0,0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8),
-                                  child: FittedBox(child: Text(snapshot.data.teamName,style: TextStyle(color: Colors.white,fontSize: 32,fontFamily: 'Muli'),),fit: BoxFit.contain,),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(2,20,8,0),
-                                  child: FittedBox(child: Text(snapshot.data.eventName,style: TextStyle(color: Colors.white,fontSize: 22,fontFamily: 'Muli'),),fit: BoxFit.contain,),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(2,25,0,0),
-                                  child: Text('Project Description:',style: TextStyle(color: Colors.white,fontSize: 15),),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(4,10,8,0),
-                                  child: Text(snapshot.data.description,style: TextStyle(color: Colors.white,fontSize: 17),),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(2,25,0,0),
-                                  child: Text('Skills Required:',style: TextStyle(color: Colors.white,fontSize: 15),),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(80,10,0,0),
-                                  child: ListView.builder(itemCount: snapshot.data.skills.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (BuildContext context, int index){
-                                        return Padding(
-                                          padding: const EdgeInsets.only(top: 3),
-                                          child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 17),),
-                                        );
-                                      }),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(2,25,0,0),
-                                  child: Text('Members:',style: TextStyle(color: Colors.white,fontSize: 15),),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(80,10,0,0),
-                                  child: ListView.builder(itemCount: snapshot.data.members.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (BuildContext context, int index){
-                                        return Padding(
-                                          padding: const EdgeInsets.only(top: 3),
-                                          child: Text(snapshot.data.members[index]["name"],style: TextStyle(color: Colors.white,fontSize: 17),),
-                                        );
-                                      }),
-                                ),
-                              ],
-                            ),
-                          );
-                        });
-                  }
-                },
-              ),
-            ],
-          ),
+                      );
+                    }
+                    else{
+                      return ListView.builder(itemCount: 1,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index){
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(8,30,8,0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  FittedBox(child: Text(snapshot.data.teamName,style: TextStyle(color: Colors.white,fontSize: 32,fontFamily: 'Muli'),),fit: BoxFit.contain,),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 12),
+                                    child: FittedBox(child: Text(snapshot.data.eventName,style: TextStyle(color: Colors.white,fontSize: 22,fontFamily: 'Muli'),),fit: BoxFit.contain,),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0,25,0,0),
+                                    child: Text('Project Description:',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0,10,0,0),
+                                    child: Text(snapshot.data.description,style: TextStyle(color: Colors.white,fontSize: 18),),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(2,25,0,0),
+                                    child: Text('Skills Required:',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(2,10,0,0),
+                                    child: ListView.builder(itemCount: snapshot.data.skills.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (BuildContext context, int index){
+                                          return Padding(
+                                            padding: const EdgeInsets.only(top: 3),
+                                            child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 18),),
+                                          );
+                                        }),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(2,25,0,0),
+                                    child: Text('Members:',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(2,10,0,0),
+                                    child: ListView.builder(itemCount: snapshot.data.members.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (BuildContext context, int index){
+                                          return Padding(
+                                            padding: const EdgeInsets.only(top: 3),
+                                            child: Text(snapshot.data.members[index]["name"],style: TextStyle(color: Colors.white,fontSize: 18),),
+                                          );
+                                        }),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+                    }
+                  },
+                ),
+              ],
+            ),
         ),
       ),
     );

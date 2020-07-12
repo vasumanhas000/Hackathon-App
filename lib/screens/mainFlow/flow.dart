@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hackapp/constants.dart';
+import 'package:hackapp/screens/mainFlow/myTeams.dart';
 import 'homepage.dart';
 import 'search.dart';
-import 'addUsers.dart';
 import 'Profile.dart';
 
 class FlowPage extends StatefulWidget {
@@ -20,7 +21,7 @@ class _FlowPageState extends State<FlowPage> {
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     SearchPage(),
-    UserScreen(name: 1,),
+    MyTeams(),
     ProfilePage(),
   ];
   @override
@@ -33,25 +34,25 @@ class _FlowPageState extends State<FlowPage> {
         resizeToAvoidBottomInset: false,
         body: SafeArea(child: _widgetOptions.elementAt(currentIndex)),
         bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
+          showSelectedLabels: true,
           showUnselectedLabels: false,
-          selectedItemColor: Color(0xffEE6C4D),
+          selectedItemColor: kConstantBlueColor,
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home,),
-              title: Text(''),
+              title: Text('Home'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
-              title: Text(''),
+              title: Text('Search'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.folder_shared),
-              title: Text(''),
+              title: Text('Teams',),
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.person),title:Text(''))
+            BottomNavigationBarItem(icon: Icon(Icons.person),title:Text('Profile'))
           ],
           currentIndex: currentIndex,
           onTap: (index) {

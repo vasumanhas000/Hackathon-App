@@ -42,7 +42,7 @@ class _AddHackState extends State<AddHack> {
         "description":description,
         "nameOfEvent":name,
       });
-      String url = 'https://hackportal.herokuapp.com/events/setevent';
+      String url = 'https://hackportal.azurewebsites.net/events/setevent';
       Response response = await dio.post(url,data: formData,options: Options(headers: headers));
       print(response.statusCode);
     }

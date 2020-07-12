@@ -20,14 +20,14 @@ class _HomePageState extends State<HomePage> {
     int i=1;
     List<Hackathon> hacks = [];
     while(end==0){
-    Map<String, String> headers = {"authtoken": "test"};
+    Map<String, String> headers = {"authtoken": "vaibhav"};
     var response = await http.get(
-        "https://hackportal.herokuapp.com/events/getevents/$i",
+        "https://hackportal.azurewebsites.net/events/getevents/$i",
         headers: headers);
     if (response.statusCode == 200) {
       var hackathonsJson = jsonDecode(response.body);
-      if(response.body!='[]'){
-      for (var u in hackathonsJson) {
+      if(hackathonsJson['documents'].length!=0){
+      for (var u in hackathonsJson['documents']) {
         Hackathon hack = Hackathon(
             description: u['description'],
             location: u['location'],
@@ -35,7 +35,11 @@ class _HomePageState extends State<HomePage> {
             start: u['startDate'],
             url: u['eventUrl'],
             name: u['nameOfEvent'],
-            id: u['_id']);
+            id: u['_id'],
+            min: u["minimumTeamSize"],
+            max: u["maximumTeamSize"],
+            image: u["eventImage"]
+        );
         hacks.add(hack);
       }
       i++;
@@ -48,139 +52,132 @@ class _HomePageState extends State<HomePage> {
   }
     return hacks;
   }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(2,0,8,0),
-            child: Row(
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add,color: kConstantBlueColor,size: 32,),backgroundColor: Colors.white,),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Container(
+                  padding: const EdgeInsets.fromLTRB(16,24,16,24),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
                     child: Text(
-                      '''Hacks happening
-around you''',
+                      'Hacks',
                       style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'Muli'
+                          fontSize: 32,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: 'Muli'
                       ),
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>AddHack()));
-                  },
-                  child: Text(
-                    'Add',
-                    style: TextStyle(decoration: TextDecoration.underline,fontSize: 22,),
-                  ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Image(image: AssetImage('images/stc.png'),fit: BoxFit.contain,height: SizeConfig.safeBlockVertical*3.15,),
                 )
               ],
             ),
-          ),
-        ),
-        Expanded(
-          flex: 8,
-          child: Container(
-            child: FutureBuilder(
-              future: getHacks(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.data == null) {
-                  return Center(
-                    child: Container(
-                      child: SpinKitFoldingCube(
-                        size: 50,
-                        color: kConstantBlueColor,
-                      ),
-                    ),
-                  );
-                } else {
-                  return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: EdgeInsets.fromLTRB(10, 15, 13, 5),
+            Expanded(
+              flex: 8,
+              child: Container(
+                child: FutureBuilder(
+                  future: getHacks(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return Center(
                         child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(5,0,5,0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  child: FittedBox(
-                                    fit: BoxFit.contain,
-                                    child: Text(
-                                      snapshot.data[index].name,
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 35),
-                                    ),
-                                  ),
-                                  padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(6, 0, 0, 16),
-                                  child: Text(
-                                    snapshot.data[index].description,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => HackDetails(
-                                              hackathon: snapshot.data[index],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'Learn More',
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 16),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          height: 242,
-                          decoration: BoxDecoration(
+                          child: SpinKitFoldingCube(
+                            size: 50,
                             color: kConstantBlueColor,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(30),
-                                topLeft: Radius.circular(30)),
                           ),
                         ),
                       );
-                    },
-                  );
-                }
-              },
+                    } else {
+                      return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(16, 15, 16, 8),
+                            child: Container(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(5,0,5,0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      child: FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: Text(
+                                          snapshot.data[index].name,
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 35),
+                                        ),
+                                      ),
+                                      padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(6, 0, 0, 16),
+                                      child: Text(
+                                        snapshot.data[index].description,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 14),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => HackDetails(
+                                                  hackathon: snapshot.data[index],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              'Learn More',
+                                              style: TextStyle(
+                                                  color: Colors.white, fontSize: 16),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              height: 242,
+                              decoration: BoxDecoration(
+                                color: kConstantBlueColor,
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(30),
+                                    topLeft: Radius.circular(30)),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

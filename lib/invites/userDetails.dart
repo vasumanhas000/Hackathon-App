@@ -19,7 +19,7 @@ class _UserDetailsState extends State<UserDetails> {
   Future getUser() async {
     Map<String, String> headers = {"authtoken": "vaibhav"};
     var response = await http.get(
-        "https://hackportal.herokuapp.com/users/getuserprofile",
+        "https://hackportal.azurewebsites.net/users/getuserprofile",
         headers: headers);
     if (response.statusCode == 200) {
       var usersJson = jsonDecode(response.body);
@@ -63,113 +63,91 @@ class _UserDetailsState extends State<UserDetails> {
           itemBuilder: (BuildContext context, int index) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  Image(image: AssetImage('images/Top-Rectangle.png')),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 4, 8, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                            icon: Icon(
-                              Icons.arrow_back,
-                              size: 38,
-                              color: kConstantBlueColor,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            }),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 26, 0, 0),
-                          child: FittedBox(
-                            child: Text(
-                              user.name,
-                              style:
-                                  TextStyle(fontSize: 30, color: Colors.white),
-                            ),
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 30, 0, 0),
-                child: Text(
-                  'Email:',
-                  style: TextStyle(color: Color(0xff293241), fontSize: 16),
+                padding: const EdgeInsets.fromLTRB(22, 32, 8, 0),
+                child: FittedBox(
+                  child: Text(
+                    user.name,
+                    style:
+                    TextStyle(fontSize: 32,),
+                  ),
+                  fit: BoxFit.contain,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
+                child: Text(
+                  'Email:',
+                  style: TextStyle(color: Color(0xff293241), fontSize: 22),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(22, 5, 0, 0),
                 child: FittedBox(
                   child: Text(
                     user.email,
-                    style: TextStyle(fontSize: 21),
+                    style: TextStyle(fontSize: 22),
                   ),
                   fit: BoxFit.contain,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                 child: Text(
                   'University Name:',
-                  style: TextStyle(color: Color(0xff293241), fontSize: 16),
+                  style: TextStyle(color: Color(0xff293241), fontSize: 22),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 5, 0, 0),
                 child: FittedBox(
                   child: Text(
                     user.college,
-                    style: TextStyle(fontSize: 21),
+                    style: TextStyle(fontSize: 22),
                   ),
                   fit: BoxFit.contain,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                 child: Text(
                   'Year of graduation',
-                  style: TextStyle(color: Color(0xff293241), fontSize: 16),
+                  style: TextStyle(color: Color(0xff293241), fontSize: 22),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 5, 0, 0),
                 child: FittedBox(
                   child: Text(
                     user.year,
-                    style: TextStyle(fontSize: 21),
+                    style: TextStyle(fontSize: 22),
                   ),
                   fit: BoxFit.contain,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                 child: Text(
                   'Description:',
-                  style: TextStyle(color: Color(0xff293241), fontSize: 16),
+                  style: TextStyle(color: Color(0xff293241), fontSize: 22),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 6, 0),
+                padding: const EdgeInsets.fromLTRB(22, 5, 6, 0),
                 child: Text(
                   user.bio,
                   style: TextStyle(fontSize: 22),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                 child: Text(
                   'Skills:',
-                  style: TextStyle(color: Color(0xff293241), fontSize: 16),
+                  style: TextStyle(color: Color(0xff293241), fontSize: 22),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 12),
                 child: ListView.builder(
                     itemCount: user.skills.length,
                     shrinkWrap: true,
@@ -181,10 +159,10 @@ class _UserDetailsState extends State<UserDetails> {
                         );
                       } else {
                         return Padding(
-                          padding: const EdgeInsets.fromLTRB(60, 5, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(60, 8, 0, 0),
                           child: Text(
                             user.skills[index],
-                            style: TextStyle(fontSize: 17),
+                            style: TextStyle(fontSize: 18),
                           ),
                         );
                       }
@@ -206,7 +184,7 @@ class _UserDetailsState extends State<UserDetails> {
                                     )));
                         Scaffold.of(context)
                           ..removeCurrentSnackBar()
-                          ..showSnackBar(SnackBar(content: Text("$result",style: TextStyle(fontFamily: 'Montserrat',color:Colors.white),),backgroundColor: result!=null?Color(0xff98c1d9):Colors.white,));
+                          ..showSnackBar(SnackBar(content: Text("$result",style: TextStyle(fontFamily: 'Montserrat',color:Colors.white),),backgroundColor: result!=null?kConstantBlueColor:Colors.white,));
                       },
                       child: Text(
                         'Invite',

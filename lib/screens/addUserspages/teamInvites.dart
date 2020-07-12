@@ -18,7 +18,7 @@ class _TeamInvitesState extends State<TeamInvites> {
   Future viewInvites(String id) async {
     Map<String, String> headers = {"authtoken": "vaibhav"};
     var response = await http.get(
-        "https://hackportal.herokuapp.com/teams/getteaminfo/$id",
+        "https://hackportal.azurewebsites.net/teams/getteaminfo/$id",
         headers: headers);
     if (response.statusCode == 200) {
       var teamsJson = jsonDecode(response.body);

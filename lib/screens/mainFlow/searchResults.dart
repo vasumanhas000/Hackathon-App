@@ -6,6 +6,8 @@ import 'package:hackapp/components/userSearch.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/invites/userDetails.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:hackapp/components/sizeConfig.dart';
 
 class ResultsPage extends StatefulWidget {
   final List list;
@@ -22,19 +24,19 @@ class _ResultsPageState extends State<ResultsPage> {
 
     Map<String, String> headers1 = {"authtoken": "vaibhav"};
     var response1 = await http.get(
-        "https://hackportal.herokuapp.com/users/getuserprofile",
+        "https://hackportal.azurewebsites.net/users/getuserprofile",
         headers: headers1);
     var user=jsonDecode(response1.body);
     if(response1.statusCode==200){
     if (list.length == 0) {
       Map<String, String> headers = {"authtoken": "vaibhav"};
       var response = await http.get(
-          "https://hackportal.herokuapp.com/users/getuserprofiles/1",
+          "https://hackportal.azurewebsites.net/users/getuserprofiles/1",
           headers: headers);
       List<UserSearch> result = [];
       if (response.statusCode == 200) {
         var resultsJson = jsonDecode(response.body);
-        for (var i in resultsJson) {
+        for (var i in resultsJson["documents"]) {
           if(i['_id']!=user['_id']){
           UserSearch user = UserSearch(
             name: i["name"],
@@ -67,7 +69,7 @@ class _ResultsPageState extends State<ResultsPage> {
           }));
       if (response.statusCode == 200) {
         var resultsJson = jsonDecode(response.body);
-        for (var i in resultsJson) {
+        for (var i in resultsJson["documents"]) {
           if(i['_id']!=user['_id']){
           UserSearch user = UserSearch(
             name: i["name"],
@@ -89,39 +91,27 @@ class _ResultsPageState extends State<ResultsPage> {
   }
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.fromLTRB(16,24,16,0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.arrow_back,
-                          size: 33,
-                          color: kConstantBlueColor,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }),
+                  Text(
+                    'Search Results',
+                    style: TextStyle(fontSize: 26, fontFamily: 'Muli'),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: Text(
-                      'Search Results',
-                      style: TextStyle(fontSize: 26, fontFamily: 'Muli'),
-                    ),
-                  ),
+                  Image(image: AssetImage('images/stc.png'),height: SizeConfig.blockSizeVertical*3.15,)
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 40),
+              padding: const EdgeInsets.only(top: 24),
               child: FutureBuilder(
                   future: getList(list),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -147,13 +137,13 @@ class _ResultsPageState extends State<ResultsPage> {
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext context, int index1) {
                             return Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 26),
+                              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                               child: GestureDetector(
                                 onTap: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>UserDetails(user: snapshot.data[index1],)));
                                 },
                                 child: Container(
-                                  height: 100,
+                                  height: 200,
                                   decoration: BoxDecoration(
                                     color: kConstantBlueColor,
                                     borderRadius: BorderRadius.only(
@@ -161,35 +151,22 @@ class _ResultsPageState extends State<ResultsPage> {
                                         topLeft: Radius.circular(30)),
                                   ),
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                    padding: const EdgeInsets.fromLTRB(16,16,8,0),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          snapshot.data[index1].name,
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 22),
-                                        ),
-                                        SizedBox(
-                                          height: 50,
-                                          child: ListView.builder(
-                                            itemCount: snapshot
-                                                .data[index1].skills.length,
-                                            scrollDirection: Axis.horizontal,
-                                            itemBuilder: (BuildContext context,
-                                                    int index) =>
-                                                Text(
-                                              snapshot.data[index1].skills[index] +
-                                                  '  ',
-                                              style:
-                                                  TextStyle(color: Colors.white),
-                                            ),
+                                        FittedBox(
+                                          child: Text(
+                                            snapshot.data[index1].name,
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 30),
                                           ),
-                                        )
+                                          fit: BoxFit.contain,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(26,16,0,0),
+                                          child: AutoSizeText(snapshot.data[index1].bio,style: TextStyle(color: Colors.white,fontSize: 16),maxLines: 5,),
+                                        ),
                                       ],
                                     ),
                                   ),
