@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'dart:ffi';
+import 'package:hackapp/components/sizeConfig.dart';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hackapp/constants.dart';
 import 'teamcreate.dart';
 import 'package:hackapp/components/hackathons.dart';
-import 'package:hackapp/components/sizeConfig.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HackDetails extends StatefulWidget {
@@ -19,7 +19,23 @@ class HackDetails extends StatefulWidget {
 class _HackDetailsState extends State<HackDetails> {
   _HackDetailsState(this.hackathon);
   Hackathon hackathon;
-  Uint8List _bytesImage;
+  var _byteImage;
+
+  void convertImage()async{
+    ByteData bytes = await rootBundle.load('images/stc.png');
+    var buffer = bytes.buffer;
+    var m = base64.encode(Uint8List.view(buffer));
+    print(m);
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    var arr= hackathon.image.split(',');
+    print(arr.length);
+    _byteImage=Base64Decoder().convert(arr[1]);
+    convertImage();
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -68,6 +84,10 @@ class _HackDetailsState extends State<HackDetails> {
                       textAlign: TextAlign.left,
                     ),
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0,32,0,16),
+                  child: SizedBox(child: FittedBox(fit:BoxFit.fill,child: Image.memory(_byteImage)),height: SizeConfig.safeBlockVertical*16,width: SizeConfig.blockSizeHorizontal*140,),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
@@ -130,7 +150,8 @@ class _HackDetailsState extends State<HackDetails> {
                             ));
                         },
                         color: Colors.white,
-                        child: Text('Create Team'),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                        child: Text('Create Team',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),
                       )
                     ],
                   ),

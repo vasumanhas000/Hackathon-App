@@ -153,10 +153,15 @@ class _AcceptInviteState extends State<AcceptInvite> {
                                           Padding(
                                             padding: const EdgeInsets.only(right: 10),
                                             child: RaisedButton(onPressed: ()async{
+                                              setState(() {
+                                                _isInAsyncCall=true;
+                                              });
                                               if(await rejectInvite(id)==200){
-                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 2,)));
+                                                _isInAsyncCall=false;
+                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Page2()));
                                             }
                                               else{
+                                                _isInAsyncCall=false;
                                                 final snackBar=SnackBar(content: Text('Error.Please try again later',style: TextStyle(fontFamily: 'Montserrat',color: kConstantBlueColor),),backgroundColor: Colors.white,);
                                                 await Scaffold.of(context).showSnackBar(snackBar);
                                               }

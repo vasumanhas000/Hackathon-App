@@ -188,8 +188,9 @@ class _UserDetailsState extends State<UserDetails> {
                       },
                       child: Text(
                         'Invite',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
                       ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                       color: kConstantBlueColor,
                     )
                   ],

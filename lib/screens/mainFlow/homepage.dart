@@ -1,5 +1,7 @@
 import 'dart:ui';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:hackapp/homepage_components/adminDetailsPage.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/homepage_components/detailspage.dart';
 import 'package:hackapp/components/hackathons.dart';
@@ -15,7 +17,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String id;
   Future<List<Hackathon>> getHacks() async {
+    await getUser();
     int end=0;
     int i=1;
     List<Hackathon> hacks = [];
@@ -38,8 +42,10 @@ class _HomePageState extends State<HomePage> {
             id: u['_id'],
             min: u["minimumTeamSize"],
             max: u["maximumTeamSize"],
-            image: u["eventImage"]
+            image: u["eventImage"],
+            creatorID: u['creatorId']
         );
+        print(hack.id);
         hacks.add(hack);
       }
       i++;
@@ -52,11 +58,23 @@ class _HomePageState extends State<HomePage> {
   }
     return hacks;
   }
+  Future getUser() async{
+    Map<String, String> headers = {"authtoken": "vaibhav"};
+    var response = await http.get(
+        "https://hackportal.azurewebsites.net/users/getuserprofile",
+        headers: headers);
+    if (response.statusCode == 200) {
+      var usersJson = jsonDecode(response.body);
+      id=usersJson['_id'];}
+     print(id);
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add,color: kConstantBlueColor,size: 32,),backgroundColor: Colors.white,),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddHack()));
+      },child: Icon(Icons.add,color: kConstantBlueColor,size: 32,),backgroundColor: Colors.white,),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,15 +123,22 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
                             padding: EdgeInsets.fromLTRB(16, 15, 16, 8),
-                            child: Container(
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(5,0,5,0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      child: FittedBox(
+                            child: GestureDetector(
+                              onTap: (){
+                                if(snapshot.data[index].creatorID==id){
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminDetailsPage(hackathon: snapshot.data[index],)));
+                                }
+                                else{
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HackDetails(hackathon: snapshot.data[index],)));
+                                }
+                              },
+                              child: Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(12,16,16,0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      FittedBox(
                                         fit: BoxFit.contain,
                                         child: Text(
                                           snapshot.data[index].name,
@@ -121,50 +146,25 @@ class _HomePageState extends State<HomePage> {
                                               color: Colors.white, fontSize: 35),
                                         ),
                                       ),
-                                      padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(6, 0, 0, 16),
-                                      child: Text(
-                                        snapshot.data[index].description,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 14),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => HackDetails(
-                                                  hackathon: snapshot.data[index],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              'Learn More',
-                                              style: TextStyle(
-                                                  color: Colors.white, fontSize: 16),
-                                            ),
-                                          ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(20, 12, 14, 4),
+                                        child: AutoSizeText(
+                                          snapshot.data[index].description,
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 14),
+                                          maxLines: 8,
                                         ),
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              height: 242,
-                              decoration: BoxDecoration(
-                                color: kConstantBlueColor,
-                                borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(30),
-                                    topLeft: Radius.circular(30)),
+                                height: 240,
+                                decoration: BoxDecoration(
+                                  color: kConstantBlueColor,
+                                  borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(30),
+                                      topLeft: Radius.circular(30)),
+                                ),
                               ),
                             ),
                           );

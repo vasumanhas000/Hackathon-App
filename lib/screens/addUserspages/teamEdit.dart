@@ -6,6 +6,7 @@ import 'package:hackapp/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:hackapp/components/sizeConfig.dart';
 
 class EditTeam extends StatefulWidget {
   final Team team;
@@ -93,6 +94,7 @@ class _EditTeamState extends State<EditTeam> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     final name = TextEditingController(text: team.teamName);
     final bio = TextEditingController(text: team.description);
     return GestureDetector(
@@ -115,14 +117,20 @@ class _EditTeamState extends State<EditTeam> {
                 itemCount: 1,
                 itemBuilder: (BuildContext context, int index) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 32, 8, 0),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Edit your team',
                             style: TextStyle(fontFamily: 'Muli', fontSize: 30),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: Image(image: AssetImage('images/stc.png'),fit: BoxFit.contain,height: SizeConfig.safeBlockVertical*3.15,),
                           )
                         ],
                       ),
@@ -462,7 +470,7 @@ class _EditTeamState extends State<EditTeam> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 24, 24, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 24, 24, 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -476,8 +484,9 @@ class _EditTeamState extends State<EditTeam> {
                                         builder: (context) =>
                                             TeamDetails(id: team.teamId)));
                               },
-                              child: Text('Cancel'),
+                              child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),
                               color: Colors.white,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor)),
                             ),
                           ),
                           RaisedButton(
@@ -648,8 +657,8 @@ class _EditTeamState extends State<EditTeam> {
                                 }
                               }
                               skillList.removeWhere((e) => toRemove.contains(e));
-                              if (await updateTeam(team.teamId, team.teamName,
-                                      team.description, team.skills) ==
+                              if (await updateTeam(team.teamId, name.text,
+                                      bio.text, skillList) ==
                                   200) {
                                 setState(() {
                                   _isInAsyncCall=false;
@@ -678,9 +687,10 @@ class _EditTeamState extends State<EditTeam> {
                             },
                             child: Text(
                               'Confirm',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
                             ),
                             color: kConstantBlueColor,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                           ),
                         ],
                       ),

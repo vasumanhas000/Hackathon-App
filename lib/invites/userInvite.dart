@@ -128,7 +128,7 @@ class _UserInviteState extends State<UserInvite> {
                              );
                              await Scaffold.of(context).showSnackBar(snackBar);
                            }
-                         },child: Text('Send',style: TextStyle(color: Colors.white),),color: kConstantBlueColor,),
+                         },child: Text('Send',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
                        ],
                      ),
                    )

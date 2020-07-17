@@ -43,7 +43,6 @@ class _CreateTeamState extends State<CreateTeam> {
           "description": description,
           "skillsRequired": skills,
         }));
-    print(response.body);
     print(response.statusCode);
     return response.statusCode;
   }
@@ -417,7 +416,7 @@ class _CreateTeamState extends State<CreateTeam> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 24, 24, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 24, 24, 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -428,8 +427,9 @@ class _CreateTeamState extends State<CreateTeam> {
                                 Navigator.pop(
                                     context, 'Team creation was cancelled.');
                               },
-                              child: Text('Cancel'),
+                              child: Text('Cancel',style: TextStyle(color: kConstantBlueColor),),
                               color: Colors.white,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 1)),
                             ),
                           ),
                           RaisedButton(
@@ -614,8 +614,9 @@ class _CreateTeamState extends State<CreateTeam> {
                                   _isInAsyncCall=false;
                                 });
                                 final snackBar = SnackBar(
+                                  backgroundColor: kConstantBlueColor,
                                   content: Text(
-                                    'Error.Please try again later',style: TextStyle(color: kConstantBlueColor),
+                                    'Error.Please try again later',style: TextStyle(color: Colors.white),
                                   ),
                                   action:
                                       SnackBarAction(label: '', onPressed: () {}),
@@ -625,9 +626,10 @@ class _CreateTeamState extends State<CreateTeam> {
                             },
                             child: Text(
                               'Confirm',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.white,fontFamily:'Montserrat'),
                             ),
                             color: kConstantBlueColor,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                           ),
                         ],
                       ),

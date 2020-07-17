@@ -485,13 +485,15 @@ class _EditUserState extends State<EditUser> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0,24,24,0),
+                      padding: const EdgeInsets.fromLTRB(0,24,24,8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(right: 16),
-                            child: RaisedButton(onPressed: (){},child: Text('Cancel'),color: Colors.white,),
+                            child: RaisedButton(onPressed: (){
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex:3,)));
+                            },child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),color: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
                           ),
                           RaisedButton(onPressed: ()async{
                             if(selectWeb==1){
@@ -680,7 +682,7 @@ class _EditUserState extends State<EditUser> {
                               );
                               Scaffold.of(context).showSnackBar(snackBar);
                             };
-                          },child: Text('Confirm',style: TextStyle(color: Colors.white),),color: kConstantBlueColor,),
+                          },child: Text('Confirm',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
                         ],
                       ),
                     ),
