@@ -79,13 +79,7 @@ class _SearchPageState extends State<SearchPage> {
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: SizedBox(
-                      width: 200,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text('Web Development',style: TextStyle(fontSize: 20),),
-                        ),
-                      ),
+                      child: SizedBox(width:185,child: FittedBox(fit:BoxFit.contain,child: Text('Web Development',style: TextStyle(fontSize: 20),))),
                     ),
                   ],
                 ),
@@ -112,7 +106,7 @@ class _SearchPageState extends State<SearchPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: SizedBox(
-                        width: 265,
+                        width: 245,
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text('Mobile App Development',style: TextStyle(fontSize: 20)),
@@ -144,7 +138,7 @@ class _SearchPageState extends State<SearchPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: SizedBox(
-                        width: 78,
+                        width: 70,
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text('Devops',style: TextStyle(fontSize: 20)),
@@ -176,7 +170,7 @@ class _SearchPageState extends State<SearchPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: SizedBox(
-                        width: 190,
+                        width: 175,
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text('Machine Learning',style: TextStyle(fontSize: 20)),
@@ -208,7 +202,7 @@ class _SearchPageState extends State<SearchPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: SizedBox(
-                        width: 210,
+                        width:196,
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text('Artificial Intelligence',style: TextStyle(fontSize: 20)),
@@ -240,7 +234,7 @@ class _SearchPageState extends State<SearchPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: SizedBox(
-                        width: 150,
+                        width: 140,
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text('Design - UI/UX',style: TextStyle(fontSize: 20)),
@@ -272,7 +266,7 @@ class _SearchPageState extends State<SearchPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: SizedBox(
-                        width: 195,
+                        width: 185,
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text('Management skills',style: TextStyle(fontSize: 20)),
@@ -304,7 +298,7 @@ class _SearchPageState extends State<SearchPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: SizedBox(
-                        width: 117,
+                        width: 107,
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text('Blockchain',style: TextStyle(fontSize: 20)),
@@ -337,7 +331,7 @@ class _SearchPageState extends State<SearchPage> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8,0,0,0),
                       child: SizedBox(
-                        width: 140,
+                        width: 130,
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text('CyberSecurity',style: TextStyle(fontSize: 20)),

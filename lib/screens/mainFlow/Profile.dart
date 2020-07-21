@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hackapp/screens/loginFlow/loginPage.dart';
 import 'editUser.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
@@ -17,6 +19,14 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final _auth = FirebaseAuth.instance;
+  Future logOut()async{
+    FirebaseUser user= await _auth.currentUser();
+    if(user!=null){
+     await _auth.signOut();
+     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+    }
+  }
   Future<User> getUser() async {
     Map<String, String> headers = {"authtoken": "vaibhav"};
     var response = await http.get(
@@ -70,13 +80,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: FittedBox(
                             fit: BoxFit.contain,
                             child: Text(snapshot.data.name,
-                                style: TextStyle(fontSize: 32)),
+                                style: TextStyle(fontSize: 32,fontWeight: FontWeight.w600)),
                           ),
                         ),
                         Padding(
                           child: Text(
                             'Email :',
-                            style: TextStyle(color: Colors.black,fontSize: 22),
+                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                           ),
                           padding: EdgeInsets.fromLTRB(22, 30, 8, 5),
                         ),
@@ -86,13 +96,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               fit: BoxFit.contain,
                               child: Text(
                                 snapshot.data.email,
-                                style: TextStyle(fontSize: 22),
+                                style: TextStyle(fontSize: 18),
                               )),
                         ),
                         Padding(
                           child: Text(
                             'University Name :',
-                            style: TextStyle(color: Colors.black,fontSize: 22),
+                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                           ),
                           padding: EdgeInsets.fromLTRB(22, 20, 8, 5),
                         ),
@@ -102,14 +112,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             fit: BoxFit.contain,
                             child: Text(
                               snapshot.data.college,
-                              style: TextStyle(fontSize: 22),
+                              style: TextStyle(fontSize: 18),
                             ),
                           ),
                         ),
                         Padding(
                           child: Text(
                             'Year of graduation :',
-                            style: TextStyle(color: Colors.black,fontSize: 22),
+                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                           ),
                           padding: EdgeInsets.fromLTRB(22, 20, 8, 5),
                         ),
@@ -117,33 +127,33 @@ class _ProfilePageState extends State<ProfilePage> {
                           padding: const EdgeInsets.fromLTRB(22, 0, 8, 5),
                           child: Text(
                             snapshot.data.year,
-                            style: TextStyle(fontSize: 22),
+                            style: TextStyle(fontSize: 18),
                           ),
                         ),
                         Padding(
                           child: Text(
                             'Description :',
-                            style: TextStyle(color: Colors.black,fontSize: 22),
+                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                           ),
                           padding: EdgeInsets.fromLTRB(22, 20, 0, 8),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(22, 0, 8, 8),
-                          child: AutoSizeText(
+                          child: Text(
                             snapshot.data.bio,
-                            style: TextStyle(fontSize: 16),
-                            maxLines: 6,
+                            style: TextStyle(fontSize: 18),
                           ),
                         ),
                         Padding(
                           child: Text(
                             'Skills :',
-                            style: TextStyle(color: Colors.black,fontSize: 22),
+                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                           ),
                           padding: EdgeInsets.fromLTRB(22, 20, 0, 0),
                         ),
                         ListView.builder(
                             itemCount: snapshot.data.skills.length,
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (BuildContext context, int index1) {
                               if (snapshot.data.skills.length == 0) {
@@ -162,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               }
                             }),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0,48,24,0),
+                          padding: const EdgeInsets.fromLTRB(0,48,24,8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -182,7 +192,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor)),
                                 ),
                               ),
-                              RaisedButton(onPressed: (){},color: kConstantBlueColor,child: Text('Sign Out',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                              RaisedButton(onPressed: ()async{
+                                await logOut();
+                              },color: kConstantBlueColor,child: Text('Sign Out',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
                             ],
                           ),
                         ),

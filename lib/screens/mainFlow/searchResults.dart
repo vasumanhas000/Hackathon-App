@@ -104,7 +104,7 @@ class _ResultsPageState extends State<ResultsPage> {
                 children: [
                   Text(
                     'Search Results',
-                    style: TextStyle(fontSize: 26, fontFamily: 'Muli'),
+                    style: TextStyle(fontSize: 26, fontFamily: 'Muli',fontWeight: FontWeight.w600),
                   ),
                   Image(image: AssetImage('images/stc.png'),height: SizeConfig.blockSizeVertical*3.15,)
                 ],

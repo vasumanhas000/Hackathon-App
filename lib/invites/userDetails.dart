@@ -69,7 +69,7 @@ class _UserDetailsState extends State<UserDetails> {
                   child: Text(
                     user.name,
                     style:
-                    TextStyle(fontSize: 32,),
+                    TextStyle(fontSize: 32,fontWeight: FontWeight.w600),
                   ),
                   fit: BoxFit.contain,
                 ),
@@ -78,7 +78,7 @@ class _UserDetailsState extends State<UserDetails> {
                 padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                 child: Text(
                   'Email:',
-                  style: TextStyle(color: Color(0xff293241), fontSize: 22),
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                 ),
               ),
               Padding(
@@ -86,7 +86,7 @@ class _UserDetailsState extends State<UserDetails> {
                 child: FittedBox(
                   child: Text(
                     user.email,
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 18),
                   ),
                   fit: BoxFit.contain,
                 ),
@@ -95,7 +95,7 @@ class _UserDetailsState extends State<UserDetails> {
                 padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                 child: Text(
                   'University Name:',
-                  style: TextStyle(color: Color(0xff293241), fontSize: 22),
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                 ),
               ),
               Padding(
@@ -103,7 +103,7 @@ class _UserDetailsState extends State<UserDetails> {
                 child: FittedBox(
                   child: Text(
                     user.college,
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 18),
                   ),
                   fit: BoxFit.contain,
                 ),
@@ -112,7 +112,7 @@ class _UserDetailsState extends State<UserDetails> {
                 padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                 child: Text(
                   'Year of graduation',
-                  style: TextStyle(color: Color(0xff293241), fontSize: 22),
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                 ),
               ),
               Padding(
@@ -120,7 +120,7 @@ class _UserDetailsState extends State<UserDetails> {
                 child: FittedBox(
                   child: Text(
                     user.year,
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 18),
                   ),
                   fit: BoxFit.contain,
                 ),
@@ -129,45 +129,42 @@ class _UserDetailsState extends State<UserDetails> {
                 padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                 child: Text(
                   'Description:',
-                  style: TextStyle(color: Color(0xff293241), fontSize: 22),
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(22, 5, 6, 0),
                 child: Text(
                   user.bio,
-                  style: TextStyle(fontSize: 22),
+                  style: TextStyle(fontSize: 18),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                 child: Text(
                   'Skills:',
-                  style: TextStyle(color: Color(0xff293241), fontSize: 22),
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: ListView.builder(
-                    itemCount: user.skills.length,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (user.skills.length == 0) {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('No Skills'),
-                        );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(60, 8, 0, 0),
-                          child: Text(
-                            user.skills[index],
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        );
-                      }
-                    }),
-              ),
+              ListView.builder(
+                  itemCount: user.skills.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (user.skills.length == 0) {
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                        child: Text('No Skills'),
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(22, 8, 0, 0),
+                        child: Text(
+                          user.skills[index],
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      );
+                    }
+                  }),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 50, 30, 0),
                 child: Row(

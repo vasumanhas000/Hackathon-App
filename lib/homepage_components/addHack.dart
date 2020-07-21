@@ -50,6 +50,7 @@ class _AddHackState extends State<AddHack> {
           "minimumTeamSize": min,
           "maximumTeamSize": max,
           "eventImage": image,
+          'eventUrl':link,
         }));
     print(response.statusCode);
     return response.statusCode;
@@ -100,6 +101,7 @@ class _AddHackState extends State<AddHack> {
                               style: TextStyle(
                                 fontSize: 24,
                                 fontFamily: 'Muli',
+                                fontWeight: FontWeight.w600
                               ),
                             ),
                           ),

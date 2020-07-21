@@ -49,6 +49,7 @@ class _UserInviteState extends State<UserInvite> {
           child: SafeArea(
             child: ListView.builder(
               itemCount: 1,
+              physics: AlwaysScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index)=>
                Column(
                  crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +59,7 @@ class _UserInviteState extends State<UserInvite> {
                      children: [
                        Padding(
                          padding: const EdgeInsets.fromLTRB(16,0,6,0),
-                         child: FittedBox(child: Text('Send Invite',style: TextStyle(fontFamily: 'Muli',fontSize: 28),maxLines: 1,),fit: BoxFit.contain,),
+                         child: FittedBox(child: Text('Send Invite',style: TextStyle(fontFamily: 'Muli',fontSize: 28,fontWeight: FontWeight.w600),maxLines: 1,),fit: BoxFit.contain,),
                        ),
                        Padding(
                          padding: const EdgeInsets.fromLTRB(0,15,16,0),
@@ -78,6 +79,7 @@ class _UserInviteState extends State<UserInvite> {
                      child: ListView.builder(
                        itemCount: admin.length,
                        shrinkWrap: true,
+                       physics: NeverScrollableScrollPhysics(),
                        itemBuilder: (BuildContext context, int index)=>
                            Row(
                              children: [

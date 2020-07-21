@@ -85,6 +85,7 @@ class _CreateTeamState extends State<CreateTeam> {
                               style: TextStyle(
                                 fontSize: 24,
                                 fontFamily: 'Muli',
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),

@@ -54,7 +54,7 @@ class _HackDetailsState extends State<HackDetails> {
                   child: Text(
                     hackathon.name,
                     style: TextStyle(
-                        fontFamily: 'Muli', fontSize: 39, color: Colors.white),
+                        fontFamily: 'Muli', fontSize: 34, color: Colors.white),
                   ),
                 ),
                 Padding(
@@ -65,7 +65,7 @@ class _HackDetailsState extends State<HackDetails> {
                       hackathon.location,
                       style: TextStyle(
                           fontFamily: 'Muli',
-                          fontSize: 28,
+                          fontSize: 24,
                           color: Colors.white),
                       textAlign: TextAlign.left,
                     ),
@@ -79,7 +79,7 @@ class _HackDetailsState extends State<HackDetails> {
                       hackathon.start + '-' + hackathon.end,
                       style: TextStyle(
                           fontFamily: 'Muli',
-                          fontSize: 26,
+                          fontSize: 22,
                           color: Colors.white),
                       textAlign: TextAlign.left,
                     ),
@@ -101,7 +101,7 @@ class _HackDetailsState extends State<HackDetails> {
                   padding: EdgeInsets.only(top: 16),
                   child: Text(
                     'Link:',
-                    style: TextStyle(fontSize: 19, color: Colors.white),
+                    style: TextStyle(fontSize: 18, color: Colors.white,fontWeight: FontWeight.w600),
                     textAlign: TextAlign.left,
                   ),
                 ),
@@ -112,17 +112,17 @@ class _HackDetailsState extends State<HackDetails> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 2),
                     child: Text(
-                      "sample link",
+                      hackathon.url,
                       style: TextStyle(
                           decoration: TextDecoration.underline,
-                          fontSize: 16,
+                          fontSize: 18,
                           color: Colors.white),
                       textAlign: TextAlign.left,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 48, 8, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 48, 8, 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[

@@ -89,8 +89,8 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       'Hacks',
                       style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.normal,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Muli'
                       ),
                     ),

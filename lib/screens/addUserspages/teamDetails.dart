@@ -50,6 +50,7 @@ class _TeamDetailsState extends State<TeamDetails> {
         backgroundColor: kConstantBlueColor,
         body: SafeArea(
           child: ListView.builder(
+            physics: AlwaysScrollableScrollPhysics(),
             itemCount: 1,
             itemBuilder: (BuildContext context, int index)=>
              Padding(
@@ -74,6 +75,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                         else{
                           return ListView.builder(itemCount: 1,
                           shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int index){
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(8,30,8,0),
@@ -87,15 +89,16 @@ class _TeamDetailsState extends State<TeamDetails> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(0,25,0,0),
-                                    child: Text('Project Description :',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    child: Text('Project Description :',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(0,10,0,0),
-                                    child: Text(snapshot.data.description,style: TextStyle(color: Colors.white,fontSize: 18),),
+                                    padding
+                                        : const EdgeInsets.fromLTRB(0,10,0,0),
+                                    child: Text(snapshot.data.description,style: TextStyle(color: Colors.white,fontSize: 16),),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,25,0,0),
-                                    child: Text('Skills Required :',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    child: Text('Skills Required :',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,10,0,0),
@@ -104,32 +107,36 @@ class _TeamDetailsState extends State<TeamDetails> {
                                         itemBuilder: (BuildContext context, int index){
                                          return Padding(
                                            padding: const EdgeInsets.only(top: 3),
-                                           child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 18),),
+                                           child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 16),),
                                          );
                                         }),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,25,0,0),
-                                    child: Text('Members :',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    child: Text('Members :',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,10,0,0),
                                     child: ListView.builder(itemCount: snapshot.data.members.length,
                                         shrinkWrap: true,
+                                        physics:NeverScrollableScrollPhysics(),
                                         itemBuilder: (BuildContext context, int index){
                                           return Padding(
                                             padding: const EdgeInsets.only(top: 3),
-                                            child: Text(snapshot.data.members[index]["name"],style: TextStyle(color: Colors.white,fontSize: 18),),
+                                            child: Text(snapshot.data.members[index]["name"],style: TextStyle(color: Colors.white,fontSize: 16),),
                                           );
                                         }),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,25,0,0),
-                                    child: Text('Sent Invites :',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    child: Text('Sent Invites :',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                   ),
                                   Padding(padding: const EdgeInsets.fromLTRB(2,10,0,0),
-                                  child:snapshot.data.pendingRequests.length==0?Text('You have no pending sent requests',style: TextStyle(color: Colors.white),):
-                                      ListView.builder(itemCount: snapshot.data.pendingRequests.length,shrinkWrap: true,itemBuilder: (BuildContext context, int index)=>
+                                  child:snapshot.data.pendingRequests.length==0?Padding(
+                                    padding: const EdgeInsets.only(left: 2),
+                                    child: Text('You have no pending sent requests',style: TextStyle(color: Colors.white,fontSize: 12),),
+                                  ):
+                                      ListView.builder(itemCount: snapshot.data.pendingRequests.length,physics:NeverScrollableScrollPhysics(),shrinkWrap: true,itemBuilder: (BuildContext context, int index)=>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(0,0,25,10),
                                             child: GestureDetector(
@@ -141,7 +148,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                                   children: <Widget>[
                                                     Padding(
                                                       padding: const EdgeInsets.fromLTRB(16,0,8,0),
-                                                      child: FittedBox(fit: BoxFit.contain,child: Text(snapshot.data.pendingRequests[index]['name'],style: TextStyle(fontSize: 20,color: Colors.white),)),
+                                                      child: FittedBox(fit: BoxFit.contain,child: Text(snapshot.data.pendingRequests[index]['name'],style: TextStyle(fontSize: 16,color: Colors.white),)),
                                                     ),
                                                   ],
                                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +163,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                       )
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(0,32,8,0),
+                                    padding: const EdgeInsets.fromLTRB(0,32,8,8),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [

@@ -79,15 +79,15 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(0,25,0,0),
-                                    child: Text('Project Description:',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    child: Text('Project Description:',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(0,10,0,0),
-                                    child: Text(snapshot.data.description,style: TextStyle(color: Colors.white,fontSize: 18),),
+                                    child: Text(snapshot.data.description,style: TextStyle(color: Colors.white,fontSize: 16),),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,25,0,0),
-                                    child: Text('Skills Required:',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    child: Text('Skills Required:',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,10,0,0),
@@ -96,13 +96,13 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                                         itemBuilder: (BuildContext context, int index){
                                           return Padding(
                                             padding: const EdgeInsets.only(top: 3),
-                                            child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 18),),
+                                            child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 16),),
                                           );
                                         }),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,25,0,0),
-                                    child: Text('Members:',style: TextStyle(color: Colors.white,fontSize: 14),),
+                                    child: Text('Members:',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,10,0,0),
@@ -111,7 +111,7 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                                         itemBuilder: (BuildContext context, int index){
                                           return Padding(
                                             padding: const EdgeInsets.only(top: 3),
-                                            child: Text(snapshot.data.members[index]["name"],style: TextStyle(color: Colors.white,fontSize: 18),),
+                                            child: Text(snapshot.data.members[index]["name"],style: TextStyle(color: Colors.white,fontSize: 16),),
                                           );
                                         }),
                                   ),

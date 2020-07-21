@@ -42,6 +42,7 @@ class _Page2State extends State<Page2> {
     return Scaffold(
       body: SafeArea(
         child: ListView.builder(
+          physics: AlwaysScrollableScrollPhysics(),
           itemCount: 1,
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) => Padding(
@@ -83,26 +84,35 @@ class _Page2State extends State<Page2> {
                         }
                         else{
                           return Padding(
-                            padding: const EdgeInsets.fromLTRB(16,14,0,10),
-                            child: GestureDetector(
-                              onTap: (){
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AcceptInvite(id:snapshot.data.teamInvites[index]["_id"])));
-                              },
-                              child: Container(
-                                height: 45,
-                                width: 350,
-                                color: Color.fromRGBO(41, 50, 65, 0.1),
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(8,0,8,0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Center(child: FittedBox(fit: BoxFit.contain,child: Text(snapshot.data.teamInvites[index]['teamName'],style: TextStyle(fontSize: 20),))),
-                                    ],
+                            padding: const EdgeInsets.fromLTRB(16,14,16,10),
+                            child: ListView.builder(
+                              itemCount: snapshot.data.teamInvites.length,
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index1)=>
+                               Padding(
+                                 padding: const EdgeInsets.only(bottom: 10),
+                                 child: GestureDetector(
+                                  onTap: (){
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AcceptInvite(id:snapshot.data.teamInvites[index]["_id"])));
+                                  },
+                                  child: Container(
+                                    height: 45,
+                                    width: 350,
+                                    color: Color.fromRGBO(41, 50, 65, 0.1),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(8,0,8,0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Center(child: FittedBox(fit: BoxFit.contain,child: Text(snapshot.data.teamInvites[index1]['teamName'],style: TextStyle(fontSize: 20),))),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ),
                               ),
+                               ),
                             ),
                           );
                         }

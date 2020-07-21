@@ -24,7 +24,7 @@ class _Form2State extends State<Form2> {
      "Content-Type": "application/json",
      "authtoken": Token,
    };
-   String url = 'https://hackportal.herokuapp.com/users/setprofile';
+   String url = 'https://hackportal.azurewebsites.net/users/setuserprofile';
    var response = await http.post(url,
        headers: headers,
        body: jsonEncode({
@@ -37,6 +37,8 @@ class _Form2State extends State<Form2> {
          "stackOverflowLink":stack,
          "externalLink":website,
        }));
+   print(response.statusCode);
+   print(response.body);
    return response.statusCode;
  }
 
@@ -184,7 +186,7 @@ class _Form2State extends State<Form2> {
                           GestureDetector(
                             onTap: ()async{
                              if(await postForm(bio, name, year, college, github, stack, website, skillList)==200){
-                               Navigator.push(context, MaterialPageRoute(builder: (context)=>FlowPage()));
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
                              };
                             },
                             child: Container(

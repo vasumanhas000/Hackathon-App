@@ -175,7 +175,7 @@ class _AcceptInviteState extends State<AcceptInvite> {
                                               setState(() {
                                                 _isInAsyncCall=false;
                                               });
-                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyTeams()));
+                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Page2()));
                                           }
                                             else{
                                               setState(() {
