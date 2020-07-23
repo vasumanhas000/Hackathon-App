@@ -160,7 +160,18 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
                           ),
                           RaisedButton(onPressed: (){
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>EditHack(hackathon: hackathon,)));
-                          },child: Text('Edit',style: TextStyle(fontFamily: 'Montserrat'),),color: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),)
+                          },child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: Text('Edit',style: TextStyle(fontFamily: 'Montserrat'),),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5),
+                                child: Icon(Icons.edit,size: 16,color: kConstantBlueColor,),
+                              ),
+                            ],
+                          ),color: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),)
                         ],
                       ),
                     ),

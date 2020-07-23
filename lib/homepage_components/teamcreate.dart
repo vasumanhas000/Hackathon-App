@@ -428,7 +428,7 @@ class _CreateTeamState extends State<CreateTeam> {
                                 Navigator.pop(
                                     context, 'Team creation was cancelled.');
                               },
-                              child: Text('Cancel',style: TextStyle(color: kConstantBlueColor),),
+                              child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),
                               color: Colors.white,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 1)),
                             ),

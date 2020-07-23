@@ -30,6 +30,11 @@ class _MyTeamsState extends State<MyTeams> {
       return team;
     }
   }
+  String truncateWithEllipsis(int cutoff, String myString) {
+    return (myString.length <= cutoff)
+        ? myString
+        : '${myString.substring(0, cutoff)}...';
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,8 +121,8 @@ class _MyTeamsState extends State<MyTeams> {
                                               children: [
                                                 FittedBox(fit: BoxFit.contain,child: Text(snapshot.data.teams[index]['teamName'],style: TextStyle(color: Colors.white,fontSize: 26),)),
                                                 Padding(
-                                                  padding: const EdgeInsets.fromLTRB(14,18,14,4),
-                                                  child: AutoSizeText(snapshot.data.teams[index]['description'],style: TextStyle(color: Colors.white,fontSize: 16),maxLines: 7,),
+                                                  padding: const EdgeInsets.fromLTRB(20,18,14,4),
+                                                  child: Text(truncateWithEllipsis(285, snapshot.data.teams[index]['description']),style: TextStyle(color: Colors.white,fontSize: 14),maxLines: 7,),
                                                 ),
                                               ],
                                             ),

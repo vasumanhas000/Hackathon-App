@@ -67,23 +67,37 @@ class _EditHackState extends State<EditHack> {
   }
   bool _isInAsyncCall=false;
   var _byteImage;
+  TextEditingController name,start,end,min,max,venue,bio,link;
   void initState() {
     // TODO: implement initState
     super.initState();
     var arr= hackathon.image.split(',');
     print(arr.length);
     _byteImage=Base64Decoder().convert(arr[1]);
+    name = TextEditingController(text: hackathon.name);
+    start = TextEditingController(text: hackathon.start);
+     end= TextEditingController(text: hackathon.end);
+     min=TextEditingController(text: hackathon.min.toString());
+     max=TextEditingController(text: hackathon.max.toString());
+     venue=TextEditingController(text: hackathon.location);
+     bio=TextEditingController(text: hackathon.description);
+     link=TextEditingController(text: hackathon.url);
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    name.dispose();
+    start.dispose();
+    end.dispose();
+    min.dispose();
+    max.dispose();
+    venue.dispose();
+    bio.dispose();
+    link.dispose();
   }
   @override
   Widget build(BuildContext context) {
-    final name = TextEditingController(text: hackathon.name);
-    final start = TextEditingController(text: hackathon.start);
-    final end= TextEditingController(text: hackathon.end);
-    final min=TextEditingController(text: hackathon.min.toString());
-    final max=TextEditingController(text: hackathon.max.toString());
-    final venue=TextEditingController(text: hackathon.location);
-    final bio=TextEditingController(text: hackathon.description);
-    final link=TextEditingController(text: hackathon.url);
 
     SizeConfig().init(context);
     return GestureDetector(

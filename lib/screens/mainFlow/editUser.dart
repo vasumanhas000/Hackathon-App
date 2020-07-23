@@ -83,9 +83,29 @@ class _EditUserState extends State<EditUser> {
         selectCyber=1;
       }
     }
+     name = TextEditingController(text: user.name);
+     university = TextEditingController(text: user.college);
+     bio = TextEditingController(text: user.bio);
+     year = TextEditingController(text: user.year);
+     github = TextEditingController(text: user.github);
+     stack = TextEditingController(text: user.stack);
+     link = TextEditingController(text: user.link);
   }
+  TextEditingController name,university,bio,year,github,stack,link;
   _dismissKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    name.dispose();
+    university.dispose();
+    bio.dispose();
+    year.dispose();
+    github.dispose();
+    stack.dispose();
+    link.dispose();
   }
   void _moveToSignInScreen(BuildContext context) =>
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex:3,)));
@@ -493,7 +513,7 @@ class _EditUserState extends State<EditUser> {
                             padding: const EdgeInsets.only(right: 16),
                             child: RaisedButton(onPressed: (){
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex:3,)));
-                            },child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),color: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                            },child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),color: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor)),),
                           ),
                           RaisedButton(onPressed: ()async{
                             if(selectWeb==1){

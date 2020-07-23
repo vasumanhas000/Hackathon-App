@@ -9,7 +9,7 @@ class Form0 extends StatefulWidget {
 }
 
 class _Form0State extends State<Form0> {
-String name,college,year;
+String name='',college='',year='';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,7 +29,7 @@ String name,college,year;
                     child: Container(
                       child: Text(
                         'Complete your profile',
-                        style: TextStyle(fontFamily: 'Muli', fontSize: 30),
+                        style: TextStyle(fontFamily: 'Muli', fontSize: 30,fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
@@ -82,7 +82,7 @@ String name,college,year;
               Container(
                 margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                 child: Text(
-                  'Name:',
+                  'Name :',
                   style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
@@ -113,7 +113,7 @@ String name,college,year;
               Container(
                 margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                 child: Text(
-                  'University Name:',
+                  'University Name :',
                   style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
@@ -131,7 +131,7 @@ String name,college,year;
               Container(
                 margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                 child: Text(
-                  'Year Studying In:',
+                  'Year of Graduation :',
                   style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
@@ -150,14 +150,26 @@ String name,college,year;
                 child: Material(
                   color: Colors.transparent,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 24, 24, 8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                        GestureDetector(
-                         onTap: (){
-                           Navigator.push(context, MaterialPageRoute(builder: (context)=>Form1(name: name,year: year,college: college,)));
-                         },
+                         onTap: () async{
+                           if(name==''||college==''||year==''){
+                             final snackBar = SnackBar(
+                               content: Text(
+                                 'All fields are mandatory.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                               ),
+                               backgroundColor:kConstantBlueColor ,
+                             );
+                             await Scaffold.of(context).showSnackBar(snackBar);
+                             print('empty');
+                           }
+                           else{
+                             Navigator.push(context, MaterialPageRoute(builder: (context)=>Form1(name: name,year: year,college: college,)));
+                           }
+                           },
                          child: Container(
                            height: 50,
                            width: 50,

@@ -12,7 +12,7 @@ class Form1 extends StatefulWidget {
 
 class _Form1State extends State<Form1> {
   _Form1State(this.name,this.year,this.college);
-  String bio,name,year,college;
+  String bio='',name,year,college;
   List toRemove = [];
   int selectWeb,
       selectMobile,
@@ -43,7 +43,7 @@ class _Form1State extends State<Form1> {
                         child: Container(
                           child: Text(
                             'Complete your profile',
-                            style: TextStyle(fontFamily: 'Muli', fontSize: 30),
+                            style: TextStyle(fontFamily: 'Muli', fontSize: 30,fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
@@ -402,12 +402,22 @@ class _Form1State extends State<Form1> {
                     child: Material(
                       color: Colors.transparent,
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 24, 24, 8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GestureDetector(
-                              onTap: () {
+                              onTap: () async{
+                                if(bio==''){
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                      'All fields are mandatory.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                    ),
+                                    backgroundColor:kConstantBlueColor ,
+                                  );
+                                  await Scaffold.of(context).showSnackBar(snackBar);
+                                }
+                                else{
                                 if (selectWeb == 1) {
                                   var count = 0;
                                   for (var i in skillList) {
@@ -576,7 +586,7 @@ class _Form1State extends State<Form1> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => Form2(name: name,college: college,year: year,bio: bio,skillList: skillList,)));
-                              },
+                              }},
                               child: Container(
                                 height: 50,
                                 width: 50,

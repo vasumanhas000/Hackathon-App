@@ -18,7 +18,7 @@ class _VerificationState extends State<Verification> {
         await FirebaseAuth.instance.currentUser()..reload();
         var user = await FirebaseAuth.instance.currentUser();
         if (user.isEmailVerified) {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>Form0()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Form0()));
           timer.cancel();
         }
       });

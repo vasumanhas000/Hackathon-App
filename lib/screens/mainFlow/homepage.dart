@@ -68,6 +68,11 @@ class _HomePageState extends State<HomePage> {
       id=usersJson['_id'];}
      print(id);
   }
+  String truncateWithEllipsis(int cutoff, String myString) {
+    return (myString.length <= cutoff)
+        ? myString
+        : '${myString.substring(0, cutoff)}...';
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -134,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: Container(
                                 child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(12,16,16,0),
+                                  padding: const EdgeInsets.fromLTRB(14,22,16,0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -143,22 +148,21 @@ class _HomePageState extends State<HomePage> {
                                         child: Text(
                                           snapshot.data[index].name,
                                           style: TextStyle(
-                                              color: Colors.white, fontSize: 35),
+                                              color: Colors.white, fontSize: 26),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(20, 12, 14, 4),
-                                        child: AutoSizeText(
-                                          snapshot.data[index].description,
+                                        padding: const EdgeInsets.fromLTRB(20, 18, 14, 4),
+                                        child: Text(
+                                          truncateWithEllipsis(285, snapshot.data[index].description),
                                           style: TextStyle(
                                               color: Colors.white, fontSize: 14),
-                                          maxLines: 8,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                height: 240,
+                                height: 220,
                                 decoration: BoxDecoration(
                                   color: kConstantBlueColor,
                                   borderRadius: BorderRadius.only(

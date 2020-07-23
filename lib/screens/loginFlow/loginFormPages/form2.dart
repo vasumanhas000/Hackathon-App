@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/screens/mainFlow/flow.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:ui';
+
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 class Form2 extends StatefulWidget {
   final String name,college,year,bio;
   final List skillList;
@@ -41,172 +45,194 @@ class _Form2State extends State<Form2> {
    print(response.body);
    return response.statusCode;
  }
-
+  bool _isInAsyncCall=false;
   _Form2State(this.year,this.college,this.name,this.bio,this.skillList);
   String bio,name,year,college,github='',stack='',website='',token;
   List skillList;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: ListView.builder(
-          itemCount: 1,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Hero(
-                  tag: 'Heading',
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 15, 0, 30),
-                      child: Container(
-                        child: Text(
-                          'Complete your profile',
-                          style: TextStyle(fontFamily: 'Muli', fontSize: 30),
+      child: ModalProgressHUD(
+        inAsyncCall: _isInAsyncCall,
+        opacity: 0.5,
+        progressIndicator: SpinKitFoldingCube(
+          color: kConstantBlueColor,
+        ),
+        child: Scaffold(
+          body: ListView.builder(
+            itemCount: 1,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Hero(
+                    tag: 'Heading',
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 15, 0, 30),
+                        child: Container(
+                          child: Text(
+                            'Complete your profile',
+                            style: TextStyle(fontFamily: 'Muli', fontSize: 30,fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Hero(
-                  tag: 'Icons',
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 35),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image(
-                          image: AssetImage('images/1filled.png'),
-                          height: 45,
-                        ),
-                        Image(
-                          image: AssetImage('images/blueLine.png'),
-                        ),
-                        Image(
-                          image: AssetImage('images/2filled.png'),
-                          height: 45,
-                        ),
-                        Image(
-                          image: AssetImage('images/blueLine.png'),
-                        ),
-                        Image(
-                          image: AssetImage('images/3unfilled.png'),
-                          height: 45,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                  child: Text(
-                    'Personal',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(20, 0, 0, 30),
-                  child: Text(
-                    '(you can skip this section)',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                  child: Text(
-                    'Github:',
-                    style: TextStyle(color: Colors.black, fontSize: 18),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  child: TextField(
-                    onChanged: (val){
-                      setState(() {
-                        github=val;
-                      });
-                    },
-                    decoration: kTextFieldDecoration,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                  child: Text(
-                    'Stack Overflow:',
-                    style: TextStyle(color: Colors.black, fontSize: 18),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  child: TextField(
-                    onChanged: (val){
-                      setState(() {
-                        stack=val;
-                      });
-                    },
-                    decoration: kTextFieldDecoration,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                  child: Text(
-                    'Your Website:',
-                    style: TextStyle(color: Colors.black, fontSize: 18),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  child: TextField(
-                    onChanged: (val){
-                      setState(() {
-                        website=val;
-                      });
-                    },
-                    decoration: kTextFieldDecoration,
-                  ),
-                ),
-                Hero(
-                  tag: 'BottomIcon',
-                  child: Material(
-                    color: Colors.transparent,
+                  Hero(
+                    tag: 'Icons',
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                      padding: const EdgeInsets.only(bottom: 35),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          GestureDetector(
-                            onTap: ()async{
-                             if(await postForm(bio, name, year, college, github, stack, website, skillList)==200){
-                               Navigator.push(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
-                             };
-                            },
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                                color: kConstantBlueColor,
-                              ),
-                              child: Icon(Icons.check,color: Colors.white,size: 30,),
-                            ),
+                          Image(
+                            image: AssetImage('images/1filled.png'),
+                            height: 45,
+                          ),
+                          Image(
+                            image: AssetImage('images/blueLine.png'),
+                          ),
+                          Image(
+                            image: AssetImage('images/2filled.png'),
+                            height: 45,
+                          ),
+                          Image(
+                            image: AssetImage('images/blueLine.png'),
+                          ),
+                          Image(
+                            image: AssetImage('images/3unfilled.png'),
+                            height: 45,
                           ),
                         ],
                       ),
                     ),
                   ),
-                ),
-              ],
-            );
-          }
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Text(
+                      'Personal',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 0, 0, 30),
+                    child: Text(
+                      '(you can skip this section)',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                    child: Text(
+                      'Github:',
+                      style: TextStyle(color: Colors.black, fontSize: 18),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    child: TextField(
+                      onChanged: (val){
+                        setState(() {
+                          github=val;
+                        });
+                      },
+                      decoration: kTextFieldDecoration,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                    child: Text(
+                      'Stack Overflow:',
+                      style: TextStyle(color: Colors.black, fontSize: 18),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    child: TextField(
+                      onChanged: (val){
+                        setState(() {
+                          stack=val;
+                        });
+                      },
+                      decoration: kTextFieldDecoration,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                    child: Text(
+                      'Your Website:',
+                      style: TextStyle(color: Colors.black, fontSize: 18),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    child: TextField(
+                      onChanged: (val){
+                        setState(() {
+                          website=val;
+                        });
+                      },
+                      decoration: kTextFieldDecoration,
+                    ),
+                  ),
+                  Hero(
+                    tag: 'BottomIcon',
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 24, 24, 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: ()async{
+                                setState(() {
+                                  _isInAsyncCall=true;
+                                });
+                               if(await postForm(bio, name, year, college, github, stack, website, skillList)==200){
+                                 setState(() {
+                                   _isInAsyncCall=false;
+                                 });
+                                 Navigator.of(context).pushNamedAndRemoveUntil('/first', (Route<dynamic> route) => false);
+                               }
+                               else{
+                                 final snackBar = SnackBar(
+                                   content: Text(
+                                     'Error.Please try again later.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                   ),
+                                   backgroundColor:kConstantBlueColor ,
+                                 );
+                                 await Scaffold.of(context).showSnackBar(snackBar);
+                               }
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40),
+                                  color: kConstantBlueColor,
+                                ),
+                                child: Icon(Icons.check,color: Colors.white,size: 30,),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+          ),
         ),
       ),
     );

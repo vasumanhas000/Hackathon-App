@@ -55,9 +55,6 @@ class _EditTeamState extends State<EditTeam> {
   void _moveToSignInScreen(BuildContext context) => Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => TeamDetails(id: team.teamId)));
-  List users=[];
-  List deleteUsers=[];
-  List toremoveUsers=[];
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -93,16 +90,20 @@ class _EditTeamState extends State<EditTeam> {
         selectCyber = 1;
       }
     }
-    for(var i in team.members){
-      users.add(i['name']);
-    }
+     name = TextEditingController(text: team.teamName);
+     bio = TextEditingController(text: team.description);
+  }
+  TextEditingController name,bio;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    name.dispose();
+    bio.dispose();
   }
   @override
   Widget build(BuildContext context) {
-
     SizeConfig().init(context);
-    final name = TextEditingController(text: team.teamName);
-    final bio = TextEditingController(text: team.description);
     return GestureDetector(
       onTap: () {
         _dismissKeyboard(context);
@@ -475,54 +476,6 @@ class _EditTeamState extends State<EditTeam> {
                         ],
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(20, 18, 0, 0),
-                      child: Text(
-                        'Remove Teammates :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(45,15,0,0),
-                      child: ListView.builder(itemCount: team.members.length-1,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index1) =>
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: GestureDetector(
-                                  onTap: (){
-                                    if(deleteUsers.length==0){
-                                      deleteUsers.add(team.members[index1+1]['_id']);
-                                    }
-                                    else{
-                                      deleteUsers.forEach( (e) {
-                                      if(e == team.members[index1+1]['_id'])
-                                      {toremoveUsers.add(e);}
-                                      else{
-                                        deleteUsers.add(team.members[index1+1]['_id']);
-                                      }
-                                          });
-                                      deleteUsers.removeWhere( (e) => toremoveUsers.contains(e));
-                                    }
-                                  },
-                                  child: Row(
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.fiber_manual_record,
-                                        size: 24,
-                                        color:kConstantBlueColor,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 8),
-                                        child: Text(team.members[index1+1]["name"],style: TextStyle(fontSize: 18),),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 24, 24, 8),
                       child: Row(
@@ -749,9 +702,6 @@ class _EditTeamState extends State<EditTeam> {
                         ],
                       ),
                     ),
-                    RaisedButton(onPressed: (){
-                      print(deleteUsers);
-                    })
                   ],
                 ),
               ),

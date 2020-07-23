@@ -163,7 +163,7 @@ class _SignInState extends State<SignIn> {
                               return token;
                             });
                             if(user.isEmailVerified){
-                              if(await getProfile(Token)==403){
+                              if(await getProfile(Token)==404){
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>Form0()));
                                 setState(() {
                                   _isInAsyncCall=false;
@@ -173,7 +173,7 @@ class _SignInState extends State<SignIn> {
                                 setState(() {
                                   _isInAsyncCall=false;
                                 });
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
+                                Navigator.of(context).pushNamedAndRemoveUntil('/first', (Route<dynamic> route) => false);
                               }
                             }
                             else{

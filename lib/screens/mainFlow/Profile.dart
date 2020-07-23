@@ -182,7 +182,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>EditUser(user: snapshot.data)));
                                 },color: Colors.white,child: Row(
                                   children: [
-                                    Text('Edit',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 4),
+                                      child: Text('Edit',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 5),
                                       child: Icon(Icons.edit,size: 16,color: kConstantBlueColor,),
