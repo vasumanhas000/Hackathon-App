@@ -92,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen>
                   children: <Widget>[
                     Center(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0,0,10,200),
+                        padding: const EdgeInsets.fromLTRB(0,0,10,150),
                         child: Container(
                           child: Image(
                             image: AssetImage('images/applogo.png'),
@@ -104,10 +104,6 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ),
                     Center(child: Text('Hack Portal',style: TextStyle(fontFamily: 'Muli',fontWeight: FontWeight.w600,fontSize: 30),)),
-                    Center(child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0,0,8,80),
-                      child: Image(image: AssetImage('images/drop.png')),
-                    ),)
                   ],
                 ),
               ),
