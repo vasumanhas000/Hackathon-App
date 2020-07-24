@@ -68,12 +68,12 @@ class _SignInState extends State<SignIn> {
                         tag: 'Image',
                         child: Container(
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10,25,0,0),
+                            padding: const EdgeInsets.fromLTRB(20,46,0,0),
                             child: Image(
                               image: AssetImage('images/LoginPageImage.png'),
                               fit: BoxFit.fill,
-                              height: SizeConfig.safeBlockVertical * 50,
-                              width: SizeConfig.safeBlockHorizontal * 95,
+                              height: SizeConfig.safeBlockVertical * 45,
+                              width: SizeConfig.safeBlockHorizontal * 90,
                             ),
                           ),
                         ),
@@ -97,18 +97,13 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
-                      Hero(
-                        tag: 'Text2',
-                        child: Material(
-                          color: Colors.transparent,
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(20, 20, 90, 0),
-                            child: Text(
-                              'Find teams and projects to collaborate during Hackathons',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(color: kConstantTextColor, fontSize: 18),
-                            ),
-                          ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(20, 20, 90, 0),
+                        child: Text(
+                          """Find teams and projects to 
+collaborate during Hackathons""",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: kConstantTextColor, fontSize: 18),
                         ),
                       ),
                       Padding(
@@ -142,80 +137,82 @@ class _SignInState extends State<SignIn> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(child: Text("Don't have an account ?"),onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));},),
-                            RaisedButton(onPressed: ()async{
-                              if(email==''||password==''){
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    'All fields are mandatory.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
-                                  ),
-                                  backgroundColor:kConstantBlueColor ,
-                                );
-                                await Scaffold.of(context).showSnackBar(snackBar);
+                            ButtonTheme(
+                              child: FlatButton(onPressed: ()async{
+                                if(email==''||password==''){
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                      'All fields are mandatory.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                    ),
+                                    backgroundColor:kConstantBlueColor ,
+                                  );
+                                  await Scaffold.of(context).showSnackBar(snackBar);
+                                }
+                                else{
+                                setState(() {
+                                  _isInAsyncCall=true;
+                                });
+                               try{
+                              FirebaseUser user= await signIn(email, password);
+                              String Token= await user.getIdToken().then((result) {
+                              String  token = result.token;
+                                return token;
+                              });
+                              if(user.isEmailVerified){
+                                if(await getProfile(Token)==404){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Form0()));
+                                  setState(() {
+                                    _isInAsyncCall=false;
+                                  });
+                                }
+                                else if(await getProfile(Token)==200){
+                                  setState(() {
+                                    _isInAsyncCall=false;
+                                  });
+                                  Navigator.of(context).pushNamedAndRemoveUntil('/first', (Route<dynamic> route) => false);
+                                }
                               }
                               else{
-                              setState(() {
-                                _isInAsyncCall=true;
-                              });
-                             try{
-                            FirebaseUser user= await signIn(email, password);
-                            String Token= await user.getIdToken().then((result) {
-                            String  token = result.token;
-                              return token;
-                            });
-                            if(user.isEmailVerified){
-                              if(await getProfile(Token)==404){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>Form0()));
                                 setState(() {
                                   _isInAsyncCall=false;
                                 });
-                              }
-                              else if(await getProfile(Token)==200){
-                                setState(() {
-                                  _isInAsyncCall=false;
-                                });
-                                Navigator.of(context).pushNamedAndRemoveUntil('/first', (Route<dynamic> route) => false);
-                              }
-                            }
-                            else{
-                              setState(() {
-                                _isInAsyncCall=false;
-                              });
-                              print(false);
-                            }}catch(e){
-                               switch (e.code) {
-                                 case "ERROR_INVALID_EMAIL":
-                                   errorMessage = "Your email address appears to be malformed.";
-                                   break;
-                                 case "ERROR_WRONG_PASSWORD":
-                                   errorMessage = "Your password is wrong.";
-                                   break;
-                                 case "ERROR_USER_NOT_FOUND":
-                                   errorMessage = "User with this email doesn't exist.";
-                                   break;
-                                 case "ERROR_USER_DISABLED":
-                                   errorMessage = "User with this email has been disabled.";
-                                   break;
-                                 case "ERROR_TOO_MANY_REQUESTS":
-                                   errorMessage = "Too many requests. Try again later.";
-                                   break;
-                                 case "ERROR_OPERATION_NOT_ALLOWED":
-                                   errorMessage = "Signing in with Email and Password is not enabled.";
-                                   break;
-                                 default:
-                                   errorMessage = "An undefined Error happened.";
-                               }
-                               setState(() {
-                                 _isInAsyncCall=false;
-                               });
-                               final snackBar = SnackBar(
-                                 content: Text(
-                                   errorMessage,style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
-                                 ),
-                                 backgroundColor:kConstantBlueColor ,
-                               );
-                               await Scaffold.of(context).showSnackBar(snackBar);
-                             }}
-                            },child: Text('Login',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                                print(false);
+                              }}catch(e){
+                                 switch (e.code) {
+                                   case "ERROR_INVALID_EMAIL":
+                                     errorMessage = "Your email address appears to be malformed.";
+                                     break;
+                                   case "ERROR_WRONG_PASSWORD":
+                                     errorMessage = "Your password is wrong.";
+                                     break;
+                                   case "ERROR_USER_NOT_FOUND":
+                                     errorMessage = "User with this email doesn't exist.";
+                                     break;
+                                   case "ERROR_USER_DISABLED":
+                                     errorMessage = "User with this email has been disabled.";
+                                     break;
+                                   case "ERROR_TOO_MANY_REQUESTS":
+                                     errorMessage = "Too many requests. Try again later.";
+                                     break;
+                                   case "ERROR_OPERATION_NOT_ALLOWED":
+                                     errorMessage = "Signing in with Email and Password is not enabled.";
+                                     break;
+                                   default:
+                                     errorMessage = "An undefined Error happened.";
+                                 }
+                                 setState(() {
+                                   _isInAsyncCall=false;
+                                 });
+                                 final snackBar = SnackBar(
+                                   content: Text(
+                                     errorMessage,style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',),
+                                   ),
+                                   backgroundColor:kConstantBlueColor ,
+                                 );
+                                 await Scaffold.of(context).showSnackBar(snackBar);
+                               }}
+                              },child: Text('Login',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),minWidth: 100,
+                            ),
                           ],
                         ),
                       ),

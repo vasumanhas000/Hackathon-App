@@ -20,6 +20,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final _auth = FirebaseAuth.instance;
+  String Token;
   Future logOut()async{
     FirebaseUser user= await _auth.currentUser();
     if(user!=null){
@@ -28,7 +29,12 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
   Future<User> getUser() async {
-    Map<String, String> headers = {"authtoken": "vaibhav"};
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
+    Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
         "https://hackportal.azurewebsites.net/users/getuserprofile",
         headers: headers);

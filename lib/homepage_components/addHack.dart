@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,6 +21,8 @@ class _AddHackState extends State<AddHack> {
   bool _isInAsyncCall = false;
   File file1;
   String base64img;
+  final _auth = FirebaseAuth.instance;
+  String Token;
   Future getImage() async {
     File file = await FilePicker.getFile(type: FileType.image);
     setState(() {
@@ -34,9 +37,14 @@ class _AddHackState extends State<AddHack> {
 
   Future postHack(String name, String image, String start, String end,
       String venue, String bio, String link, int max, int min) async {
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "authtoken": "vaibhav"
+      "authtoken": Token
     };
     String url = 'https://hackportal.azurewebsites.net/events/setevent';
     var response = await http.post(url,

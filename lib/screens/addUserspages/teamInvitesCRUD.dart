@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/constants.dart';
@@ -16,8 +17,15 @@ class InviteCRUD extends StatefulWidget {
 }
 
 class _InviteCRUDState extends State<InviteCRUD> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   Future cancelInvite(String id,String userID)async{
-    Map<String, String> headers = {"authtoken": "vaibhav","Content-Type": "application/json"};
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
+    Map<String, String> headers = {"authtoken": Token,"Content-Type": "application/json"};
     var response = await http.post(
         "https://hackportal.azurewebsites.net/teams/cancelinvite",
         headers: headers,body: jsonEncode({

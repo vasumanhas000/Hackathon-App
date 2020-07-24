@@ -55,12 +55,12 @@ class _SignUpState extends State<SignUp> {
                   tag: 'Image',
                   child: Container(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10,25,0,0),
+                      padding: const EdgeInsets.fromLTRB(20,46,0,0),
                       child: Image(
                         image: AssetImage('images/LoginPageImage.png'),
                         fit: BoxFit.fill,
-                        height: SizeConfig.safeBlockVertical * 50,
-                        width: SizeConfig.safeBlockHorizontal * 95,
+                        height: SizeConfig.safeBlockVertical * 45,
+                        width: SizeConfig.safeBlockHorizontal * 90,
                       ),
                     ),
                   ),
@@ -84,18 +84,13 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                 ),
-                Hero(
-                  tag: 'Text2',
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(20, 20, 90, 0),
-                      child: Text(
-                        'Find teams and projects to collaborate during Hackathons',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(color: kConstantTextColor, fontSize: 18),
-                      ),
-                    ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(20, 20, 90, 0),
+                  child: Text(
+                    """Find teams and projects to 
+collaborate during Hackathons""",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: kConstantTextColor, fontSize: 18),
                   ),
                 ),
                 Padding(
@@ -128,63 +123,65 @@ class _SignUpState extends State<SignUp> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      RaisedButton(onPressed: ()async{
-                        if(email==''||password==''){
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'All fields are mandatory.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
-                            ),
-                            backgroundColor:kConstantBlueColor ,
-                          );
-                          await Scaffold.of(context).showSnackBar(snackBar);
-                        }
-                        else{
-                        setState(() {
-                          _isInAsyncCall=true;
-                        });
-                        try{
-                          await signUp( email, password);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Verification()));}catch(e){
-                          switch (e.code) {
-                            case "ERROR_INVALID_EMAIL":
-                              errorMessage = "Your email address appears to be malformed.";
-                              break;
-                            case "ERROR_WRONG_PASSWORD":
-                              errorMessage = "Your password is wrong.";
-                              break;
-                            case "ERROR_USER_NOT_FOUND":
-                              errorMessage = "User with this email doesn't exist.";
-                              break;
-                            case "ERROR_USER_DISABLED":
-                              errorMessage = "User with this email has been disabled.";
-                              break;
-                            case "ERROR_WEAK_PASSWORD" :
-                              errorMessage='Password must be at least 6 characters.';
-                              break;
-                            case "ERROR_TOO_MANY_REQUESTS":
-                              errorMessage = "Too many requests. Try again later.";
-                              break;
-                            case "ERROR_EMAIL_ALREADY_IN_USE":
-                              errorMessage="An account is already present with the given email.";
-                              break;
-                            case "ERROR_OPERATION_NOT_ALLOWED":
-                              errorMessage = "Signing in with Email and Password is not enabled.";
-                              break;
-                            default:
-                              errorMessage = "An undefined Error happened.";
+                      ButtonTheme(
+                        child: FlatButton(onPressed: ()async{
+                          if(email==''||password==''){
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'All fields are mandatory.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                              ),
+                              backgroundColor:kConstantBlueColor ,
+                            );
+                            await Scaffold.of(context).showSnackBar(snackBar);
                           }
+                          else{
                           setState(() {
-                            _isInAsyncCall=false;
+                            _isInAsyncCall=true;
                           });
-                          final snackBar = SnackBar(
-                            content: Text(
-                              errorMessage,style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
-                            ),
-                            backgroundColor:kConstantBlueColor ,
-                          );
-                          await Scaffold.of(context).showSnackBar(snackBar);
-                        }}
-                      },child: Text('Sign up',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                          try{
+                            await signUp( email, password);
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Verification()));}catch(e){
+                            switch (e.code) {
+                              case "ERROR_INVALID_EMAIL":
+                                errorMessage = "Your email address appears to be malformed.";
+                                break;
+                              case "ERROR_WRONG_PASSWORD":
+                                errorMessage = "Your password is wrong.";
+                                break;
+                              case "ERROR_USER_NOT_FOUND":
+                                errorMessage = "User with this email doesn't exist.";
+                                break;
+                              case "ERROR_USER_DISABLED":
+                                errorMessage = "User with this email has been disabled.";
+                                break;
+                              case "ERROR_WEAK_PASSWORD" :
+                                errorMessage='Password must be at least 6 characters.';
+                                break;
+                              case "ERROR_TOO_MANY_REQUESTS":
+                                errorMessage = "Too many requests. Try again later.";
+                                break;
+                              case "ERROR_EMAIL_ALREADY_IN_USE":
+                                errorMessage="An account is already present with the given email.";
+                                break;
+                              case "ERROR_OPERATION_NOT_ALLOWED":
+                                errorMessage = "Signing in with Email and Password is not enabled.";
+                                break;
+                              default:
+                                errorMessage = "An undefined Error happened.";
+                            }
+                            setState(() {
+                              _isInAsyncCall=false;
+                            });
+                            final snackBar = SnackBar(
+                              content: Text(
+                                errorMessage,style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                              ),
+                              backgroundColor:kConstantBlueColor ,
+                            );
+                            await Scaffold.of(context).showSnackBar(snackBar);
+                          }}
+                        },child: Text('Sign up',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),minWidth: 100,
+                      ),
                     ],
                   ),
                 ),

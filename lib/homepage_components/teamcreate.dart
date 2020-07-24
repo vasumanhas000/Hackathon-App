@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,8 @@ class CreateTeam extends StatefulWidget {
 }
 
 class _CreateTeamState extends State<CreateTeam> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   int selectWeb,
       selectMobile,
       selectDevOps,
@@ -30,9 +33,14 @@ class _CreateTeamState extends State<CreateTeam> {
   var toRemove=[];
   Future postTeam(
       String name, String description, String id, List skills) async {
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "authtoken": "vaibhav"
+      "authtoken": Token
     };
     String url = 'https://hackportal.azurewebsites.net/teams/setteam';
     var response = await http.post(url,

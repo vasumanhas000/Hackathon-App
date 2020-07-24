@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/screens/addUserspages/nonAdminTeam.dart';
@@ -15,8 +16,15 @@ class MyTeams extends StatefulWidget {
 }
 
 class _MyTeamsState extends State<MyTeams> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   Future getTeams()async{
-    Map<String, String> headers = {"authtoken": "vaibhav"};
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
+    Map<String, String> headers = {"authtoken": Token};
     final String url= "https://hackportal.azurewebsites.net/users/getuserprofile";
     var response = await http.get(
         url, headers: headers);
@@ -83,10 +91,7 @@ class _MyTeamsState extends State<MyTeams> {
                             }
                             else if(snapshot.data.teams.length==0){
                               return Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 200),
-                                  child: Text('You have no teams'),
-                                ),
+                                child: Text('You have no teams'),
                               );
                             }
                             else{

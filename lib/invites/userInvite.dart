@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
@@ -17,11 +18,18 @@ class UserInvite extends StatefulWidget {
 }
 
 class _UserInviteState extends State<UserInvite> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   String _selectedRadio,email;
   Future sendInvite(String email,String id)async{
+    FirebaseUser user1 = await _auth.currentUser();
+    Token= await user1.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "authtoken": "vaibhav"
+      "authtoken": Token
     };
     String url = 'https://hackportal.azurewebsites.net/teams/sendinvite';
     var response = await http.post(url,

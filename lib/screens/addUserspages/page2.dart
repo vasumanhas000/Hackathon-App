@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
@@ -13,8 +14,15 @@ class Page2 extends StatefulWidget {
 }
 
 class _Page2State extends State<Page2> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   Future getUser() async {
-    Map<String, String> headers = {"authtoken": "test"};
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
+    Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
         "https://hackportal.azurewebsites.net/users/getuserprofile",
         headers: headers);

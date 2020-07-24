@@ -30,12 +30,12 @@ class _LoginPageState extends State<LoginPage> {
                           tag: 'Image',
                           child: Container(
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(10,25,0,0),
+                              padding: const EdgeInsets.fromLTRB(20,46,0,0),
                               child: Image(
                                 image: AssetImage('images/LoginPageImage.png'),
                                 fit: BoxFit.fill,
-                                height: SizeConfig.safeBlockVertical * 50,
-                                width: SizeConfig.safeBlockHorizontal * 95,
+                                height: SizeConfig.safeBlockVertical * 45,
+                                width: SizeConfig.safeBlockHorizontal * 90,
                               ),
                             ),
                           ),
@@ -59,18 +59,13 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        Hero(
-                          tag: 'Text2',
-                          child: Material(
-                            color: Colors.transparent,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(20, 20, 90, 0),
-                              child: Text(
-                                'Find teams and projects to collaborate during Hackathons',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(color: kConstantTextColor, fontSize: 18),
-                              ),
-                            ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                          child: Text(
+                            """Find teams and projects to 
+collaborate during Hackathons""",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(color: kConstantTextColor, fontSize: 18),
                           ),
                         ),
                         Padding(
@@ -78,36 +73,42 @@ class _LoginPageState extends State<LoginPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              RaisedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignUp()));
-                                },
-                                child: Text(
-                                  'Sign up',
-                                  style: TextStyle(
-                                      color: kConstantBlueColor,
-                                      fontFamily: 'Montserrat'),
+                              ButtonTheme(
+                                child: FlatButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SignUp()));
+                                  },
+                                  child: Text(
+                                    'Sign up',
+                                    style: TextStyle(
+                                        color: kConstantBlueColor,
+                                        fontFamily: 'Montserrat',fontWeight: FontWeight.w500,fontSize: 16),
+                                  ),
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                      side: BorderSide(color: kConstantBlueColor,width: 2)),
                                 ),
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4),
-                                    side: BorderSide(color: kConstantBlueColor)),
+                                minWidth: 100,
                               ),
-                              RaisedButton(
-                                onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
-                                },
-                                child: Text(
-                                  'Login',
-                                  style: TextStyle(
-                                      color: Colors.white, fontFamily: 'Montserrat'),
+                              ButtonTheme(
+                                child: FlatButton(
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
+                                  },
+                                  child: Text(
+                                    'Login',
+                                    style: TextStyle(
+                                        color: Colors.white, fontFamily: 'Montserrat',fontSize: 16),
+                                  ),
+                                  color: kConstantBlueColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4)),
                                 ),
-                                color: kConstantBlueColor,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4)),
+                                minWidth: 100,
                               ),
                             ],
                           ),

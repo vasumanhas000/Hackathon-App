@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/homepage_components/adminDetailsPage.dart';
 import 'package:hackapp/constants.dart';
@@ -17,14 +18,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String Token;
+  final auth = FirebaseAuth.instance;
   String id;
   Future<List<Hackathon>> getHacks() async {
+    FirebaseUser user = await auth.currentUser();
+     Token= await user.getIdToken().then((result) {
+     String token = result.token;
+      return token;
+    });
     await getUser();
     int end=0;
     int i=1;
     List<Hackathon> hacks = [];
     while(end==0){
-    Map<String, String> headers = {"authtoken": "vaibhav"};
+    Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
         "https://hackportal.azurewebsites.net/events/getevents/$i",
         headers: headers);
@@ -59,7 +67,7 @@ class _HomePageState extends State<HomePage> {
     return hacks;
   }
   Future getUser() async{
-    Map<String, String> headers = {"authtoken": "vaibhav"};
+    Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
         "https://hackportal.azurewebsites.net/users/getuserprofile",
         headers: headers);

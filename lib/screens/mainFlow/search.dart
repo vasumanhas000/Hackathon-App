@@ -354,12 +354,12 @@ class _SearchPageState extends State<SearchPage> {
                           if(selectWeb==1){
                             var count=0;
                             for(var i in skillList){
-                              if(i=='Web Dev'){
+                              if(i=='Web Development'){
                                 count+=1;
                               }
                             }
                             if(count==0){
-                              skillList.add('Web Dev');
+                              skillList.add('Web Development');
                             }
                           }
                           if(selectMobile==1){
@@ -370,7 +370,7 @@ class _SearchPageState extends State<SearchPage> {
                               }
                             }
                             if(count==0){
-                              skillList.add('App Dev');
+                              skillList.add('App Development');
                             }
                           }
                           if(selectDevOps==1){
@@ -398,7 +398,7 @@ class _SearchPageState extends State<SearchPage> {
                           if(selectAI==1){
                             var count=0;
                             for(var i in skillList){
-                              if(i=='AI'){
+                              if(i=='Artificial Intelligence'){
                                 count+=1;
                               }
                             }
@@ -453,14 +453,14 @@ class _SearchPageState extends State<SearchPage> {
                           }
                           if(selectWeb!=1){
                             for(var i in skillList){
-                              if(i=='Web Dev'){
+                              if(i=='Web Development'){
                                 toRemove.add(i);
                               }
                             }
                           }
                           if(selectMobile!=1){
                             for(var i in skillList){
-                              if(i=='App Dev'){
+                              if(i=='App Development'){
                                 toRemove.add(i);
                               }
                             }
@@ -481,7 +481,7 @@ class _SearchPageState extends State<SearchPage> {
                           }
                           if(selectAI!=1){
                             for(var i in skillList){
-                              if(i=='AI'){
+                              if(i=='Artificial Intelligence'){
                                 toRemove.add(i);
                               }
                             }

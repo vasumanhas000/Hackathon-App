@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/Team.dart';
@@ -14,10 +15,17 @@ class NTeamDetails extends StatefulWidget {
 }
 
 class _NTeamDetailsState extends State<NTeamDetails> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   _NTeamDetailsState(this.id);
   String id;
   Future<Team> getTeam(String id)async{
-    Map<String, String> headers = {"authtoken": "vaibhav"};
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
+    Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
         "https://hackportal.azurewebsites.net/teams/getteaminfo/$id",
         headers: headers);

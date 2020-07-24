@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
@@ -20,16 +21,22 @@ class _ResultsPageState extends State<ResultsPage> {
   List list;
   _ResultsPageState(this.list);
 
+  final _auth = FirebaseAuth.instance;
+  String Token;
   Future getList(List list) async {
-
-    Map<String, String> headers1 = {"authtoken": "vaibhav"};
+    FirebaseUser user1 = await _auth.currentUser();
+    Token= await user1.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
+    Map<String, String> headers1 = {"authtoken": Token};
     var response1 = await http.get(
         "https://hackportal.azurewebsites.net/users/getuserprofile",
         headers: headers1);
     var user=jsonDecode(response1.body);
     if(response1.statusCode==200){
     if (list.length == 0) {
-      Map<String, String> headers = {"authtoken": "vaibhav"};
+      Map<String, String> headers = {"authtoken": Token};
       var response = await http.get(
           "https://hackportal.azurewebsites.net/users/getuserprofiles/1",
           headers: headers);
@@ -57,12 +64,12 @@ class _ResultsPageState extends State<ResultsPage> {
     }
     if (list.length != 0) {
       Map<String, String> headers = {
-        "authtoken": "vaibhav",
+        "authtoken": Token,
         "Content-Type": "application/json",
       };
       List<UserSearch> result = [];
       var response = await http.post(
-          "https://hackportal.herokuapp.com/users/searchuserprofiles/1",
+          "https://hackportal.azurewebsites.net/users/searchuserprofiles/1",
           headers: headers,
           body: jsonEncode({
             "skills": list,
@@ -88,6 +95,11 @@ class _ResultsPageState extends State<ResultsPage> {
       }
       return result;
     }}
+  }
+  String truncateWithEllipsis(int cutoff, String myString) {
+    return (myString.length <= cutoff)
+        ? myString
+        : '${myString.substring(0, cutoff)}...';
   }
   @override
   Widget build(BuildContext context) {
@@ -159,13 +171,13 @@ class _ResultsPageState extends State<ResultsPage> {
                                           child: Text(
                                             snapshot.data[index1].name,
                                             style: TextStyle(
-                                                color: Colors.white, fontSize: 30),
+                                                color: Colors.white, fontSize: 26),
                                           ),
                                           fit: BoxFit.contain,
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.fromLTRB(26,16,0,0),
-                                          child: AutoSizeText(snapshot.data[index1].bio,style: TextStyle(color: Colors.white,fontSize: 16),maxLines: 5,),
+                                          child: Text(truncateWithEllipsis(250, snapshot.data[index1].bio),style: TextStyle(color: Colors.white,fontSize: 14),),
                                         ),
                                       ],
                                     ),

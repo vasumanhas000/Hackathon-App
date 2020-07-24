@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -21,15 +22,22 @@ class EditHack extends StatefulWidget {
 }
 
 class _EditHackState extends State<EditHack> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   _EditHackState(this.hackathon);
   Hackathon hackathon;
   File file1;
   String base64img;
   Future editHack(String name, String image, String start, String end,
       String venue, String bio, String link, int max, int min,String id) async {
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "authtoken": "vaibhav"
+      "authtoken": Token,
     };
     String url = 'https://hackportal.azurewebsites.net/events/updateevent/$id';
     var response = await http.patch(url,

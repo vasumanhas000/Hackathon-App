@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/screens/addUserspages/page2.dart';
@@ -17,8 +18,15 @@ class AcceptInvite extends StatefulWidget {
 }
 
 class _AcceptInviteState extends State<AcceptInvite> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   Future getTeam(String id) async {
-    Map<String, String> headers = {"authtoken": "test"};
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
+    Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
         "https://hackportal.azurewebsites.net/teams/getteaminfo/$id",
         headers: headers);
@@ -47,7 +55,7 @@ class _AcceptInviteState extends State<AcceptInvite> {
     }
   }
   Future acceptInvite(String id) async{
-    Map<String, String> headers = {"authtoken": "test","Content-Type": "application/json",};
+    Map<String, String> headers = {"authtoken": Token,"Content-Type": "application/json",};
     var response = await http.patch(
         "https://hackportal.azurewebsites.net/users/acceptteaminvite/$id",
         headers: headers,);
@@ -56,7 +64,7 @@ class _AcceptInviteState extends State<AcceptInvite> {
     return response.statusCode;
   }
   Future rejectInvite(String id) async{
-    Map<String, String> headers = {"authtoken": "test","Content-Type": "application/json",};
+    Map<String, String> headers = {"authtoken": Token,"Content-Type": "application/json",};
     var response = await http.patch(
       "https://hackportal.azurewebsites.net/users/rejectteaminvite/$id",
       headers: headers,);

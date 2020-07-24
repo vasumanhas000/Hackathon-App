@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/components/Team.dart';
@@ -16,10 +17,17 @@ class EditTeam extends StatefulWidget {
 }
 
 class _EditTeamState extends State<EditTeam> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   bool _isInAsyncCall = false;
   Future updateTeam(String id, String name, String bio, List skills) async {
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
     Map<String, String> headers = {
-      "authtoken": "vaibhav",
+      "authtoken": Token,
       "Content-Type": "application/json"
     };
     var response = await http.post(

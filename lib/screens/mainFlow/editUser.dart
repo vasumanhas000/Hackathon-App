@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
@@ -15,8 +16,15 @@ class EditUser extends StatefulWidget {
 }
 
 class _EditUserState extends State<EditUser> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   Future updateProfile(String name,String university,String bio,String year,String github,String stack,String link,List skillList)async{
-    Map<String, String> headers = {"authtoken": "vaibhav","Content-Type": "application/json"};
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
+    Map<String, String> headers = {"authtoken": Token,"Content-Type": "application/json"};
     var response = await http.patch(
         "https://hackportal.azurewebsites.net/users/updateuserprofile",
         headers: headers,body: jsonEncode({
