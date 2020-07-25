@@ -24,7 +24,7 @@ class _SearchPageState extends State<SearchPage> {
   List skillList = [];
   var toRemove = [];
   String _selectedRadio;
-  int selected=1;
+  int selected=0;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -76,6 +76,16 @@ class _SearchPageState extends State<SearchPage> {
                             selectWeb=0;
                           }
                         });
+                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                          setState(() {
+                            selected=1;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            selected=0;
+                          });
+                        }
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -102,6 +112,16 @@ class _SearchPageState extends State<SearchPage> {
                             selectMobile=0;
                           }
                         });
+                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                          setState(() {
+                            selected=1;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            selected=0;
+                          });
+                        }
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -134,6 +154,16 @@ class _SearchPageState extends State<SearchPage> {
                             selectDevOps=0;
                           }
                         });
+                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                          setState(() {
+                            selected=1;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            selected=0;
+                          });
+                        }
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -166,6 +196,16 @@ class _SearchPageState extends State<SearchPage> {
                             selectML=0;
                           }
                         });
+                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                          setState(() {
+                            selected=1;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            selected=0;
+                          });
+                        }
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -198,6 +238,16 @@ class _SearchPageState extends State<SearchPage> {
                             selectAI=0;
                           }
                         });
+                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                          setState(() {
+                            selected=1;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            selected=0;
+                          });
+                        }
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -230,6 +280,16 @@ class _SearchPageState extends State<SearchPage> {
                             selectDesign=0;
                           }
                         });
+                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                          setState(() {
+                            selected=1;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            selected=0;
+                          });
+                        }
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -262,6 +322,16 @@ class _SearchPageState extends State<SearchPage> {
                             selectManagement=0;
                           }
                         });
+                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                          setState(() {
+                            selected=1;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            selected=0;
+                          });
+                        }
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -294,6 +364,16 @@ class _SearchPageState extends State<SearchPage> {
                             selectBlock=0;
                           }
                         });
+                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                          setState(() {
+                            selected=1;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            selected=0;
+                          });
+                        }
                       },),
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -326,6 +406,16 @@ class _SearchPageState extends State<SearchPage> {
                             selectCyber=0;
                           }
                         });
+                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                          setState(() {
+                            selected=1;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            selected=0;
+                          });
+                        }
                       },
                     ),
                     Padding(
@@ -342,14 +432,14 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 45),
+                padding: const EdgeInsets.only(top: 68),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ButtonTheme(
-                      minWidth: 200,
-                      height: 46,
-                      child: RaisedButton(
+                      minWidth: 220,
+                      height: 48,
+                      child: FlatButton(
                         onPressed: () {
                           if(selectWeb==1){
                             var count=0;
@@ -517,7 +607,7 @@ class _SearchPageState extends State<SearchPage> {
                           skillList.removeWhere( (e) => toRemove.contains(e));
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>ResultsPage(list: skillList)));
                         },
-                        child: Text('Search',style: TextStyle(fontSize: 22,fontFamily: 'Muli',color: selected==1?Colors.white:kConstantBlueColor,fontWeight: FontWeight.w600),),
+                        child: Text('Search',style: TextStyle(fontSize: 22,fontFamily: 'Montserrat',color: selected==1?Colors.white:kConstantBlueColor,fontWeight: FontWeight.w600),),
                         color: selected==1?kConstantBlueColor:Colors.white,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6),side: BorderSide(color: kConstantBlueColor,width: 3)),
                       ),

@@ -327,36 +327,46 @@ class _AddHackState extends State<AddHack> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(right: 14),
-                            child: RaisedButton(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor)),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),
-                              color: Colors.white,
+                            child: ButtonTheme(
+                              height: 38,
+                              minWidth: 100,
+                              child: FlatButton(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 2)),
+                                onPressed: () {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(
+                                    currentIndex: 0,
+                                  )));
+                                },
+                                child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 16),),
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                          RaisedButton(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                            onPressed: () async {
-                              setState(() {
-                                _isInAsyncCall=true;
-                              });
-                              if(await postHack(name, base64img, startDate,
-                                  endDate, venue, description, link, max, min)==200){
+                          ButtonTheme(
+                            minWidth: 100,
+                            height: 38,
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                              onPressed: () async {
                                 setState(() {
-                                  _isInAsyncCall=false;
+                                  _isInAsyncCall=true;
                                 });
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(
-                                  currentIndex: 0,
-                                )));
-                              };
-                            },
-                            child: Text(
-                              'Confirm',
-                              style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                if(await postHack(name, base64img, startDate,
+                                    endDate, venue, description, link, max, min)==200){
+                                  setState(() {
+                                    _isInAsyncCall=false;
+                                  });
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(
+                                    currentIndex: 0,
+                                  )));
+                                };
+                              },
+                              child: Text(
+                                'Confirm',
+                                style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),
+                              ),
+                              color: kConstantBlueColor,
                             ),
-                            color: kConstantBlueColor,
                           ),
                         ],
                       ),

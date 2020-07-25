@@ -211,7 +211,7 @@ collaborate during Hackathons""",
                                  );
                                  await Scaffold.of(context).showSnackBar(snackBar);
                                }}
-                              },child: Text('Login',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),minWidth: 100,
+                              },child: Text('Login',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),minWidth: 100,height: 38,
                             ),
                           ],
                         ),

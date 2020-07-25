@@ -183,27 +183,35 @@ class _ProfilePageState extends State<ProfilePage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 16),
-                                child: RaisedButton(onPressed: (){
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>EditUser(user: snapshot.data)));
-                                },color: Colors.white,child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: Text('Edit',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5),
-                                      child: Icon(Icons.edit,size: 16,color: kConstantBlueColor,),
-                                    ),
-                                  ],
-                                ),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor)),
+                                padding: const EdgeInsets.only(right: 18),
+                                child: ButtonTheme(
+                                  height: 38,
+                                  minWidth: 100,
+                                  child: FlatButton(onPressed: (){
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>EditUser(user: snapshot.data)));
+                                  },color: Colors.white,child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: Text('Edit',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 16),),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(5,0,0,3),
+                                        child: Icon(Icons.edit,size: 18,color: kConstantBlueColor,),
+                                      ),
+                                    ],
+                                  ),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 2)),
+                                  ),
                                 ),
                               ),
-                              RaisedButton(onPressed: ()async{
-                                await logOut();
-                              },color: kConstantBlueColor,child: Text('Sign Out',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                              ButtonTheme(
+                                minWidth: 100,
+                                height: 38,
+                                child: FlatButton(onPressed: ()async{
+                                  await logOut();
+                                },color: kConstantBlueColor,child: Text('Sign Out',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                              ),
                             ],
                           ),
                         ),

@@ -71,28 +71,32 @@ collaborate during Hackathons""",
                         Padding(
                           padding: const EdgeInsets.only(top: 54),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ButtonTheme(
-                                child: FlatButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => SignUp()));
-                                  },
-                                  child: Text(
-                                    'Sign up',
-                                    style: TextStyle(
-                                        color: kConstantBlueColor,
-                                        fontFamily: 'Montserrat',fontWeight: FontWeight.w500,fontSize: 16),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 42),
+                                  child: FlatButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => SignUp()));
+                                    },
+                                    child: Text(
+                                      'Sign up',
+                                      style: TextStyle(
+                                          color: kConstantBlueColor,
+                                          fontFamily: 'Montserrat',fontWeight: FontWeight.w500,fontSize: 16),
+                                    ),
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                        side: BorderSide(color: kConstantBlueColor,width: 2)),
                                   ),
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4),
-                                      side: BorderSide(color: kConstantBlueColor,width: 2)),
                                 ),
                                 minWidth: 100,
+                                height: 38,
                               ),
                               ButtonTheme(
                                 child: FlatButton(
@@ -109,6 +113,7 @@ collaborate during Hackathons""",
                                       borderRadius: BorderRadius.circular(4)),
                                 ),
                                 minWidth: 100,
+                                height: 38,
                               ),
                             ],
                           ),

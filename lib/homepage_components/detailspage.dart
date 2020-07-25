@@ -126,32 +126,36 @@ class _HackDetailsState extends State<HackDetails> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      RaisedButton(
-                        onPressed: () async {
-                          final result = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CreateTeam(
-                                  id: hackathon.id,
+                      ButtonTheme(
+                        height: 38,
+                        minWidth: 100,
+                        child: FlatButton(
+                          onPressed: () async {
+                            final result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CreateTeam(
+                                    id: hackathon.id,
+                                  ),
+                                ));
+                            Scaffold.of(context)
+                              ..removeCurrentSnackBar()
+                              ..showSnackBar(SnackBar(
+                                content: Text(
+                                  "$result",
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: kConstantBlueColor),
                                 ),
+                                backgroundColor: result != null
+                                    ? Colors.white
+                                    : kConstantBlueColor,
                               ));
-                          Scaffold.of(context)
-                            ..removeCurrentSnackBar()
-                            ..showSnackBar(SnackBar(
-                              content: Text(
-                                "$result",
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    color: kConstantBlueColor),
-                              ),
-                              backgroundColor: result != null
-                                  ? Colors.white
-                                  : kConstantBlueColor,
-                            ));
-                        },
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                        child: Text('Create Team',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),
+                          },
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                          child: Text('Create Team',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 16),),
+                        ),
                       )
                     ],
                   ),

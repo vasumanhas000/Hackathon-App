@@ -106,39 +106,43 @@ class _UserInviteState extends State<UserInvite> {
                      child: Row(
                        mainAxisAlignment: MainAxisAlignment.end,
                        children: [
-                         RaisedButton(onPressed: ()async{
-                           setState(() {
-                             _isInAsyncCall=true;
-                           });
-                           if(await sendInvite(email, _selectedRadio)==200){
+                         ButtonTheme(
+                           height: 38,
+                           minWidth: 100,
+                           child: FlatButton(onPressed: ()async{
                              setState(() {
-                               _isInAsyncCall=false;
+                               _isInAsyncCall=true;
                              });
-                             print('success');
-                             Navigator.pop(context,'Invite was successfully sent.');
-                           }
-                           else if(await sendInvite(email, _selectedRadio)==400){
-                             setState(() {
-                               _isInAsyncCall=false;
-                             });
-                             final snackBar = SnackBar(
-                               content: Text(
-                                 'User has already been invited to the selected team.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
-                               ),
-                               backgroundColor:kConstantBlueColor ,
-                             );
-                             await Scaffold.of(context).showSnackBar(snackBar);
-                           }
-                           else{
-                             final snackBar = SnackBar(
-                               content: Text(
-                                 'Error.Please try again later.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
-                               ),
-                               backgroundColor:kConstantBlueColor ,
-                             );
-                             await Scaffold.of(context).showSnackBar(snackBar);
-                           }
-                         },child: Text('Send',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                             if(await sendInvite(email, _selectedRadio)==200){
+                               setState(() {
+                                 _isInAsyncCall=false;
+                               });
+                               print('success');
+                               Navigator.pop(context,'Invite was successfully sent.');
+                             }
+                             else if(await sendInvite(email, _selectedRadio)==400){
+                               setState(() {
+                                 _isInAsyncCall=false;
+                               });
+                               final snackBar = SnackBar(
+                                 content: Text(
+                                   'User has already been invited to the selected team.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                 ),
+                                 backgroundColor:kConstantBlueColor ,
+                               );
+                               await Scaffold.of(context).showSnackBar(snackBar);
+                             }
+                             else{
+                               final snackBar = SnackBar(
+                                 content: Text(
+                                   'Error.Please try again later.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                 ),
+                                 backgroundColor:kConstantBlueColor ,
+                               );
+                               await Scaffold.of(context).showSnackBar(snackBar);
+                             }
+                           },child: Text('Send',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                         ),
                        ],
                      ),
                    )

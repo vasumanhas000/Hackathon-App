@@ -327,32 +327,23 @@ class _EditHackState extends State<EditHack> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(right: 14),
-                          child: RaisedButton(onPressed: (){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminDetailsPage(hackathon: hackathon,)));
-                          },child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),color: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor)),),
+                          child: ButtonTheme(
+                            height: 38,
+                            minWidth: 100,
+                            child: FlatButton(onPressed: (){
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminDetailsPage(hackathon: hackathon,)));
+                            },child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 16),),color: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 2)),),
+                          ),
                         ),
-                        RaisedButton(onPressed: ()async{
-                          setState(() {
-                            _isInAsyncCall=true;
-                          });
-                          if(file1==null){
-                          if(await editHack(name.text, hackathon.image, start.text, end.text, venue.text, bio.text, link.text, int.parse(max.text), int.parse(min.text), hackathon.id)==200){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
-                            _isInAsyncCall=false;
-                          }
-                          else{
-                            _isInAsyncCall=false;
-                            final snackBar = SnackBar(
-                              content: Text(
-                                'Error.Please try again later.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
-                              ),
-                              backgroundColor:kConstantBlueColor ,
-                            );
-                            await Scaffold.of(context).showSnackBar(snackBar);
-                          }
-                          }
-                          else{
-                            if(await editHack(name.text, base64img, start.text, end.text, venue.text, bio.text, link.text, int.parse(max.text), int.parse(min.text), hackathon.id)==200){
+                        ButtonTheme(
+                          height: 38,
+                          minWidth: 100,
+                          child: FlatButton(onPressed: ()async{
+                            setState(() {
+                              _isInAsyncCall=true;
+                            });
+                            if(file1==null){
+                            if(await editHack(name.text, hackathon.image, start.text, end.text, venue.text, bio.text, link.text, int.parse(max.text), int.parse(min.text), hackathon.id)==200){
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
                               _isInAsyncCall=false;
                             }
@@ -366,8 +357,25 @@ class _EditHackState extends State<EditHack> {
                               );
                               await Scaffold.of(context).showSnackBar(snackBar);
                             }
-                          }
-                        },child: Text('Confirm',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                            }
+                            else{
+                              if(await editHack(name.text, base64img, start.text, end.text, venue.text, bio.text, link.text, int.parse(max.text), int.parse(min.text), hackathon.id)==200){
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
+                                _isInAsyncCall=false;
+                              }
+                              else{
+                                _isInAsyncCall=false;
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    'Error.Please try again later.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                  ),
+                                  backgroundColor:kConstantBlueColor ,
+                                );
+                                await Scaffold.of(context).showSnackBar(snackBar);
+                              }
+                            }
+                          },child: Text('Confirm',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                        ),
                       ],
                     ),
                   ),

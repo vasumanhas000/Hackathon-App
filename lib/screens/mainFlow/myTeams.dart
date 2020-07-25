@@ -79,19 +79,24 @@ class _MyTeamsState extends State<MyTeams> {
                           future: getTeams(),
                           builder: (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.data == null) {
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 200),
-                                child: Container(
-                                  child: SpinKitFoldingCube(
-                                    size: 50,
-                                    color: kConstantBlueColor,
+                              return Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 120),
+                                  child: Container(
+                                    child: SpinKitFoldingCube(
+                                      size: 50,
+                                      color: kConstantBlueColor,
+                                    ),
                                   ),
                                 ),
                               );
                             }
                             else if(snapshot.data.teams.length==0){
                               return Center(
-                                child: Text('You have no teams'),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 120),
+                                  child: Text('You have no teams'),
+                                ),
                               );
                             }
                             else{

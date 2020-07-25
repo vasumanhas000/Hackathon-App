@@ -170,25 +170,29 @@ class _UserDetailsState extends State<UserDetails> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    RaisedButton(
-                      onPressed: () async {
-                        final result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => UserInvite(
-                                      admin: admin,
-                                      email: user.email,
-                                    )));
-                        Scaffold.of(context)
-                          ..removeCurrentSnackBar()
-                          ..showSnackBar(SnackBar(content: Text("$result",style: TextStyle(fontFamily: 'Montserrat',color:Colors.white),),backgroundColor: result!=null?kConstantBlueColor:Colors.white,));
-                      },
-                      child: Text(
-                        'Invite',
-                        style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                    ButtonTheme(
+                      height: 38,
+                      minWidth: 100,
+                      child: FlatButton(
+                        onPressed: () async {
+                          final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserInvite(
+                                        admin: admin,
+                                        email: user.email,
+                                      )));
+                          Scaffold.of(context)
+                            ..removeCurrentSnackBar()
+                            ..showSnackBar(SnackBar(content: Text("$result",style: TextStyle(fontFamily: 'Montserrat',color:Colors.white),),backgroundColor: result!=null?kConstantBlueColor:Colors.white,));
+                        },
+                        child: Text(
+                          'Invite',
+                          style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),
+                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                        color: kConstantBlueColor,
                       ),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                      color: kConstantBlueColor,
                     )
                   ],
                 ),

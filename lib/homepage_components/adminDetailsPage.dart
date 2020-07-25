@@ -146,32 +146,40 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(right: 16),
-                            child: RaisedButton(onPressed: ()async{
-                              setState(() {
-                                _isInAsyncCall=true;
-                              });
-                             if(await deleteHack(hackathon.id)==200){
-                               setState(() {
-                                 _isInAsyncCall=false;
-                               });
-                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
-                             }
-                            },child: Text('Delete',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: Colors.white)),),
+                            child: ButtonTheme(
+                              height: 38,
+                              minWidth: 100,
+                              child: FlatButton(onPressed: ()async{
+                                setState(() {
+                                  _isInAsyncCall=true;
+                                });
+                               if(await deleteHack(hackathon.id)==200){
+                                 setState(() {
+                                   _isInAsyncCall=false;
+                                 });
+                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
+                               }
+                              },child: Text('Delete',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: Colors.white,width: 2)),),
+                            ),
                           ),
-                          RaisedButton(onPressed: (){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>EditHack(hackathon: hackathon,)));
-                          },child: Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: Text('Edit',style: TextStyle(fontFamily: 'Montserrat'),),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Icon(Icons.edit,size: 16,color: kConstantBlueColor,),
-                              ),
-                            ],
-                          ),color: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),)
+                          ButtonTheme(
+                            height: 38,
+                            minWidth: 100,
+                            child: FlatButton(onPressed: (){
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>EditHack(hackathon: hackathon,)));
+                            },child: Row(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 4),
+                                  child: Text('Edit',style: TextStyle(fontFamily: 'Montserrat',fontSize: 16,color: kConstantBlueColor),),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(5,0,0,3),
+                                  child: Icon(Icons.edit,size: 18,color: kConstantBlueColor,),
+                                ),
+                              ],
+                            ),color: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                          )
                         ],
                       ),
                     ),
