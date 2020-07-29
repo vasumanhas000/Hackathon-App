@@ -206,7 +206,7 @@ class _AddHackState extends State<AddHack> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.datetime,
                         decoration: kTextFieldDecoration,
                         style: TextStyle(
                           color: Colors.black,
@@ -248,7 +248,7 @@ class _AddHackState extends State<AddHack> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
-                        keyboardType: TextInputType.datetime,
+                        keyboardType: TextInputType.number,
                         decoration: kTextFieldDecoration,
                         style: TextStyle(
                           color: Colors.black,

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,15 +10,22 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class UserDetails extends StatefulWidget {
-  final UserSearch user;
+  final user;
   UserDetails({@required this.user});
   @override
   _UserDetailsState createState() => _UserDetailsState(this.user);
 }
 
 class _UserDetailsState extends State<UserDetails> {
+  final _auth = FirebaseAuth.instance;
+  String Token;
   Future getUser() async {
-    Map<String, String> headers = {"authtoken": "vaibhav"};
+    FirebaseUser user = await _auth.currentUser();
+    Token= await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
+    Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
         "https://hackportal.azurewebsites.net/users/getuserprofile",
         headers: headers);
@@ -43,9 +51,8 @@ class _UserDetailsState extends State<UserDetails> {
       }
     }
   }
-
   List admin = [];
-  UserSearch user;
+  var user;
   _UserDetailsState(this.user);
   @override
   void initState() {
@@ -67,7 +74,7 @@ class _UserDetailsState extends State<UserDetails> {
                 padding: const EdgeInsets.fromLTRB(22, 32, 8, 0),
                 child: FittedBox(
                   child: Text(
-                    user.name,
+                    user['name'],
                     style:
                     TextStyle(fontSize: 32,fontWeight: FontWeight.w600),
                   ),
@@ -85,14 +92,14 @@ class _UserDetailsState extends State<UserDetails> {
                 padding: const EdgeInsets.fromLTRB(22, 5, 0, 0),
                 child: FittedBox(
                   child: Text(
-                    user.email,
+                    user['email'],
                     style: TextStyle(fontSize: 18),
                   ),
                   fit: BoxFit.contain,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                 child: Text(
                   'University Name:',
                   style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
@@ -102,14 +109,14 @@ class _UserDetailsState extends State<UserDetails> {
                 padding: const EdgeInsets.fromLTRB(22, 5, 0, 0),
                 child: FittedBox(
                   child: Text(
-                    user.college,
+                    user['college'],
                     style: TextStyle(fontSize: 18),
                   ),
                   fit: BoxFit.contain,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                 child: Text(
                   'Year of graduation',
                   style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
@@ -119,14 +126,14 @@ class _UserDetailsState extends State<UserDetails> {
                 padding: const EdgeInsets.fromLTRB(22, 5, 0, 0),
                 child: FittedBox(
                   child: Text(
-                    user.year,
+                    user['expectedGraduation'],
                     style: TextStyle(fontSize: 18),
                   ),
                   fit: BoxFit.contain,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                 child: Text(
                   'Description:',
                   style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
@@ -135,22 +142,22 @@ class _UserDetailsState extends State<UserDetails> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(22, 5, 6, 0),
                 child: Text(
-                  user.bio,
+                  user['bio'],
                   style: TextStyle(fontSize: 18),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                 child: Text(
                   'Skills:',
                   style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                 ),
               ),
               ListView.builder(
-                  itemCount: user.skills.length,
+                  itemCount: user['skills'].length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    if (user.skills.length == 0) {
+                    if (user['skills'].length == 0) {
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
                         child: Text('No Skills'),
@@ -159,7 +166,7 @@ class _UserDetailsState extends State<UserDetails> {
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(22, 8, 0, 0),
                         child: Text(
-                          user.skills[index],
+                          user['skills'][index],
                           style: TextStyle(fontSize: 18),
                         ),
                       );
@@ -180,7 +187,7 @@ class _UserDetailsState extends State<UserDetails> {
                               MaterialPageRoute(
                                   builder: (context) => UserInvite(
                                         admin: admin,
-                                        email: user.email,
+                                        email: user['email'],
                                       )));
                           Scaffold.of(context)
                             ..removeCurrentSnackBar()

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/screens/mainFlow/myTeams.dart';
-import 'homepage.dart';
+import 'package:hackapp/screens/mainFlow/newHomepage.dart';
 import 'search.dart';
 import 'Profile.dart';
 
@@ -19,7 +19,7 @@ class _FlowPageState extends State<FlowPage> {
   _FlowPageState(this.currentIndex);
   int currentIndex;
   static List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
+    NewHomePage(),
     SearchPage(),
     MyTeams(),
     ProfilePage(),

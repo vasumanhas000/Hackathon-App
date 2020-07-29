@@ -18,39 +18,25 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   AnimationController controller;
-  Future getProfile(String token) async {
-    Map<String, String> headers = {"authtoken": token};
-    var response = await http.get(
-        "https://hackportal.azurewebsites.net/users/getuserprofile",
-        headers: headers);
-    print(response.body);
-    print(response.statusCode);
-    return response.statusCode;
-  }
-
   final _auth = FirebaseAuth.instance;
-
+  // ignore: non_constant_identifier_names
+  String Token;
   Future handleAuth() async {
     FirebaseUser user = await _auth.currentUser();
     if (user != null) {
-      String Token = await user.getIdToken().then((result) {
+      Token= await user.getIdToken().then((result) {
         String token = result.token;
+        print(token);
         return token;
       });
-      if (user.isEmailVerified) {
-        if (await getProfile(Token) == 404) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Form0()));
-        } else if (await getProfile(Token) == 200) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-              '/first', (Route<dynamic> route) => false);
-        }
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
       }
-    } else {
+    else{
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
     }
-  }
+    }
+
 
   @override
   void initState() {

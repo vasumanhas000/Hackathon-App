@@ -12,17 +12,17 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/invites/userDetails.dart';
 import 'package:hackapp/components/sizeConfig.dart';
 
-class ResultsPage extends StatefulWidget {
+class NResultsPage extends StatefulWidget {
   final List list;
-  ResultsPage({@required this.list});
+  NResultsPage({@required this.list});
   @override
-  _ResultsPageState createState() => _ResultsPageState(this.list);
+  _NResultsPageState createState() => _NResultsPageState(this.list);
 }
 
-class _ResultsPageState extends State<ResultsPage> {
+class _NResultsPageState extends State<NResultsPage> {
   GlobalKey<PaginatorState> paginatorGlobalKey = GlobalKey();
   List list;
-  _ResultsPageState(this.list);
+  _NResultsPageState(this.list);
   List<dynamic> listItemsGetter(Users hackData) {
     List<dynamic> list = [];
     hackData.users.forEach((value) {
@@ -47,32 +47,11 @@ class _ResultsPageState extends State<ResultsPage> {
       return token;
     });
     await getUser();
-    if(list.length==0){
-    try {
-      Map<String, String> headers = {"authtoken": Token};
-      String url = Uri.encodeFull(
-          'https://hackportal.azurewebsites.net/users/getuserprofiles/$page');
-      http.Response response = await http.get(url,headers:headers);
-      print(response);
-      return Users.fromResponse(response);
-    } catch (e) {
-      if (e is IOException) {
-        return Users.withError(
-            'Please check your internet connection.');
-      } else {
-        print(e.toString());
-        return Users.withError('Something went wrong.');
-      }
-    }
-  }
-    if(list.length!=0){
-      try {
-        Map<String, String> headers = {"authtoken": Token,"Content-Type": "application/json"};
+       try {
+        Map<String, String> headers = {"authtoken": Token};
         String url = Uri.encodeFull(
-            'https://hackportal.azurewebsites.net/users/searchuserprofiles/$page');
-        http.Response response = await http.post(url,headers:headers,body: jsonEncode({
-          "skills": list,
-        }));
+            'https://hackportal.azurewebsites.net/users/getuserprofiles/$page');
+        http.Response response = await http.get(url,headers:headers);
         print(response);
         return Users.fromResponse(response);
       } catch (e) {
@@ -86,50 +65,49 @@ class _ResultsPageState extends State<ResultsPage> {
       }
     }
 
-  }
 
   Widget listItemBuilder(value, int index){
     if(value['_id']==userId){
       return SizedBox(height: 0,);
     }
     else{
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-      child: GestureDetector(
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>UserDetails(user: value,)));
-        },
-        child: Container(
-          height: 200,
-          decoration: BoxDecoration(
-            color: kConstantBlueColor,
-            borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(30),
-                topLeft: Radius.circular(30)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16,16,8,0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(
-                  child: Text(
-                    value['name'],
-                    style: TextStyle(
-                        color: Colors.white, fontSize: 26),
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>UserDetails(user: value,)));
+          },
+          child: Container(
+            height: 200,
+            decoration: BoxDecoration(
+              color: kConstantBlueColor,
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(30),
+                  topLeft: Radius.circular(30)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16,16,8,0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FittedBox(
+                    child: Text(
+                      value['name'],
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 26),
+                    ),
+                    fit: BoxFit.contain,
                   ),
-                  fit: BoxFit.contain,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(26,16,0,0),
-                  child: Text(truncateWithEllipsis(250, value['bio']),style: TextStyle(color: Colors.white,fontSize: 14),),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(26,16,0,0),
+                    child: Text(truncateWithEllipsis(250, value['bio']),style: TextStyle(color: Colors.white,fontSize: 14),),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );}
+      );}
   }
 
   Widget errorWidgetMaker(Users hackData, retryListener) {
@@ -259,39 +237,39 @@ class _ResultsPageState extends State<ResultsPage> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16,24,16,24),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Search Results',
-                      style: TextStyle(fontSize: 26, fontFamily: 'Muli',fontWeight: FontWeight.w600),
-                    ),
-                    Image(image: AssetImage('images/stc.png'),height: SizeConfig.blockSizeVertical*3.15,)
-                  ],
-                ),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16,24,16,24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Search Results',
+                    style: TextStyle(fontSize: 26, fontFamily: 'Muli',fontWeight: FontWeight.w600),
+                  ),
+                  Image(image: AssetImage('images/stc.png'),height: SizeConfig.blockSizeVertical*3.15,)
+                ],
               ),
-              Expanded(
-                flex: 8,
-                child: Paginator.listView(
-                  key: paginatorGlobalKey,
-                  pageLoadFuture: sendUsersDataRequest,
-                  pageItemsGetter: listItemsGetter,
-                  listItemBuilder: listItemBuilder,
-                  loadingWidgetBuilder: loadingWidgetMaker,
-                  errorWidgetBuilder: errorWidgetMaker,
-                  emptyListWidgetBuilder: emptyListWidgetMaker,
-                  totalItemsGetter: totalPagesGetter,
-                  pageErrorChecker: pageErrorChecker,
-                  scrollPhysics: BouncingScrollPhysics(),
-                ),
+            ),
+            Expanded(
+              flex: 8,
+              child: Paginator.listView(
+                key: paginatorGlobalKey,
+                pageLoadFuture: sendUsersDataRequest,
+                pageItemsGetter: listItemsGetter,
+                listItemBuilder: listItemBuilder,
+                loadingWidgetBuilder: loadingWidgetMaker,
+                errorWidgetBuilder: errorWidgetMaker,
+                emptyListWidgetBuilder: emptyListWidgetMaker,
+                totalItemsGetter: totalPagesGetter,
+                pageErrorChecker: pageErrorChecker,
+                scrollPhysics: BouncingScrollPhysics(),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
     );
   }
 }

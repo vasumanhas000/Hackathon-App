@@ -10,7 +10,6 @@ import 'package:hackapp/homepage_components/adminDetailsPage.dart';
 import 'package:hackapp/components/sizeConfig.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:hackapp/screens/mainFlow/flow.dart';
-import 'package:hackapp/screens/mainFlow/homepage.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -69,7 +68,7 @@ class _EditHackState extends State<EditHack> {
   }
 
   void _moveToSignInScreen(BuildContext context) =>
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminDetailsPage(hackathon: hackathon,)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminDetailsPage(hackId: hackathon.id,)));
   _dismissKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
@@ -217,7 +216,7 @@ class _EditHackState extends State<EditHack> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: TextField(
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.datetime,
                       decoration: kTextFieldDecoration,
                       controller: end,
                       style: TextStyle(
@@ -256,7 +255,7 @@ class _EditHackState extends State<EditHack> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: TextField(
-                      keyboardType: TextInputType.datetime,
+                      keyboardType: TextInputType.number,
                       decoration: kTextFieldDecoration,
                       controller: max,
                       style: TextStyle(
@@ -331,7 +330,7 @@ class _EditHackState extends State<EditHack> {
                             height: 38,
                             minWidth: 100,
                             child: FlatButton(onPressed: (){
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminDetailsPage(hackathon: hackathon,)));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminDetailsPage(hackId: hackathon.id,)));
                             },child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 16),),color: Colors.white,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 2)),),
                           ),
                         ),
@@ -344,7 +343,7 @@ class _EditHackState extends State<EditHack> {
                             });
                             if(file1==null){
                             if(await editHack(name.text, hackathon.image, start.text, end.text, venue.text, bio.text, link.text, int.parse(max.text), int.parse(min.text), hackathon.id)==200){
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminDetailsPage(hackId: hackathon.id,)));
                               _isInAsyncCall=false;
                             }
                             else{

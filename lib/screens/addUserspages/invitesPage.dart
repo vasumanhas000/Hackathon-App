@@ -93,7 +93,7 @@ class _AcceptInviteState extends State<AcceptInvite> {
             ),
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16,16,8,0),
+                padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -127,31 +127,31 @@ class _AcceptInviteState extends State<AcceptInvite> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 25),
-                                      child: Text('Project Description:',style: TextStyle(color: Colors.white,fontSize: 15),),
+                                      child: Text('Project Description:',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 10),
-                                      child: Text(snapshot.data.description,style: TextStyle(color: Colors.white,fontSize: 17),),
+                                      child: Text(snapshot.data.description,style: TextStyle(color: Colors.white,fontSize: 16),),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(2,10,0,0),
-                                      child: Text('Skills Required:',style: TextStyle(color: Colors.white,fontSize: 15),),
+                                      child: Text('Skills Required:',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                     ),
                                     ListView.builder(itemCount: snapshot.data.skills.length,
                                         shrinkWrap: true,
                                         itemBuilder: (BuildContext context, int index){
                                           return Padding(
                                             padding: const EdgeInsets.fromLTRB(2, 3, 0, 0),
-                                            child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 17),),
+                                            child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 16),),
                                           );
                                         }),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
-                                      child: Text('Creator:',style: TextStyle(color: Colors.white,fontSize: 15),),
+                                      child: Text('Creator:',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                     ),
                                     Padding(
                                             padding: const EdgeInsets.fromLTRB(2,3,0,0),
-                                            child: Text(snapshot.data.cName,style: TextStyle(color: Colors.white,fontSize: 17),),
+                                            child: Text(snapshot.data.cName,style: TextStyle(color: Colors.white,fontSize: 16),),
                                           ),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(0,32,8,0),

@@ -65,7 +65,7 @@ class _MyTeamsState extends State<MyTeams> {
                             border:Border.all(color: kConstantBlueColor,width: 2.5),
                           ),
                           child: Center(child: IconButton(icon: Icon(Icons.email,color: kConstantBlueColor,size: 20,), onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Page2()));
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Page2()));
                           })),
                         ),
                       ),

@@ -53,7 +53,7 @@ class _NTeamDetailsState extends State<NTeamDetails> {
       backgroundColor: kConstantBlueColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16,16,8,0),
+          padding: const EdgeInsets.fromLTRB(16,0,8,0),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -73,6 +73,7 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                     }
                     else{
                       return ListView.builder(itemCount: 1,
+                          physics: AlwaysScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index){
                             return Padding(
@@ -100,6 +101,7 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,10,0,0),
                                     child: ListView.builder(itemCount: snapshot.data.skills.length,
+                                        physics: NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         itemBuilder: (BuildContext context, int index){
                                           return Padding(
@@ -115,6 +117,7 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(2,10,0,0),
                                     child: ListView.builder(itemCount: snapshot.data.members.length,
+                                        physics: NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         itemBuilder: (BuildContext context, int index){
                                           return Padding(
