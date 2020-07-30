@@ -38,7 +38,7 @@ class _AddHackState extends State<AddHack> {
   Future postHack(String name, String image, String start, String end,
       String venue, String bio, String link, int max, int min) async {
     FirebaseUser user = await _auth.currentUser();
-    Token= await user.getIdToken().then((result) {
+    Token = await user.getIdToken().then((result) {
       String token = result.token;
       return token;
     });
@@ -58,24 +58,113 @@ class _AddHackState extends State<AddHack> {
           "minimumTeamSize": min,
           "maximumTeamSize": max,
           "eventImage": image,
-          'eventUrl':link,
+          'eventUrl': link,
         }));
     print(response.statusCode);
     return response.statusCode;
   }
 
-  String name, startDate, endDate, venue, description, link;
+  TextEditingController startDate=TextEditingController(), endDate=TextEditingController();
+  String name, venue, description, link;
   int min, max;
   _dismissKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 
+  DateTime selectedDate = DateTime.now();
   void _moveToSignInScreen(BuildContext context) => Navigator.pushReplacement(
       context,
       MaterialPageRoute(
           builder: (context) => FlowPage(
                 currentIndex: 0,
               )));
+  Future<Null> _selectDate(
+      BuildContext context, TextEditingController controller) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1901, 1),
+        lastDate: DateTime(2100));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      List pickedL=  picked.toString().split(' ');
+      List pickedList= pickedL[0].toString().split('-');
+        controller.value = TextEditingValue(text: pickedList[2] +'/'+ pickedList[1]+ "/" + pickedList[0]);
+      });
+  }
+ String getMonth(int number){
+    String month;
+    if(number==01){
+      setState(() {
+        month='January';
+      });
+    }
+    if(number==02){
+      setState(() {
+        month='February';
+      });
+    }
+    if(number==03){
+      setState(() {
+        month='March';
+      });
+    }
+    if(number==04){
+      setState(() {
+        month='April';
+      });
+    }
+    if(number==05){
+      setState(() {
+        month='May';
+      });
+    }
+    if(number==06){
+      setState(() {
+        month='June';
+      });
+    }
+    if(number==07){
+      setState(() {
+        month='July';
+      });
+    }
+    if(number==08){
+      setState(() {
+        month='August';
+      });
+    }
+    if(number==09){
+      setState(() {
+        month='September';
+      });
+    }
+    if(number==10){
+      setState(() {
+        month='October';
+      });
+    }
+    if(number==11){
+      setState(() {
+        month='November';
+      });
+    }
+    if(number==12){
+      setState(() {
+        month='December';
+      });
+    }
+    return month;
+ }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    startDate.dispose();
+    endDate.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -107,10 +196,9 @@ class _AddHackState extends State<AddHack> {
                             child: Text(
                               'Add Hack',
                               style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: 'Muli',
-                                fontWeight: FontWeight.w600
-                              ),
+                                  fontSize: 24,
+                                  fontFamily: 'Muli',
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                           Image(
@@ -134,7 +222,7 @@ class _AddHackState extends State<AddHack> {
                         keyboardType: TextInputType.text,
                         decoration: kTextFieldDecoration,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
                         ),
                         onChanged: (value) {
@@ -184,16 +272,21 @@ class _AddHackState extends State<AddHack> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: TextField(
-                        keyboardType: TextInputType.datetime,
-                        decoration: kTextFieldDecoration,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Montserrat',
-                        ),
-                        onChanged: (value) {
-                          startDate = value;
+                      child: GestureDetector(
+                        onTap: () {
+                          _selectDate(context, startDate);
                         },
+                        child: AbsorbPointer(
+                          child: TextField(
+                            keyboardType: TextInputType.datetime,
+                            decoration: kTextFieldDecoration,
+                            controller: startDate,
+                            style: TextStyle(
+                              color: kConstantBlueColor,
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     Container(
@@ -205,16 +298,20 @@ class _AddHackState extends State<AddHack> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: TextField(
-                        keyboardType: TextInputType.datetime,
-                        decoration: kTextFieldDecoration,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Montserrat',
-                        ),
-                        onChanged: (value) {
-                          endDate = value;
+                      child: GestureDetector(
+                        onTap: () {
+                          _selectDate(context, endDate);
                         },
+                        child: AbsorbPointer(
+                          child: TextField(
+                            controller: endDate,
+                            decoration: kTextFieldDecoration,
+                            style: TextStyle(
+                              color: kConstantBlueColor,
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     Container(
@@ -230,7 +327,7 @@ class _AddHackState extends State<AddHack> {
                         keyboardType: TextInputType.number,
                         decoration: kTextFieldDecoration,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
                         ),
                         onChanged: (value) {
@@ -251,7 +348,7 @@ class _AddHackState extends State<AddHack> {
                         keyboardType: TextInputType.number,
                         decoration: kTextFieldDecoration,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
                         ),
                         onChanged: (value) {
@@ -270,7 +367,7 @@ class _AddHackState extends State<AddHack> {
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
                         style: TextStyle(
-                          color: Colors.black,
+                          color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
                         ),
                         decoration: kTextFieldDecoration,
@@ -290,7 +387,7 @@ class _AddHackState extends State<AddHack> {
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
                         style: TextStyle(
-                          color: Colors.black,
+                          color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
                         ),
                         decoration: kTextFieldDecoration,
@@ -311,7 +408,7 @@ class _AddHackState extends State<AddHack> {
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
                         style: TextStyle(
-                          color: Colors.black,
+                          color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
                         ),
                         decoration: kTextFieldDecoration,
@@ -331,13 +428,25 @@ class _AddHackState extends State<AddHack> {
                               height: 38,
                               minWidth: 100,
                               child: FlatButton(
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 2)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                    side: BorderSide(
+                                        color: kConstantBlueColor, width: 2)),
                                 onPressed: () {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(
-                                    currentIndex: 0,
-                                  )));
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => FlowPage(
+                                                currentIndex: 0,
+                                              )));
                                 },
-                                child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 16),),
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      color: kConstantBlueColor,
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16),
+                                ),
                                 color: Colors.white,
                               ),
                             ),
@@ -346,24 +455,41 @@ class _AddHackState extends State<AddHack> {
                             minWidth: 100,
                             height: 38,
                             child: FlatButton(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4)),
                               onPressed: () async {
                                 setState(() {
-                                  _isInAsyncCall=true;
+                                  _isInAsyncCall = true;
                                 });
-                                if(await postHack(name, base64img, startDate,
-                                    endDate, venue, description, link, max, min)==200){
+                                if (await postHack(
+                                        name,
+                                        base64img,
+                                        startDate.text,
+                                        endDate.text,
+                                        venue,
+                                        description,
+                                        link,
+                                        max,
+                                        min) ==
+                                    200) {
                                   setState(() {
-                                    _isInAsyncCall=false;
+                                    _isInAsyncCall = false;
                                   });
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(
-                                    currentIndex: 0,
-                                  )));
-                                };
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => FlowPage(
+                                                currentIndex: 0,
+                                              )));
+                                }
+                                ;
                               },
                               child: Text(
                                 'Confirm',
-                                style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16),
                               ),
                               color: kConstantBlueColor,
                             ),

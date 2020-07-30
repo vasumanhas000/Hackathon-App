@@ -26,7 +26,7 @@ class _EditUserState extends State<EditUser> {
     });
     Map<String, String> headers = {"authtoken": Token,"Content-Type": "application/json"};
     var response = await http.patch(
-        "https://hackportal.azurewebsites.net/users/updateuserprofile",
+        "https://hackportal.azurewebsites.net/users",
         headers: headers,body: jsonEncode({
       "name":name,
       "college":university,

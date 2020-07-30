@@ -1,11 +1,10 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/screens/addUserspages/nonAdminTeam.dart';
 import 'package:hackapp/screens/addUserspages/teamDetails.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:dio/dio.dart';
 import 'package:hackapp/components/User.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/screens/addUserspages/page2.dart';
@@ -17,19 +16,25 @@ class MyTeams extends StatefulWidget {
 
 class _MyTeamsState extends State<MyTeams> {
   final _auth = FirebaseAuth.instance;
+  DioCacheManager _dioCacheManager;
   String Token;
   Future getTeams()async{
+    _dioCacheManager = DioCacheManager(CacheConfig());
+    Options _cacheOptions = buildCacheOptions(Duration(days: 7),forceRefresh: true);
+    Dio _dio = Dio();
+    _dio.interceptors.add(_dioCacheManager.interceptor);
     FirebaseUser user = await _auth.currentUser();
     Token= await user.getIdToken().then((result) {
       String token = result.token;
       return token;
     });
-    Map<String, String> headers = {"authtoken": Token};
-    final String url= "https://hackportal.azurewebsites.net/users/getuserprofile";
-    var response = await http.get(
-        url, headers: headers);
+    _dio.options.headers["authtoken"] = "$Token";
+//    Map<String, String> headers = {"authtoken": Token};
+    final String url= "https://hackportal.azurewebsites.net/users";
+    Response response = await _dio.get(
+        url,options: _cacheOptions);
     if(response.statusCode==200){
-      var teamsJson=jsonDecode(response.body);
+      var teamsJson=response.data;
       User team= User(
         id: teamsJson["_id"],
         teams: teamsJson["teamsInfo"],

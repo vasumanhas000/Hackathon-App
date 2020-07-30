@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -9,9 +10,9 @@ class Hackathons {
   int total;
   int nItems;
 
-  Hackathons.fromResponse(http.Response response) {
+  Hackathons.fromResponse(Response response) {
     this.statusCode = response.statusCode;
-    var jsonData = json.decode(response.body);
+    var jsonData = response.data;
     print(jsonData);
     hacks = jsonData['documents'];
     total = jsonData['totalCount'];

@@ -75,6 +75,86 @@ class _EditHackState extends State<EditHack> {
   bool _isInAsyncCall=false;
   var _byteImage;
   TextEditingController name,start,end,min,max,venue,bio,link;
+  DateTime selectedDate = DateTime.now();
+  String getMonth(int number){
+    String month;
+    if(number==01){
+      setState(() {
+        month='January';
+      });
+    }
+    if(number==02){
+      setState(() {
+        month='February';
+      });
+    }
+    if(number==03){
+      setState(() {
+        month='March';
+      });
+    }
+    if(number==04){
+      setState(() {
+        month='April';
+      });
+    }
+    if(number==05){
+      setState(() {
+        month='May';
+      });
+    }
+    if(number==06){
+      setState(() {
+        month='June';
+      });
+    }
+    if(number==07){
+      setState(() {
+        month='July';
+      });
+    }
+    if(number==08){
+      setState(() {
+        month='August';
+      });
+    }
+    if(number==09){
+      setState(() {
+        month='September';
+      });
+    }
+    if(number==10){
+      setState(() {
+        month='October';
+      });
+    }
+    if(number==11){
+      setState(() {
+        month='November';
+      });
+    }
+    if(number==12){
+      setState(() {
+        month='December';
+      });
+    }
+    return month;
+  }
+  Future<Null> _selectDate(
+      BuildContext context, TextEditingController controller) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1901, 1),
+        lastDate: DateTime(2100));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        List pickedL=  picked.toString().split(' ');
+        List pickedList= pickedL[0].toString().split('-');
+        controller.value = TextEditingValue(text: pickedList[2] +'/'+ pickedList[1]+ "/" + pickedList[0]);
+      });
+  }
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -196,13 +276,20 @@ class _EditHackState extends State<EditHack> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    child: TextField(
-                      keyboardType: TextInputType.datetime,
-                      decoration: kTextFieldDecoration,
-                      controller: start,
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
+                    child: GestureDetector(
+                      onTap: (){
+                        _selectDate(context, start);
+                      },
+                      child: AbsorbPointer(
+                        child: TextField(
+                          keyboardType: TextInputType.datetime,
+                          decoration: kTextFieldDecoration,
+                          controller: start,
+                          style: TextStyle(
+                            color: kConstantBlueColor,
+                            fontFamily: 'Montserrat',
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -215,15 +302,22 @@ class _EditHackState extends State<EditHack> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    child: TextField(
-                      keyboardType: TextInputType.datetime,
-                      decoration: kTextFieldDecoration,
-                      controller: end,
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                      ),
+                    child: GestureDetector(
+                      onTap: (){
+                        _selectDate(context, end);
+                      },
+                      child: AbsorbPointer(
+                        child: TextField(
+                          keyboardType: TextInputType.datetime,
+                          decoration: kTextFieldDecoration,
+                          controller: end,
+                          style: TextStyle(
+                            color: kConstantBlueColor,
+                            fontFamily: 'Montserrat',
+                          ),
 
+                        ),
+                      ),
                     ),
                   ),
                   Container(

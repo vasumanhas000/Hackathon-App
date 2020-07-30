@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/screens/loginFlow/loginPage.dart';
@@ -7,9 +6,9 @@ import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:dio/dio.dart';
 import 'package:hackapp/components/sizeConfig.dart';
-import 'package:hackapp/screens/addUserspages/nonAdminTeam.dart';
-import 'package:hackapp/screens/addUserspages/teamDetails.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
@@ -28,18 +27,24 @@ class _ProfilePageState extends State<ProfilePage> {
      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
     }
   }
+  DioCacheManager _dioCacheManager;
   Future<User> getUser() async {
+    _dioCacheManager = DioCacheManager(CacheConfig());
+    Options _cacheOptions = buildCacheOptions(Duration(days: 7),forceRefresh: true);
+    Dio _dio = Dio();
+    _dio.interceptors.add(_dioCacheManager.interceptor);
     FirebaseUser user = await _auth.currentUser();
     Token= await user.getIdToken().then((result) {
       String token = result.token;
       return token;
     });
-    Map<String, String> headers = {"authtoken": Token};
-    var response = await http.get(
-        "https://hackportal.azurewebsites.net/users/getuserprofile",
-        headers: headers);
+    _dio.options.headers['content-Type'] = 'application/json';
+    _dio.options.headers["authtoken"] = "$Token";
+//    Map<String, String> headers = {"authtoken": Token};
+    Response response = await _dio.get(
+        "https://hackportal.azurewebsites.net/users",options: _cacheOptions);
     if (response.statusCode == 200) {
-      var usersJson = jsonDecode(response.body);
+      var usersJson = response.data;
       User user = User(
         name: usersJson['name'],
         college: usersJson['college'],

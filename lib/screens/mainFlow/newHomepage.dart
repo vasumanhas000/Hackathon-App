@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paginator/flutter_paginator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:dio/dio.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/sizeConfig.dart';
 import 'package:hackapp/homepage_components/addHack.dart';
@@ -32,7 +34,7 @@ class _NewHomePageState extends State<NewHomePage> {
   Future getUser() async{
     Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
-        "https://hackportal.azurewebsites.net/users/getuserprofile",
+        "https://hackportal.azurewebsites.net/users",
         headers: headers);
     if (response.statusCode == 200) {
       var usersJson = jsonDecode(response.body);
@@ -91,7 +93,12 @@ class _NewHomePageState extends State<NewHomePage> {
   }
   final auth = FirebaseAuth.instance;
   String Token;
+  DioCacheManager _dioCacheManager;
   Future<Hackathons> sendUsersDataRequest(int page) async {
+    _dioCacheManager = DioCacheManager(CacheConfig());
+    Options _cacheOptions = buildCacheOptions(Duration(days: 1,),forceRefresh: true);
+    Dio _dio = Dio();
+    _dio.interceptors.add(_dioCacheManager.interceptor);
     FirebaseUser user = await auth.currentUser();
     Token= await user.getIdToken().then((result) {
       String token = result.token;
@@ -100,10 +107,12 @@ class _NewHomePageState extends State<NewHomePage> {
     });
       try {
         await getUser();
-        Map<String, String> headers = {"authtoken": Token};
+        _dio.options.headers['content-Type'] = 'application/json';
+        _dio.options.headers["authtoken"] = "$Token";
+//        Map<String, String> headers = {"authtoken": Token};
         String url = Uri.encodeFull(
-            'https://hackportal.herokuapp.com/events/getevents/$page');
-        http.Response response = await http.get(url,headers:headers);
+            'https://hackportal.azurewebsites.net/events/getevents/$page');
+        Response response = await _dio.get(url);
         print(response);
         return Hackathons.fromResponse(response);
       } catch (e) {

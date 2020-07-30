@@ -31,7 +31,7 @@ class _SignInState extends State<SignIn> {
   Future getProfile(String token)async{
     Map<String, String> headers = {"authtoken": token};
     var response = await http.get(
-        "https://hackportal.azurewebsites.net/users/getuserprofile",
+        "https://hackportal.herokuapp.com/users",
         headers: headers);
     print(response.body);
     print(response.statusCode);
