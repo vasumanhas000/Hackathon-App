@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/Team.dart';
+import 'package:hackapp/screens/teamsPages/memberView.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -175,37 +176,45 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                                       shrinkWrap: true,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 0, 25, 10),
-                                          child: Container(
-                                              height: 45,
-                                              width: 350,
-                                              color: Color.fromRGBO(
-                                                  255, 255, 255, 0.25),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding: const EdgeInsets.fromLTRB(16,0,8,0),
-                                                    child: FittedBox(
-                                                      child: Text(
-                                            index == 0
-                                                        ? snapshot.data.members[index]
-                                                                ["name"] +
-                                                            ' (admin)'
-                                                        : snapshot.data.members[index]
-                                                            ["name"],
-                                            style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 16),
-                                          ),
-                                                      fit: BoxFit.contain,
+                                        return GestureDetector(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>MemberView(user: snapshot
+                                                .data
+                                                .members[index],
+                                              id: id,)));
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 25, 10),
+                                            child: Container(
+                                                height: 45,
+                                                width: 350,
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 0.25),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding: const EdgeInsets.fromLTRB(16,0,8,0),
+                                                      child: FittedBox(
+                                                        child: Text(
+                                              index == 0
+                                                          ? snapshot.data.members[index]
+                                                                  ["name"] +
+                                                              ' (admin)'
+                                                          : snapshot.data.members[index]
+                                                              ["name"],
+                                              style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 16),
+                                            ),
+                                                        fit: BoxFit.contain,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              )),
+                                                  ],
+                                                )),
+                                          ),
                                         );
                                       }),
                                 ),

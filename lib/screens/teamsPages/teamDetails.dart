@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/Team.dart';
+import 'package:hackapp/screens/teamsPages/adminMemberView.dart';
+import 'package:hackapp/screens/teamsPages/memberView.dart';
 import 'package:hackapp/screens/teamsPages/teamEdit.dart';
 import 'package:hackapp/screens/teamsPages/teamInvitesCRUD.dart';
 import 'package:http/http.dart' as http;
@@ -42,6 +44,7 @@ class _TeamDetailsState extends State<TeamDetails> {
           members: teamsJson["membersInfo"],
           eventName: teamsJson["nameOfEvent"],
           pendingRequests: teamsJson["pendingRequestsInfo"]);
+      print(team);
       return team;
     } else {
       print(response.statusCode);
@@ -182,38 +185,51 @@ class _TeamDetailsState extends State<TeamDetails> {
                                         physics: NeverScrollableScrollPhysics(),
                                         itemBuilder:
                                             (BuildContext context, int index) {
-                                          return Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 25, 10),
-                                            child: GestureDetector(
-                                                child: Container(
-                                                    height: 45,
-                                                    width: 350,
-                                                    color: Color.fromRGBO(
-                                                        255, 255, 255, 0.25),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: <Widget>[
-                                                        Padding(
-                                                          padding: const EdgeInsets.fromLTRB(16,0,8,0),
-                                                          child: FittedBox(
-                                                            fit: BoxFit.contain,
-                                                            child: Text(
-                                              index == 0
-                                                  ? snapshot.data.members[index]
-                                                                  ["name"] +
-                                                              ' (admin)'
-                                                  : snapshot.data.members[index]
-                                                              ["name"],
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16),
-                                            ),
+                                          return GestureDetector(
+                                            onTap:index==0?(){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>MemberView(user: snapshot
+                                                  .data
+                                                  .members[index],
+                                                id: id,)));
+                                            }:(){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminMemberView(user: snapshot
+                                                  .data
+                                                  .members[index],
+                                                id: id,)));
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.fromLTRB(
+                                                  0, 0, 25, 10),
+                                              child: GestureDetector(
+                                                  child: Container(
+                                                      height: 45,
+                                                      width: 350,
+                                                      color: Color.fromRGBO(
+                                                          255, 255, 255, 0.25),
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: <Widget>[
+                                                          Padding(
+                                                            padding: const EdgeInsets.fromLTRB(16,0,8,0),
+                                                            child: FittedBox(
+                                                              fit: BoxFit.contain,
+                                                              child: Text(
+                                                index == 0
+                                                    ? snapshot.data.members[index]
+                                                                    ["name"] +
+                                                                ' (admin)'
+                                                    : snapshot.data.members[index]
+                                                                ["name"],
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16),
+                                              ),
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ))),
+                                                        ],
+                                                      ))),
+                                            ),
                                           );
                                         }),
                                   ),
