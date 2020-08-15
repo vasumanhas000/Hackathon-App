@@ -32,7 +32,12 @@ class _FlowPageState extends State<FlowPage> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: SafeArea(child: _widgetOptions.elementAt(currentIndex)),
+        body: IndexedStack(index:currentIndex ,children: <Widget>[
+          NewHomePage(),
+          SearchPage(),
+          MyTeams(),
+          ProfilePage(),
+        ],),
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: true,
           showUnselectedLabels: false,

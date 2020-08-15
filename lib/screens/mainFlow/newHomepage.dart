@@ -32,12 +32,17 @@ class _NewHomePageState extends State<NewHomePage> {
     return list;
   }
   Future getUser() async{
-    Map<String, String> headers = {"authtoken": Token};
-    var response = await http.get(
-        "https://hackportal.azurewebsites.net/users",
-        headers: headers);
+    _dioCacheManager = DioCacheManager(CacheConfig());
+    Options _cacheOptions = buildCacheOptions(Duration(days: 7,));
+    Dio _dio = Dio();
+    _dio.interceptors.add(_dioCacheManager.interceptor);
+    _dio.options.headers['content-Type'] = 'application/json';
+    _dio.options.headers["authtoken"] = "$Token";
+//    Map<String, String> headers = {"authtoken": Token};
+    Response response = await _dio.get(
+        "https://hackportal.azurewebsites.net/users",options: _cacheOptions);
     if (response.statusCode == 200) {
-      var usersJson = jsonDecode(response.body);
+      var usersJson = response.data;
       id=usersJson['_id'];}
     print(id);
   }
@@ -49,7 +54,7 @@ class _NewHomePageState extends State<NewHomePage> {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminDetailsPage(hackId: value['_id'],)));
         }
         else{
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HackDetails(hackID: value['_id'],)));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>HackDetails(hackID: value['_id'],)));
         }
 
       },
@@ -95,10 +100,7 @@ class _NewHomePageState extends State<NewHomePage> {
   String Token;
   DioCacheManager _dioCacheManager;
   Future<Hackathons> sendUsersDataRequest(int page) async {
-    _dioCacheManager = DioCacheManager(CacheConfig());
-    Options _cacheOptions = buildCacheOptions(Duration(days: 1,),forceRefresh: true);
     Dio _dio = Dio();
-    _dio.interceptors.add(_dioCacheManager.interceptor);
     FirebaseUser user = await auth.currentUser();
     Token= await user.getIdToken().then((result) {
       String token = result.token;
@@ -171,47 +173,49 @@ class _NewHomePageState extends State<NewHomePage> {
       floatingActionButton: FloatingActionButton(onPressed: (){
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddHack()));
       },child: Icon(Icons.add,color: kConstantBlueColor,size: 32,),backgroundColor: Colors.white,),
-      body: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16,24,16,24),
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: Text(
-                    'Hacks',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Muli'
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16,24,16,24),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      'Hacks',
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Muli'
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Image(image: AssetImage('images/stc.png'),fit: BoxFit.contain,height: SizeConfig.safeBlockVertical*3.15,color: kConstantBlueColor,),
-              )
-            ],
-          ),
-          Expanded(
-            flex: 8,
-            child: Paginator.listView(
-              key: paginatorGlobalKey,
-              pageLoadFuture: sendUsersDataRequest,
-              pageItemsGetter: listItemsGetter,
-              listItemBuilder: listItemBuilder,
-              loadingWidgetBuilder: loadingWidgetMaker,
-              errorWidgetBuilder: errorWidgetMaker,
-              emptyListWidgetBuilder: emptyListWidgetMaker,
-              totalItemsGetter: totalPagesGetter,
-              pageErrorChecker: pageErrorChecker,
-              scrollPhysics: BouncingScrollPhysics(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Image(image: AssetImage('images/stc.png'),fit: BoxFit.contain,height: SizeConfig.safeBlockVertical*3.15,color: kConstantBlueColor,),
+                )
+              ],
             ),
-          ),
-        ],
+            Expanded(
+              flex: 8,
+              child: Paginator.listView(
+                key: paginatorGlobalKey,
+                pageLoadFuture: sendUsersDataRequest,
+                pageItemsGetter: listItemsGetter,
+                listItemBuilder: listItemBuilder,
+                loadingWidgetBuilder: loadingWidgetMaker,
+                errorWidgetBuilder: errorWidgetMaker,
+                emptyListWidgetBuilder: emptyListWidgetMaker,
+                totalItemsGetter: totalPagesGetter,
+                pageErrorChecker: pageErrorChecker,
+                scrollPhysics: BouncingScrollPhysics(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

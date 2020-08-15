@@ -89,6 +89,11 @@ String name='',college='',year='';
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 child: TextField(
+                 style: TextStyle(
+                    color: kConstantBlueColor,
+                    fontFamily: 'Montserrat',
+                    fontSize: 15,
+                  ),
                   onChanged: (val){
                     setState(() {
                       name=val;
@@ -120,6 +125,11 @@ String name='',college='',year='';
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 child: TextField(
+                  style: TextStyle(
+                    color: kConstantBlueColor,
+                    fontFamily: 'Montserrat',
+                    fontSize: 15,
+                  ),
                   onChanged: (val){
                     setState(() {
                       college=val;
@@ -138,6 +148,11 @@ String name='',college='',year='';
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 child: TextField(
+                  style: TextStyle(
+                    color: kConstantBlueColor,
+                    fontFamily: 'Montserrat',
+                    fontSize: 15,
+                  ),
                   keyboardType: TextInputType.datetime,
                   onChanged: (val){
                     year=val;

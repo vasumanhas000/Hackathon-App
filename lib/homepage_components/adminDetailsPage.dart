@@ -72,6 +72,19 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
     return response.statusCode;
   }
 
+
+  _launchURL(String url) async {
+    String webpage ;
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      webpage = "http://" + url;
+    }
+    if (await canLaunch(webpage)) {
+      await launch(webpage);
+    } else {
+      throw 'Could not launch $webpage';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -178,7 +191,7 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                launch(snapshot.data.url);
+                                _launchURL(snapshot.data.url);
                               },
                               child: Padding(
                                 padding: EdgeInsets.only(top: 2),

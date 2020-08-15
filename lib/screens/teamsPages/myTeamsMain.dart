@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
-import 'package:hackapp/screens/addUserspages/invitesPage.dart';
+import 'package:hackapp/screens/teamsPages/invitesPage.dart';
 import 'package:hackapp/screens/mainFlow/flow.dart';
 import 'package:hackapp/screens/mainFlow/myTeams.dart';
 import 'package:http/http.dart' as http;

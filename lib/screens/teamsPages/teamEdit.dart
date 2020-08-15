@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/components/Team.dart';
-import 'package:hackapp/screens/addUserspages/teamDetails.dart';
+import 'package:hackapp/screens/teamsPages/teamDetails.dart';
 import 'package:hackapp/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

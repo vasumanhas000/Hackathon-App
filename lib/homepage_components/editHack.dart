@@ -241,6 +241,7 @@ class _EditHackState extends State<EditHack> {
                       decoration: kTextFieldDecoration,
                       controller: name,
                       style: TextStyle(
+                        fontSize: 15,
                         color: kConstantBlueColor,
                         fontFamily: 'Montserrat',
                       ),
@@ -288,6 +289,7 @@ class _EditHackState extends State<EditHack> {
                           style: TextStyle(
                             color: kConstantBlueColor,
                             fontFamily: 'Montserrat',
+                            fontSize: 15,
                           ),
                         ),
                       ),
@@ -314,6 +316,7 @@ class _EditHackState extends State<EditHack> {
                           style: TextStyle(
                             color: kConstantBlueColor,
                             fontFamily: 'Montserrat',
+                            fontSize: 15,
                           ),
 
                         ),
@@ -336,6 +339,7 @@ class _EditHackState extends State<EditHack> {
                       style: TextStyle(
                         color: kConstantBlueColor,
                         fontFamily: 'Montserrat',
+                        fontSize: 15,
                       ),
                     ),
                   ),
@@ -355,6 +359,7 @@ class _EditHackState extends State<EditHack> {
                       style: TextStyle(
                         color: kConstantBlueColor,
                         fontFamily: 'Montserrat',
+                        fontSize: 15,
                       ),
                     ),
                   ),
@@ -372,6 +377,7 @@ class _EditHackState extends State<EditHack> {
                       style: TextStyle(
                         color: kConstantBlueColor,
                         fontFamily: 'Montserrat',
+                        fontSize: 15,
                       ),
                       decoration: kTextFieldDecoration,
                     ),
@@ -390,6 +396,7 @@ class _EditHackState extends State<EditHack> {
                       style: TextStyle(
                         color: kConstantBlueColor,
                         fontFamily: 'Montserrat',
+                        fontSize: 15,
                       ),
                       decoration: kTextFieldDecoration,
                       maxLines: 7,
@@ -409,6 +416,7 @@ class _EditHackState extends State<EditHack> {
                       style: TextStyle(
                         color: kConstantBlueColor,
                         fontFamily: 'Montserrat',
+                        fontSize: 15,
                       ),
                       decoration: kTextFieldDecoration,
                     ),

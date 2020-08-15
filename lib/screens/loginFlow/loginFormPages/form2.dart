@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/constants.dart';
-import 'package:hackapp/screens/mainFlow/flow.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:ui';
@@ -28,7 +27,7 @@ class _Form2State extends State<Form2> {
      "Content-Type": "application/json",
      "authtoken": Token,
    };
-   String url = 'https://hackportal.azurewebsites.net/users/setuserprofile';
+   String url = 'https://hackportal.azurewebsites.net/users';
    var response = await http.post(url,
        headers: headers,
        body: jsonEncode({
@@ -140,6 +139,11 @@ class _Form2State extends State<Form2> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: TextField(
+                      style: TextStyle(
+                        color: kConstantBlueColor,
+                        fontFamily: 'Montserrat',
+                        fontSize: 15,
+                      ),
                       onChanged: (val){
                         setState(() {
                           github=val;
@@ -158,6 +162,11 @@ class _Form2State extends State<Form2> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: TextField(
+                      style: TextStyle(
+                        color: kConstantBlueColor,
+                        fontFamily: 'Montserrat',
+                        fontSize: 15,
+                      ),
                       onChanged: (val){
                         setState(() {
                           stack=val;
@@ -176,6 +185,11 @@ class _Form2State extends State<Form2> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: TextField(
+                      style: TextStyle(
+                        color: kConstantBlueColor,
+                        fontFamily: 'Montserrat',
+                        fontSize: 15,
+                      ),
                       onChanged: (val){
                         setState(() {
                           website=val;
@@ -205,6 +219,9 @@ class _Form2State extends State<Form2> {
                                  Navigator.of(context).pushNamedAndRemoveUntil('/first', (Route<dynamic> route) => false);
                                }
                                else{
+                                 setState(() {
+                                   _isInAsyncCall=false;
+                                 });
                                  final snackBar = SnackBar(
                                    content: Text(
                                      'Error.Please try again later.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),

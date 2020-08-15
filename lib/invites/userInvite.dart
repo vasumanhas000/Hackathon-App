@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
 import 'package:hackapp/components/sizeConfig.dart';
-import 'package:hackapp/screens/addUserspages/page2.dart';
+import 'package:hackapp/screens/teamsPages/myTeamsMain.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:convert';

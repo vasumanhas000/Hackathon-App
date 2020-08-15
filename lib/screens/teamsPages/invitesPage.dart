@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
-import 'package:hackapp/screens/addUserspages/page2.dart';
+import 'package:hackapp/screens/teamsPages/myTeamsMain.dart';
 import 'package:hackapp/screens/mainFlow/flow.dart';
 import 'package:hackapp/screens/mainFlow/myTeams.dart';
 import 'package:http/http.dart' as http;
@@ -134,23 +134,23 @@ class _AcceptInviteState extends State<AcceptInvite> {
                                       child: Text(snapshot.data.description,style: TextStyle(color: Colors.white,fontSize: 16),),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(2,10,0,0),
+                                      padding: const EdgeInsets.fromLTRB(0,10,0,0),
                                       child: Text('Skills Required:',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                     ),
                                     ListView.builder(itemCount: snapshot.data.skills.length,
                                         shrinkWrap: true,
                                         itemBuilder: (BuildContext context, int index){
                                           return Padding(
-                                            padding: const EdgeInsets.fromLTRB(2, 3, 0, 0),
+                                            padding: const EdgeInsets.fromLTRB(0, 3, 0, 0),
                                             child: Text(snapshot.data.skills[index],style: TextStyle(color: Colors.white,fontSize: 16),),
                                           );
                                         }),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                       child: Text('Creator:',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600),),
                                     ),
                                     Padding(
-                                            padding: const EdgeInsets.fromLTRB(2,3,0,0),
+                                            padding: const EdgeInsets.fromLTRB(0,3,0,0),
                                             child: Text(snapshot.data.cName,style: TextStyle(color: Colors.white,fontSize: 16),),
                                           ),
                                     Padding(

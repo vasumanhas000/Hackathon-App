@@ -102,6 +102,11 @@ class _Form1State extends State<Form1> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: TextField(
+                      style: TextStyle(
+                        color: kConstantBlueColor,
+                        fontFamily: 'Montserrat',
+                        fontSize: 15,
+                      ),
                       onChanged: (val){
                         setState(() {
                           bio=val;

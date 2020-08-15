@@ -65,8 +65,8 @@ class _AddHackState extends State<AddHack> {
   }
 
   TextEditingController startDate=TextEditingController(), endDate=TextEditingController();
-  String name, venue, description, link;
-  int min, max;
+  String name='', venue='', description='', link='';
+  int min,max;
   _dismissKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
@@ -224,6 +224,7 @@ class _AddHackState extends State<AddHack> {
                         style: TextStyle(
                           color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
+                          fontSize: 15,
                         ),
                         onChanged: (value) {
                           name = value;
@@ -284,6 +285,7 @@ class _AddHackState extends State<AddHack> {
                             style: TextStyle(
                               color: kConstantBlueColor,
                               fontFamily: 'Montserrat',
+                              fontSize: 15,
                             ),
                           ),
                         ),
@@ -309,6 +311,7 @@ class _AddHackState extends State<AddHack> {
                             style: TextStyle(
                               color: kConstantBlueColor,
                               fontFamily: 'Montserrat',
+                              fontSize: 15,
                             ),
                           ),
                         ),
@@ -329,6 +332,7 @@ class _AddHackState extends State<AddHack> {
                         style: TextStyle(
                           color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
+                          fontSize: 15,
                         ),
                         onChanged: (value) {
                           min = int.parse(value);
@@ -350,6 +354,7 @@ class _AddHackState extends State<AddHack> {
                         style: TextStyle(
                           color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
+                          fontSize: 15,
                         ),
                         onChanged: (value) {
                           max = int.parse(value);
@@ -369,6 +374,7 @@ class _AddHackState extends State<AddHack> {
                         style: TextStyle(
                           color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
+                          fontSize: 15,
                         ),
                         decoration: kTextFieldDecoration,
                         onChanged: (value) {
@@ -389,6 +395,7 @@ class _AddHackState extends State<AddHack> {
                         style: TextStyle(
                           color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
+                          fontSize: 15,
                         ),
                         decoration: kTextFieldDecoration,
                         maxLines: 7,
@@ -410,6 +417,7 @@ class _AddHackState extends State<AddHack> {
                         style: TextStyle(
                           color: kConstantBlueColor,
                           fontFamily: 'Montserrat',
+                          fontSize: 15,
                         ),
                         decoration: kTextFieldDecoration,
                         onChanged: (value) {
@@ -458,6 +466,26 @@ class _AddHackState extends State<AddHack> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4)),
                               onPressed: () async {
+                                if(name==''|| venue==''|| description==''|| link==''|| min==null || max==null){
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                      'All fields are mandatory',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                    ),
+                                    backgroundColor:kConstantBlueColor ,
+                                  );
+                                  await Scaffold.of(context).showSnackBar(snackBar);
+                                }
+                                else{
+                                  if(min>max){
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                        'Minimum team size cannot be larger than Maximum team size',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                      ),
+                                      backgroundColor:kConstantBlueColor ,
+                                    );
+                                    await Scaffold.of(context).showSnackBar(snackBar);
+                                  }
+                                  else{
                                 setState(() {
                                   _isInAsyncCall = true;
                                 });
@@ -481,9 +509,9 @@ class _AddHackState extends State<AddHack> {
                                           builder: (context) => FlowPage(
                                                 currentIndex: 0,
                                               )));
-                                }
+                                }}
                                 ;
-                              },
+                              }},
                               child: Text(
                                 'Confirm',
                                 style: TextStyle(

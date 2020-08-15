@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
-import 'package:hackapp/screens/addUserspages/nonAdminTeam.dart';
-import 'package:hackapp/screens/addUserspages/teamDetails.dart';
+import 'package:hackapp/screens/teamsPages/nonAdminTeam.dart';
+import 'package:hackapp/screens/teamsPages/teamDetails.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:dio/dio.dart';
 import 'package:hackapp/components/User.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hackapp/screens/addUserspages/page2.dart';
+import 'package:hackapp/screens/teamsPages/myTeamsMain.dart';
 
 class MyTeams extends StatefulWidget {
   @override

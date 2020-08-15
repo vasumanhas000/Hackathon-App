@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'screens/loginFlow/loginFormPages/form0.dart';
 import 'screens/loginFlow/loginPage.dart';
 import 'screens/mainFlow/flow.dart';
-import 'screens/boiler.dart';
 import 'homepage_components/addHack.dart';
 import 'screens/mainFlow/splash.dart';
 import 'homepage_components/detailspage.dart';
@@ -16,7 +14,8 @@ class HackApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/first',
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
       theme: ThemeData(
           primaryColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,

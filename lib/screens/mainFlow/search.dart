@@ -44,12 +44,12 @@ class _SearchPageState extends State<SearchPage> {
                       child: FittedBox(
                         fit: BoxFit.contain,
                         child: Text(
-                          'Choose skills',
+                          'Search Teammates',
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.w600),
                         ),
                       ),
-                      width:200,
+                      width: 286,
                     ),
                     Image(
                       image: AssetImage('images/stc.png'),
@@ -57,6 +57,10 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ],
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16,8,0,0),
+                child: Text('Choose Skills',style: TextStyle(fontSize: 20),),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 60, 0, 0),

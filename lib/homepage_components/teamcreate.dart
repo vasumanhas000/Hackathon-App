@@ -111,6 +111,11 @@ class _CreateTeamState extends State<CreateTeam> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
+                        style: TextStyle(
+                          color: kConstantBlueColor,
+                          fontFamily: 'Montserrat',
+                          fontSize: 15,
+                        ),
                         onChanged: (val) {
                           setState(() {
                             name = val;
@@ -129,6 +134,11 @@ class _CreateTeamState extends State<CreateTeam> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
+                        style: TextStyle(
+                          color: kConstantBlueColor,
+                          fontFamily: 'Montserrat',
+                          fontSize: 15,
+                        ),
                         maxLines: 6,
                         decoration: kTextFieldDecoration,
                         onChanged: (val) {

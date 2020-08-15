@@ -6,8 +6,6 @@ import 'package:hackapp/screens/mainFlow/flow.dart';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hackapp/constants.dart';
 import 'teamcreate.dart';
 import 'package:hackapp/components/hackathons.dart';
@@ -55,179 +53,179 @@ class _HackDetailsState extends State<HackDetails> {
     _byteImage = Base64Decoder().convert(arr[1]);
     return hack;
   }
-  void _moveToSignInScreen(BuildContext context) => Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (context) => FlowPage(
-                currentIndex: 0,
-              )));
+  _launchURL(String url) async {
+    String webpage ;
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      webpage = "http://" + url;
+    }
+    if (await canLaunch(webpage)) {
+      await launch(webpage);
+    } else {
+      throw 'Could not launch $webpage';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return WillPopScope(
-      onWillPop: () {
-        _moveToSignInScreen(context);
-      },
-      child: Scaffold(
-        backgroundColor: Color(0xff3d5a80),
-        body: SafeArea(
-          child: FutureBuilder(
-              future: getHackathon(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.data == null) {
-                  return Center(
-                    child: Container(
-                      child: SpinKitFoldingCube(
-                        size: 50,
-                        color: Colors.white,
-                      ),
+    return Scaffold(
+      backgroundColor: Color(0xff3d5a80),
+      body: SafeArea(
+        child: FutureBuilder(
+            future: getHackathon(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.data == null) {
+                return Center(
+                  child: Container(
+                    child: SpinKitFoldingCube(
+                      size: 50,
+                      color: Colors.white,
                     ),
-                  );
-                } else {
-                  return ListView.builder(
-                    itemCount: 1,
-                    itemBuilder: (BuildContext context, int index) => Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          FittedBox(
+                  ),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (BuildContext context, int index) => Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text(
+                            snapshot.data.name,
+                            style: TextStyle(
+                                fontFamily: 'Muli',
+                                fontSize: 34,
+                                color: Colors.white),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8),
+                          child: FittedBox(
                             fit: BoxFit.contain,
                             child: Text(
-                              snapshot.data.name,
+                              snapshot.data.location,
                               style: TextStyle(
                                   fontFamily: 'Muli',
-                                  fontSize: 34,
+                                  fontSize: 24,
                                   color: Colors.white),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8),
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Text(
-                                snapshot.data.location,
-                                style: TextStyle(
-                                    fontFamily: 'Muli',
-                                    fontSize: 24,
-                                    color: Colors.white),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8),
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Text(
-                                snapshot.data.start + '-' + snapshot.data.end,
-                                style: TextStyle(
-                                    fontFamily: 'Muli',
-                                    fontSize: 22,
-                                    color: Colors.white),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 32, 0, 16),
-                            child: SizedBox(
-                              child: FittedBox(
-                                  fit: BoxFit.fill,
-                                  child: Image.memory(_byteImage)),
-                              height: SizeConfig.safeBlockVertical * 16,
-                              width: SizeConfig.blockSizeHorizontal * 140,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16),
-                            child: Text(
-                              snapshot.data.description,
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.white),
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 16),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8),
+                          child: FittedBox(
+                            fit: BoxFit.contain,
                             child: Text(
-                              'Link:',
+                              snapshot.data.start + '-' + snapshot.data.end,
                               style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
+                                  fontFamily: 'Muli',
+                                  fontSize: 22,
+                                  color: Colors.white),
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              launch(snapshot.data.url);
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 2),
-                              child: Text(
-                                snapshot.data.url,
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 18,
-                                    color: Colors.white),
-                                textAlign: TextAlign.left,
-                              ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 32, 0, 16),
+                          child: SizedBox(
+                            child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: Image.memory(_byteImage)),
+                            height: SizeConfig.safeBlockVertical * 16,
+                            width: SizeConfig.blockSizeHorizontal * 140,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Text(
+                            snapshot.data.description,
+                            style:
+                                TextStyle(fontSize: 18, color: Colors.white),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text(
+                            'Link:',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _launchURL(snapshot.data.url);
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 2),
+                            child: Text(
+                              snapshot.data.url,
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 18,
+                                  color: Colors.white),
+                              textAlign: TextAlign.left,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 48, 8, 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                ButtonTheme(
-                                  height: 38,
-                                  minWidth: 100,
-                                  child: FlatButton(
-                                    onPressed: () async {
-                                      final result = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => CreateTeam(
-                                              id: snapshot.data.id,
-                                            ),
-                                          ));
-                                      Scaffold.of(context)
-                                        ..removeCurrentSnackBar()
-                                        ..showSnackBar(SnackBar(
-                                          content: Text(
-                                            "$result",
-                                            style: TextStyle(
-                                                fontFamily: 'Montserrat',
-                                                color: kConstantBlueColor),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 48, 8, 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              ButtonTheme(
+                                height: 38,
+                                minWidth: 100,
+                                child: FlatButton(
+                                  onPressed: () async {
+                                    final result = await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => CreateTeam(
+                                            id: snapshot.data.id,
                                           ),
-                                          backgroundColor: result != null
-                                              ? Colors.white
-                                              : kConstantBlueColor,
                                         ));
-                                    },
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(4)),
-                                    child: Text(
-                                      'Create Team',
-                                      style: TextStyle(
-                                          color: kConstantBlueColor,
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16),
-                                    ),
+                                    Scaffold.of(context)
+                                      ..removeCurrentSnackBar()
+                                      ..showSnackBar(SnackBar(
+                                        content: Text(
+                                          "$result",
+                                          style: TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              color: kConstantBlueColor),
+                                        ),
+                                        backgroundColor: result != null
+                                            ? Colors.white
+                                            : kConstantBlueColor,
+                                      ));
+                                  },
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4)),
+                                  child: Text(
+                                    'Create Team',
+                                    style: TextStyle(
+                                        color: kConstantBlueColor,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 16),
                                   ),
-                                )
-                              ],
-                            ),
+                                ),
+                              )
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  );
-                }
-              }),
-        ),
+                  ),
+                );
+              }
+            }),
       ),
     );
   }
