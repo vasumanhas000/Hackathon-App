@@ -1,14 +1,9 @@
 import 'dart:async';
-import 'package:hackapp/screens/loginFlow/loginFormPages/form0.dart';
-import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hackapp/constants.dart';
 import 'package:hackapp/screens/loginFlow/loginPage.dart';
 import 'package:hackapp/components/sizeConfig.dart';
 import 'package:hackapp/screens/mainFlow/flow.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -24,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen>
   Future handleAuth() async {
     FirebaseUser user = await _auth.currentUser();
     if (user != null) {
-      Token= await user.getIdToken().then((result) {
+      Token= await user.getIdToken(refresh: true).then((result) {
         String token = result.token;
         print(token);
         return token;

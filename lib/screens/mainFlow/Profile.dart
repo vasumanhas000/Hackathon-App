@@ -4,8 +4,6 @@ import 'package:hackapp/screens/loginFlow/loginPage.dart';
 import 'editUser.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:dio/dio.dart';
 import 'package:hackapp/components/sizeConfig.dart';
@@ -22,6 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String Token;
   Future logOut()async{
     FirebaseUser user= await _auth.currentUser();
+    _dioCacheManager.clearAll();
     if(user!=null){
      await _auth.signOut();
      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));

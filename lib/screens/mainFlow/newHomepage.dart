@@ -102,7 +102,7 @@ class _NewHomePageState extends State<NewHomePage> {
   Future<Hackathons> sendUsersDataRequest(int page) async {
     Dio _dio = Dio();
     FirebaseUser user = await auth.currentUser();
-    Token= await user.getIdToken().then((result) {
+    Token= await user.getIdToken(refresh: true).then((result) {
       String token = result.token;
       print(token);
       return token;
@@ -154,7 +154,7 @@ class _NewHomePageState extends State<NewHomePage> {
 
   Widget emptyListWidgetMaker(Hackathons hackData) {
     return Center(
-      child: Text('No workers found'),
+      child: Text('No hackathons found'),
     );
   }
 

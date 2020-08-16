@@ -150,7 +150,7 @@ class _ResultsPageState extends State<ResultsPage> {
 
   Widget emptyListWidgetMaker(Users hackData) {
     return Center(
-      child: Text('No workers found'),
+      child: Text('No user found'),
     );
   }
 
