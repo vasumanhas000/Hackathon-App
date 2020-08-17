@@ -102,7 +102,7 @@ class _AcceptInviteState extends State<AcceptInvite> {
                         builder: (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.data == null) {
                             return Padding(
-                              padding: const EdgeInsets.only(top: 200),
+                              padding: const EdgeInsets.only(top: 350),
                               child: Container(
                                 child: SpinKitFoldingCube(
                                   size: 50,

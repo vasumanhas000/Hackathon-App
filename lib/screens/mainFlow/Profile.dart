@@ -200,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         child: Text('Edit',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 16),),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(5,0,0,3),
+                                        padding: const EdgeInsets.fromLTRB(5,0,0,1),
                                         child: Icon(Icons.edit,size: 18,color: kConstantBlueColor,),
                                       ),
                                     ],

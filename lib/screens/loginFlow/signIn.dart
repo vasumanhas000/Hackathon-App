@@ -111,6 +111,11 @@ collaborate during Hackathons""",
                         child: TextField(
                           keyboardType: TextInputType.emailAddress,
                           decoration: kTextFieldDecoration.copyWith(hintText: 'Email',),
+                          style: TextStyle(
+                            color: kConstantBlueColor,
+                            fontFamily: 'Montserrat',
+                            fontSize: 15,
+                          ),
                           onChanged: (val){
                             setState(() {
                               email=val;
@@ -124,6 +129,11 @@ collaborate during Hackathons""",
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           decoration: kTextFieldDecoration.copyWith(hintText: 'Password'),
+                          style: TextStyle(
+                            color: kConstantBlueColor,
+                            fontFamily: 'Montserrat',
+                            fontSize: 15,
+                          ),
                           onChanged: (val){
                             setState(() {
                               password=val;

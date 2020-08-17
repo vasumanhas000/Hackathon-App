@@ -97,6 +97,11 @@ collaborate during Hackathons""",
                   padding: const EdgeInsets.fromLTRB(20,20,20,0),
                   child: TextField(
                     keyboardType: TextInputType.emailAddress,
+                    style: TextStyle(
+                      color: kConstantBlueColor,
+                      fontFamily: 'Montserrat',
+                      fontSize: 15,
+                    ),
                     decoration: kTextFieldDecoration.copyWith(hintText: 'Email',),
                     onChanged: (val){
                       setState(() {
@@ -110,6 +115,11 @@ collaborate during Hackathons""",
                   child: TextField(
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
+                    style: TextStyle(
+                      color: kConstantBlueColor,
+                      fontFamily: 'Montserrat',
+                      fontSize: 15,
+                    ),
                     decoration: kTextFieldDecoration.copyWith(hintText: 'Password'),
                     onChanged: (val){
                       setState(() {

@@ -73,7 +73,7 @@ class _TeamInvitesState extends State<TeamInvites> {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.data == null) {
                         return Padding(
-                          padding: const EdgeInsets.only(top: 200),
+                          padding: const EdgeInsets.only(top: 350),
                           child: Container(
                             child: SpinKitFoldingCube(
                               size: 50,
@@ -85,7 +85,7 @@ class _TeamInvitesState extends State<TeamInvites> {
                       else if(snapshot.data.pendingRequests.length==0){
                         return Center(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 200),
+                            padding: const EdgeInsets.only(top: 350),
                             child: Text('You have no pending requests'),
                           ),
                         );

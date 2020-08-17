@@ -163,17 +163,21 @@ class _InviteCRUDState extends State<InviteCRUD> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      RaisedButton(onPressed: ()async{
-                        setState(() {
-                          _isInAsyncCall=true;
-                        });
-                        if(await cancelInvite(id, user['_id'])==200){
+                      ButtonTheme(
+                        minWidth: 100,
+                        height: 38,
+                        child: FlatButton(onPressed: ()async{
                           setState(() {
-                            _isInAsyncCall=false;
+                            _isInAsyncCall=true;
                           });
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>TeamDetails(id: id,)));
-                        }
-                      },child: Text('Cancel Invite',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),)
+                          if(await cancelInvite(id, user['_id'])==200){
+                            setState(() {
+                              _isInAsyncCall=false;
+                            });
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>TeamDetails(id: id,)));
+                          }
+                        },child: Text('Cancel Invite',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16,fontWeight: FontWeight.w500),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                      )
                     ],
                   ),
                 ),

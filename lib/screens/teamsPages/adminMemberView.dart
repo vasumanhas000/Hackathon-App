@@ -1,45 +1,90 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/constants.dart';
+import 'package:hackapp/screens/teamsPages/teamDetails.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:http/http.dart' as http;
 
 class AdminMemberView extends StatefulWidget {
   var user;
   final String id;
-  AdminMemberView({this.id,this.user});
+  AdminMemberView({this.id, this.user});
   @override
-  _AdminMemberViewState createState() => _AdminMemberViewState(this.user,this.id);
+  _AdminMemberViewState createState() =>
+      _AdminMemberViewState(this.user, this.id);
 }
 
 class _AdminMemberViewState extends State<AdminMemberView> {
-  _AdminMemberViewState(this.user,this.id);
+  final _auth = FirebaseAuth.instance;
+  String Token;
+  Future removeUser(String teamId, String userID) async {
+    FirebaseUser user = await _auth.currentUser();
+    Token = await user.getIdToken().then((result) {
+      String token = result.token;
+      return token;
+    });
+    Map<String, String> headers = {
+      "authtoken": Token,
+      "Content-Type": "application/json"
+    };
+    var response = await http.post(
+        "https://hackportal.azurewebsites.net/teams/removemembers",
+        headers: headers,
+        body: jsonEncode({
+          "teamId": teamId,
+          "memberIds": [userID],
+        }));
+    print(response.statusCode);
+    print(response.body);
+    return response.statusCode;
+  }
+
+  void _moveToSignInScreen(BuildContext context) => Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context) => TeamDetails(id: id)));
+  _AdminMemberViewState(this.user, this.id);
   String id;
   var user;
-  bool _isInAsyncCall=false;
+  bool _isInAsyncCall = false;
   @override
   Widget build(BuildContext context) {
-    return ModalProgressHUD(
-      inAsyncCall: _isInAsyncCall,
-      opacity: 0.5,
-      progressIndicator: SpinKitFoldingCube(
-        color: kConstantBlueColor,
-      ),
-      child: Scaffold(
-        body: SafeArea(child: ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          itemCount: 1,
-          itemBuilder: (BuildContext context, int index) =>
-              Column(
+    return WillPopScope(
+      onWillPop: () {
+        _moveToSignInScreen(context);
+      },
+      child: ModalProgressHUD(
+        inAsyncCall: _isInAsyncCall,
+        opacity: 0.5,
+        progressIndicator: SpinKitFoldingCube(
+          color: kConstantBlueColor,
+        ),
+        child: Scaffold(
+          body: SafeArea(
+            child: ListView.builder(
+              physics: AlwaysScrollableScrollPhysics(),
+              itemCount: 1,
+              itemBuilder: (BuildContext context, int index) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(padding: EdgeInsets.fromLTRB(22, 32, 8, 0),
-                    child: FittedBox(child: Text(user['name'],style: TextStyle(fontSize: 32,fontWeight: FontWeight.w600),)),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(22, 32, 8, 0),
+                    child: FittedBox(
+                        child: Text(
+                      user['name'],
+                      style:
+                          TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+                    )),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                     child: Text(
                       'Email :',
-                      style: TextStyle(color: kConstantBlueColor, fontSize: 18,fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          color: kConstantBlueColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                   Padding(
@@ -47,7 +92,9 @@ class _AdminMemberViewState extends State<AdminMemberView> {
                     child: FittedBox(
                       child: Text(
                         user['email'],
-                        style: TextStyle(fontSize: 18,),
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
                       ),
                       fit: BoxFit.contain,
                     ),
@@ -56,7 +103,8 @@ class _AdminMemberViewState extends State<AdminMemberView> {
                     padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                     child: Text(
                       'University Name:',
-                      style: TextStyle( fontSize: 18,fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ),
                   Padding(
@@ -73,7 +121,8 @@ class _AdminMemberViewState extends State<AdminMemberView> {
                     padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                     child: Text(
                       'Year of graduation',
-                      style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ),
                   Padding(
@@ -90,7 +139,8 @@ class _AdminMemberViewState extends State<AdminMemberView> {
                     padding: const EdgeInsets.fromLTRB(22, 25, 8, 0),
                     child: Text(
                       'Description:',
-                      style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ),
                   Padding(
@@ -104,7 +154,8 @@ class _AdminMemberViewState extends State<AdminMemberView> {
                     padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                     child: Text(
                       'Skills:',
-                      style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ),
                   ListView.builder(
@@ -128,21 +179,51 @@ class _AdminMemberViewState extends State<AdminMemberView> {
                         }
                       }),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,32,16,0),
+                    padding: const EdgeInsets.fromLTRB(0, 32, 16, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        RaisedButton(onPressed: ()async{
-                          setState(() {
-                            _isInAsyncCall=false;
-                          });
-                        },child: Text('Remove User',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),)
+                        ButtonTheme(
+                          height: 38,
+                          minWidth: 100,
+                          child: FlatButton(
+                            onPressed: () async {
+                              setState(() {
+                                _isInAsyncCall = true;
+                              });
+                              if (await removeUser(id, user['_id']) == 200) {
+                                setState(() {
+                                  _isInAsyncCall = false;
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>TeamDetails(id: id,)));
+                                });
+                              }
+                              else{
+                                setState(() {
+                                  _isInAsyncCall=false;
+                                });
+                              }
+                            },
+                            child: Text(
+                              'Remove User',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
+                            color: kConstantBlueColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4)),
+                          ),
+                        )
                       ],
                     ),
                   ),
                 ],
               ),
-        ),),
+            ),
+          ),
+        ),
       ),
     );
   }

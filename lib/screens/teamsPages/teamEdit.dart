@@ -491,221 +491,229 @@ class _EditTeamState extends State<EditTeam> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(right: 16),
-                            child: RaisedButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            TeamDetails(id: team.teamId)));
-                              },
-                              child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),),
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor)),
+                            child: ButtonTheme(
+                              minWidth: 100,
+                              height: 38,
+                              child: FlatButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              TeamDetails(id: team.teamId)));
+                                },
+                                child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontWeight: FontWeight.w500,fontSize: 16),),
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 2)),
+                              ),
                             ),
                           ),
-                          RaisedButton(
-                            onPressed: () async {
-                              setState(() {
-                                _isInAsyncCall=true;
-                              });
-                              if (selectWeb == 1) {
-                                var count = 0;
-                                for (var i in skillList) {
-                                  if (i == 'Web Development') {
-                                    count += 1;
-                                  }
-                                }
-                                if (count == 0) {
-                                  skillList.add('Web Development');
-                                }
-                              }
-                              if (selectMobile == 1) {
-                                var count = 0;
-                                for (var i in skillList) {
-                                  if (i == 'App Development') {
-                                    count += 1;
-                                  }
-                                }
-                                if (count == 0) {
-                                  skillList.add('App Development');
-                                }
-                              }
-                              if (selectDevOps == 1) {
-                                var count = 0;
-                                for (var i in skillList) {
-                                  if (i == 'DevOps') {
-                                    count += 1;
-                                  }
-                                }
-                                if (count == 0) {
-                                  skillList.add('DevOps');
-                                }
-                              }
-                              if (selectML == 1) {
-                                var count = 0;
-                                for (var i in skillList) {
-                                  if (i == 'Machine Learning') {
-                                    count += 1;
-                                  }
-                                }
-                                if (count == 0) {
-                                  skillList.add('Machine Learning');
-                                }
-                              }
-                              if (selectAI == 1) {
-                                var count = 0;
-                                for (var i in skillList) {
-                                  if (i == 'Artificial Intelligence') {
-                                    count += 1;
-                                  }
-                                }
-                                if (count == 0) {
-                                  skillList.add('Artificial Intelligence');
-                                }
-                              }
-                              if (selectDesign == 1) {
-                                var count = 0;
-                                for (var i in skillList) {
-                                  if (i == 'Design') {
-                                    count += 1;
-                                  }
-                                }
-                                if (count == 0) {
-                                  skillList.add('Design');
-                                }
-                              }
-                              if (selectManagement == 1) {
-                                var count = 0;
-                                for (var i in skillList) {
-                                  if (i == 'Management') {
-                                    count += 1;
-                                  }
-                                }
-                                if (count == 0) {
-                                  skillList.add('Management');
-                                }
-                              }
-                              if (selectBlock == 1) {
-                                var count = 0;
-                                for (var i in skillList) {
-                                  if (i == 'BlockChain') {
-                                    count += 1;
-                                  }
-                                }
-                                if (count == 0) {
-                                  skillList.add('BlockChain');
-                                }
-                              }
-                              if (selectCyber == 1) {
-                                var count = 0;
-                                for (var i in skillList) {
-                                  if (i == 'CyberSecurity') {
-                                    count += 1;
-                                  }
-                                }
-                                if (count == 0) {
-                                  skillList.add('CyberSecurity');
-                                }
-                              }
-                              if (selectWeb != 1) {
-                                for (var i in skillList) {
-                                  if (i == 'Web Development') {
-                                    toRemove.add(i);
-                                  }
-                                }
-                              }
-                              if (selectMobile != 1) {
-                                for (var i in skillList) {
-                                  if (i == 'App Development') {
-                                    toRemove.add(i);
-                                  }
-                                }
-                              }
-                              if (selectDevOps != 1) {
-                                for (var i in skillList) {
-                                  if (i == 'DevOps') {
-                                    toRemove.add(i);
-                                  }
-                                }
-                              }
-                              if (selectML != 1) {
-                                for (var i in skillList) {
-                                  if (i == 'Machine Learning') {
-                                    toRemove.add(i);
-                                  }
-                                }
-                              }
-                              if (selectAI != 1) {
-                                for (var i in skillList) {
-                                  if (i == 'Artificial Intelligence') {
-                                    toRemove.add(i);
-                                  }
-                                }
-                              }
-                              if (selectDesign != 1) {
-                                for (var i in skillList) {
-                                  if (i == 'Design') {
-                                    toRemove.add(i);
-                                  }
-                                }
-                              }
-                              if (selectManagement != 1) {
-                                for (var i in skillList) {
-                                  if (i == 'Management') {
-                                    toRemove.add(i);
-                                  }
-                                }
-                              }
-                              if (selectBlock != 1) {
-                                for (var i in skillList) {
-                                  if (i == 'BlockChain') {
-                                    toRemove.add(i);
-                                  }
-                                }
-                              }
-                              if (selectCyber != 1) {
-                                for (var i in skillList) {
-                                  if (i == 'CyberSecurity') {
-                                    toRemove.add(i);
-                                  }
-                                }
-                              }
-                              skillList.removeWhere((e) => toRemove.contains(e));
-                              if (await updateTeam(team.teamId, name.text,
-                                      bio.text, skillList) ==
-                                  200) {
+                          ButtonTheme(
+                            minWidth: 100,
+                            height: 38,
+                            child: FlatButton(
+                              onPressed: () async {
                                 setState(() {
-                                  _isInAsyncCall=false;
+                                  _isInAsyncCall=true;
                                 });
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            TeamDetails(id: team.teamId)));
-                              } else {
-                                setState(() {
-                                  _isInAsyncCall=false;
-                                });
-                                final snackBar = SnackBar(
-                                  backgroundColor: kConstantBlueColor,
-                                  content: Text(
-                                    'Error.Please try again later',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  action:
-                                      SnackBarAction(label: '', onPressed: () {}),
-                                );
-                                Scaffold.of(context).showSnackBar(snackBar);
-                              }
-                              ;
-                            },
-                            child: Text(
-                              'Confirm',
-                              style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                if (selectWeb == 1) {
+                                  var count = 0;
+                                  for (var i in skillList) {
+                                    if (i == 'Web Development') {
+                                      count += 1;
+                                    }
+                                  }
+                                  if (count == 0) {
+                                    skillList.add('Web Development');
+                                  }
+                                }
+                                if (selectMobile == 1) {
+                                  var count = 0;
+                                  for (var i in skillList) {
+                                    if (i == 'App Development') {
+                                      count += 1;
+                                    }
+                                  }
+                                  if (count == 0) {
+                                    skillList.add('App Development');
+                                  }
+                                }
+                                if (selectDevOps == 1) {
+                                  var count = 0;
+                                  for (var i in skillList) {
+                                    if (i == 'DevOps') {
+                                      count += 1;
+                                    }
+                                  }
+                                  if (count == 0) {
+                                    skillList.add('DevOps');
+                                  }
+                                }
+                                if (selectML == 1) {
+                                  var count = 0;
+                                  for (var i in skillList) {
+                                    if (i == 'Machine Learning') {
+                                      count += 1;
+                                    }
+                                  }
+                                  if (count == 0) {
+                                    skillList.add('Machine Learning');
+                                  }
+                                }
+                                if (selectAI == 1) {
+                                  var count = 0;
+                                  for (var i in skillList) {
+                                    if (i == 'Artificial Intelligence') {
+                                      count += 1;
+                                    }
+                                  }
+                                  if (count == 0) {
+                                    skillList.add('Artificial Intelligence');
+                                  }
+                                }
+                                if (selectDesign == 1) {
+                                  var count = 0;
+                                  for (var i in skillList) {
+                                    if (i == 'Design') {
+                                      count += 1;
+                                    }
+                                  }
+                                  if (count == 0) {
+                                    skillList.add('Design');
+                                  }
+                                }
+                                if (selectManagement == 1) {
+                                  var count = 0;
+                                  for (var i in skillList) {
+                                    if (i == 'Management') {
+                                      count += 1;
+                                    }
+                                  }
+                                  if (count == 0) {
+                                    skillList.add('Management');
+                                  }
+                                }
+                                if (selectBlock == 1) {
+                                  var count = 0;
+                                  for (var i in skillList) {
+                                    if (i == 'BlockChain') {
+                                      count += 1;
+                                    }
+                                  }
+                                  if (count == 0) {
+                                    skillList.add('BlockChain');
+                                  }
+                                }
+                                if (selectCyber == 1) {
+                                  var count = 0;
+                                  for (var i in skillList) {
+                                    if (i == 'CyberSecurity') {
+                                      count += 1;
+                                    }
+                                  }
+                                  if (count == 0) {
+                                    skillList.add('CyberSecurity');
+                                  }
+                                }
+                                if (selectWeb != 1) {
+                                  for (var i in skillList) {
+                                    if (i == 'Web Development') {
+                                      toRemove.add(i);
+                                    }
+                                  }
+                                }
+                                if (selectMobile != 1) {
+                                  for (var i in skillList) {
+                                    if (i == 'App Development') {
+                                      toRemove.add(i);
+                                    }
+                                  }
+                                }
+                                if (selectDevOps != 1) {
+                                  for (var i in skillList) {
+                                    if (i == 'DevOps') {
+                                      toRemove.add(i);
+                                    }
+                                  }
+                                }
+                                if (selectML != 1) {
+                                  for (var i in skillList) {
+                                    if (i == 'Machine Learning') {
+                                      toRemove.add(i);
+                                    }
+                                  }
+                                }
+                                if (selectAI != 1) {
+                                  for (var i in skillList) {
+                                    if (i == 'Artificial Intelligence') {
+                                      toRemove.add(i);
+                                    }
+                                  }
+                                }
+                                if (selectDesign != 1) {
+                                  for (var i in skillList) {
+                                    if (i == 'Design') {
+                                      toRemove.add(i);
+                                    }
+                                  }
+                                }
+                                if (selectManagement != 1) {
+                                  for (var i in skillList) {
+                                    if (i == 'Management') {
+                                      toRemove.add(i);
+                                    }
+                                  }
+                                }
+                                if (selectBlock != 1) {
+                                  for (var i in skillList) {
+                                    if (i == 'BlockChain') {
+                                      toRemove.add(i);
+                                    }
+                                  }
+                                }
+                                if (selectCyber != 1) {
+                                  for (var i in skillList) {
+                                    if (i == 'CyberSecurity') {
+                                      toRemove.add(i);
+                                    }
+                                  }
+                                }
+                                skillList.removeWhere((e) => toRemove.contains(e));
+                                if (await updateTeam(team.teamId, name.text,
+                                        bio.text, skillList) ==
+                                    200) {
+                                  setState(() {
+                                    _isInAsyncCall=false;
+                                  });
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              TeamDetails(id: team.teamId)));
+                                } else {
+                                  setState(() {
+                                    _isInAsyncCall=false;
+                                  });
+                                  final snackBar = SnackBar(
+                                    backgroundColor: kConstantBlueColor,
+                                    content: Text(
+                                      'Error.Please try again later',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    action:
+                                        SnackBarAction(label: '', onPressed: () {}),
+                                  );
+                                  Scaffold.of(context).showSnackBar(snackBar);
+                                }
+                                ;
+                              },
+                              child: Text(
+                                'Confirm',
+                                style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontWeight: FontWeight.w500,fontSize: 16),
+                              ),
+                              color: kConstantBlueColor,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                             ),
-                            color: kConstantBlueColor,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                           ),
                         ],
                       ),

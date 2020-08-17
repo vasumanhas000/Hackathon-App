@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/Team.dart';
@@ -70,13 +71,11 @@ class _TeamDetailsState extends State<TeamDetails> {
                   future: getTeam(id),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.data == null) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 200),
-                        child: Container(
-                          child: SpinKitFoldingCube(
-                            size: 50,
-                            color: Colors.white,
-                          ),
+                      return Container(
+                        margin: EdgeInsets.only(top: 350),
+                        child: SpinKitFoldingCube(
+                          size: 50,
+                          color: Colors.white,
                         ),
                       );
                     } else {
@@ -192,7 +191,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                                   .members[index],
                                                 id: id,)));
                                             }:(){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminMemberView(user: snapshot
+                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminMemberView(user: snapshot
                                                   .data
                                                   .members[index],
                                                 id: id,)));
@@ -327,39 +326,46 @@ class _TeamDetailsState extends State<TeamDetails> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        RaisedButton(
-                                          onPressed: () {
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditTeam(
-                                                          team: snapshot.data,
-                                                        )));
-                                          },
-                                          color: Colors.white,
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                'Edit',
-                                                style: TextStyle(
-                                                    color: kConstantBlueColor,
-                                                    fontFamily: 'Montserrat'),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 6),
-                                                child: Icon(
-                                                  Icons.edit,
-                                                  size: 16,
-                                                  color: kConstantBlueColor,
+                                        ButtonTheme(
+                                          child: FlatButton(
+                                            onPressed: () {
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EditTeam(
+                                                            team: snapshot.data,
+                                                          )));
+                                            },
+                                            color: Colors.white,
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left: 4),
+                                                  child: Text(
+                                                    'Edit',
+                                                    style: TextStyle(
+                                                        color: kConstantBlueColor,
+                                                        fontFamily: 'Montserrat',fontWeight: FontWeight.w500,fontSize: 16),
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                                Padding(
+                                                  padding: const EdgeInsets.fromLTRB(
+                                                      5,0,0,3),
+                                                  child: Icon(
+                                                    Icons.edit,
+                                                    size: 18,
+                                                    color: kConstantBlueColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
                                           ),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4)),
+                                          minWidth: 100,
+                                          height: 38,
                                         ),
                                       ],
                                     ),
