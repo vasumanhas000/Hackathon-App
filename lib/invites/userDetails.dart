@@ -71,18 +71,29 @@ class _UserDetailsState extends State<UserDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(22, 32, 8, 0),
+                padding: EdgeInsets.fromLTRB(22,24,0,0),
+                child: Text('Profile',style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600,fontFamily: 'Muli'),),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
+                child: Text(
+                  'Name :',
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(22, 5, 8, 0),
                 child: FittedBox(
                   child: Text(
                     user['name'],
                     style:
-                    TextStyle(fontSize: 32,fontWeight: FontWeight.w600),
+                    TextStyle(fontSize: 18,fontWeight: FontWeight.w500),
                   ),
                   fit: BoxFit.contain,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
+                padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                 child: Text(
                   'Email:',
                   style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),

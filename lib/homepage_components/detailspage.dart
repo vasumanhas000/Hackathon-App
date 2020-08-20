@@ -132,9 +132,9 @@ class _HackDetailsState extends State<HackDetails> {
                           padding: const EdgeInsets.fromLTRB(0, 32, 0, 16),
                           child: SizedBox(
                             child: FittedBox(
-                                fit: BoxFit.fill,
+                                fit: BoxFit.contain,
                                 child: Image.memory(_byteImage)),
-                            height: SizeConfig.safeBlockVertical * 16,
+                            height: SizeConfig.safeBlockVertical * 25,
                             width: SizeConfig.blockSizeHorizontal * 140,
                           ),
                         ),

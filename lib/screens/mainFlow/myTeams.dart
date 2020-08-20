@@ -51,6 +51,8 @@ class _MyTeamsState extends State<MyTeams> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: (){
+      },child: Icon(Icons.add,color: kConstantBlueColor,size: 32,),backgroundColor: Colors.white,tooltip: 'Create Team',),
       body: SafeArea(child:
             Padding(
             padding: const EdgeInsets.fromLTRB(16,24,8,0),
@@ -79,7 +81,7 @@ class _MyTeamsState extends State<MyTeams> {
                   Expanded(
                     flex:8,
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 48),
+                      padding: const EdgeInsets.only(top: 36),
                       child: FutureBuilder(
                           future: getTeams(),
                           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -110,7 +112,7 @@ class _MyTeamsState extends State<MyTeams> {
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (BuildContext context, int index)=>
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(0,0,8,16),
+                                      padding: const EdgeInsets.fromLTRB(0,0,8,24),
                                       child: GestureDetector(
                                         onTap: (){
                                           if(snapshot.data.teams[index]["creatorId"]==snapshot.data.id){
@@ -125,8 +127,8 @@ class _MyTeamsState extends State<MyTeams> {
                                           decoration: BoxDecoration(
                                             color: kConstantBlueColor,
                                             borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              bottomRight: Radius.circular(20),
+                                              topLeft: Radius.circular(30),
+                                              bottomRight: Radius.circular(30),
                                             ),
                                           ),
                                           child: Padding(
@@ -137,7 +139,7 @@ class _MyTeamsState extends State<MyTeams> {
                                                 FittedBox(fit: BoxFit.contain,child: Text(snapshot.data.teams[index]['teamName'],style: TextStyle(color: Colors.white,fontSize: 26),)),
                                                 Padding(
                                                   padding: const EdgeInsets.fromLTRB(20,18,14,4),
-                                                  child: Text(truncateWithEllipsis(285, snapshot.data.teams[index]['description']),style: TextStyle(color: Colors.white,fontSize: 14),maxLines: 7,),
+                                                  child: Text(truncateWithEllipsis(240, snapshot.data.teams[index]['description']),style: TextStyle(color: Colors.white,fontSize: 14),maxLines: 6,),
                                                 ),
                                               ],
                                             ),

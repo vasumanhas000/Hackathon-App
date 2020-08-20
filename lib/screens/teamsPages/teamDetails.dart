@@ -119,7 +119,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                       'Project Description :',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -139,7 +139,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                       'Skills Required :',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -171,7 +171,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                       'Members :',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -201,10 +201,12 @@ class _TeamDetailsState extends State<TeamDetails> {
                                                   0, 0, 25, 10),
                                               child: GestureDetector(
                                                   child: Container(
+                                                      decoration: BoxDecoration(
+                                                        color: Color.fromRGBO(
+                                                            255, 255, 255, 0.25),borderRadius: BorderRadius.circular(4)
+                                                      ),
                                                       height: 45,
                                                       width: 350,
-                                                      color: Color.fromRGBO(
-                                                          255, 255, 255, 0.25),
                                                       child: Column(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         mainAxisAlignment: MainAxisAlignment.center,
@@ -239,7 +241,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                       'Sent Invites :',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),

@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
@@ -52,8 +51,9 @@ class _SearchPageState extends State<SearchPage> {
                       width: 286,
                     ),
                     Image(
-                      image: AssetImage('images/stc.png'),
+                      image: AssetImage('images/stc.png',),
                       height: SizeConfig.safeBlockVertical * 3.15,
+                      color: kConstantBlueColor,
                     ),
                   ],
                 ),
@@ -64,375 +64,383 @@ class _SearchPageState extends State<SearchPage> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 60, 0, 0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: Icon(
+                child: GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      if(selectWeb!=1){
+                        selectWeb=1;}
+                      else{
+                        selectWeb=0;
+                      }
+                    });
+                    if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                      setState(() {
+                        selected=1;
+                      });
+                    }
+                    else{
+                      setState(() {
+                        selected=0;
+                      });
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
                         Icons.fiber_manual_record,
                         size: 26,
                         color: selectWeb==1?kConstantBlueColor:Color(0xffD8D8D8),
                       ),
-                      onTap: (){
-                        setState(() {
-                          if(selectWeb!=1){
-                            selectWeb=1;}
-                          else{
-                            selectWeb=0;
-                          }
-                        });
-                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
-                          setState(() {
-                            selected=1;
-                          });
-                        }
-                        else{
-                          setState(() {
-                            selected=0;
-                          });
-                        }
-                      },),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: SizedBox(width:185,child: FittedBox(fit:BoxFit.contain,child: Text('Web Development',style: TextStyle(fontSize: 20),))),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SizedBox(width:185,child: FittedBox(fit:BoxFit.contain,child: Text('Web Development',style: TextStyle(fontSize: 20),))),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: Icon(
+                child: GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      if(selectMobile!=1){
+                        selectMobile=1;}
+                      else{
+                        selectMobile=0;
+                      }
+                    });
+                    if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                      setState(() {
+                        selected=1;
+                      });
+                    }
+                    else{
+                      setState(() {
+                        selected=0;
+                      });
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
                         Icons.fiber_manual_record,
                         size: 26,
                         color: selectMobile==1?kConstantBlueColor:Color(0xffD8D8D8),
                       ),
-                      onTap: (){
-                        setState(() {
-                          if(selectMobile!=1){
-                            selectMobile=1;}
-                          else{
-                            selectMobile=0;
-                          }
-                        });
-                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
-                          setState(() {
-                            selected=1;
-                          });
-                        }
-                        else{
-                          setState(() {
-                            selected=0;
-                          });
-                        }
-                      },),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: SizedBox(
-                        width: 245,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text('Mobile App Development',style: TextStyle(fontSize: 20)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SizedBox(
+                          width: 245,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text('Mobile App Development',style: TextStyle(fontSize: 20)),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: Icon(
+                child: GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      if(selectDevOps!=1){
+                        selectDevOps=1;}
+                      else{
+                        selectDevOps=0;
+                      }
+                    });
+                    if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                      setState(() {
+                        selected=1;
+                      });
+                    }
+                    else{
+                      setState(() {
+                        selected=0;
+                      });
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
                         Icons.fiber_manual_record,
                         size: 26,
                         color: selectDevOps==1?kConstantBlueColor:Color(0xffD8D8D8),
                       ),
-                      onTap: (){
-                        setState(() {
-                          if(selectDevOps!=1){
-                            selectDevOps=1;}
-                          else{
-                            selectDevOps=0;
-                          }
-                        });
-                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
-                          setState(() {
-                            selected=1;
-                          });
-                        }
-                        else{
-                          setState(() {
-                            selected=0;
-                          });
-                        }
-                      },),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: SizedBox(
-                        width: 70,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text('Devops',style: TextStyle(fontSize: 20)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SizedBox(
+                          width: 70,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text('Devops',style: TextStyle(fontSize: 20)),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: Icon(
+                child: GestureDetector(
+                    onTap: (){
+                    setState(() {
+                      if(selectML!=1){
+                        selectML=1;}
+                      else{
+                        selectML=0;
+                      }
+                    });
+                    if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                      setState(() {
+                        selected=1;
+                      });
+                    }
+                    else{
+                      setState(() {
+                        selected=0;
+                      });
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
                         Icons.fiber_manual_record,
                         size: 26,
                         color: selectML==1?kConstantBlueColor:Color(0xffD8D8D8),
                       ),
-                      onTap: (){
-                        setState(() {
-                          if(selectML!=1){
-                            selectML=1;}
-                          else{
-                            selectML=0;
-                          }
-                        });
-                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
-                          setState(() {
-                            selected=1;
-                          });
-                        }
-                        else{
-                          setState(() {
-                            selected=0;
-                          });
-                        }
-                      },),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: SizedBox(
-                        width: 175,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text('Machine Learning',style: TextStyle(fontSize: 20)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SizedBox(
+                          width: 175,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text('Machine Learning',style: TextStyle(fontSize: 20)),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: Icon(
+                child: GestureDetector(
+                    onTap:  (){
+                    setState(() {
+                      if(selectAI!=1){
+                        selectAI=1;}
+                      else{
+                        selectAI=0;
+                      }
+                    });
+                    if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                      setState(() {
+                        selected=1;
+                      });
+                    }
+                    else{
+                      setState(() {
+                        selected=0;
+                      });
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
                         Icons.fiber_manual_record,
                         size: 26,
                         color: selectAI==1?kConstantBlueColor:Color(0xffD8D8D8),
                       ),
-                      onTap: (){
-                        setState(() {
-                          if(selectAI!=1){
-                            selectAI=1;}
-                          else{
-                            selectAI=0;
-                          }
-                        });
-                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
-                          setState(() {
-                            selected=1;
-                          });
-                        }
-                        else{
-                          setState(() {
-                            selected=0;
-                          });
-                        }
-                      },),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: SizedBox(
-                        width:196,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text('Artificial Intelligence',style: TextStyle(fontSize: 20)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SizedBox(
+                          width:196,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text('Artificial Intelligence',style: TextStyle(fontSize: 20)),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: Icon(
+                child: GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      if(selectDesign!=1){
+                        selectDesign=1;}
+                      else{
+                        selectDesign=0;
+                      }
+                    });
+                    if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                      setState(() {
+                        selected=1;
+                      });
+                    }
+                    else{
+                      setState(() {
+                        selected=0;
+                      });
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
                         Icons.fiber_manual_record,
                         size: 26,
                         color: selectDesign==1?kConstantBlueColor:Color(0xffD8D8D8),
                       ),
-                      onTap: (){
-                        setState(() {
-                          if(selectDesign!=1){
-                            selectDesign=1;}
-                          else{
-                            selectDesign=0;
-                          }
-                        });
-                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
-                          setState(() {
-                            selected=1;
-                          });
-                        }
-                        else{
-                          setState(() {
-                            selected=0;
-                          });
-                        }
-                      },),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: SizedBox(
-                        width: 140,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text('Design - UI/UX',style: TextStyle(fontSize: 20)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SizedBox(
+                          width: 140,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text('Design - UI/UX',style: TextStyle(fontSize: 20)),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: Icon(
+                child: GestureDetector(
+                    onTap:  (){
+                    setState(() {
+                      if(selectManagement!=1){
+                        selectManagement=1;}
+                      else{
+                        selectManagement=0;
+                      }
+                    });
+                    if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                      setState(() {
+                        selected=1;
+                      });
+                    }
+                    else{
+                      setState(() {
+                        selected=0;
+                      });
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
                         Icons.fiber_manual_record,
                         size: 26,
                         color: selectManagement==1?kConstantBlueColor:Color(0xffD8D8D8),
                       ),
-                      onTap: (){
-                        setState(() {
-                          if(selectManagement!=1){
-                            selectManagement=1;}
-                          else{
-                            selectManagement=0;
-                          }
-                        });
-                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
-                          setState(() {
-                            selected=1;
-                          });
-                        }
-                        else{
-                          setState(() {
-                            selected=0;
-                          });
-                        }
-                      },),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: SizedBox(
-                        width: 185,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text('Management skills',style: TextStyle(fontSize: 20)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SizedBox(
+                          width: 185,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text('Management skills',style: TextStyle(fontSize: 20)),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: Icon(
+                child: GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      if(selectBlock!=1){
+                        selectBlock=1;}
+                      else{
+                        selectBlock=0;
+                      }
+                    });
+                    if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                      setState(() {
+                        selected=1;
+                      });
+                    }
+                    else{
+                      setState(() {
+                        selected=0;
+                      });
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
                         Icons.fiber_manual_record,
                         size: 26,
                         color: selectBlock==1?kConstantBlueColor:Color(0xffD8D8D8),
                       ),
-                      onTap: (){
-                        setState(() {
-                          if(selectBlock!=1){
-                            selectBlock=1;}
-                          else{
-                            selectBlock=0;
-                          }
-                        });
-                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
-                          setState(() {
-                            selected=1;
-                          });
-                        }
-                        else{
-                          setState(() {
-                            selected=0;
-                          });
-                        }
-                      },),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: SizedBox(
-                        width: 107,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text('Blockchain',style: TextStyle(fontSize: 20)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SizedBox(
+                          width: 107,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text('Blockchain',style: TextStyle(fontSize: 20)),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: Icon(
+                child: GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      if(selectCyber!=1){
+                        selectCyber=1;}
+                      else{
+                        selectCyber=0;
+                      }
+                    });
+                    if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                      setState(() {
+                        selected=1;
+                      });
+                    }
+                    else{
+                      setState(() {
+                        selected=0;
+                      });
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
                         Icons.fiber_manual_record,
                         size: 26,
                         color: selectCyber==1?kConstantBlueColor:Color(0xffD8D8D8),
                       ),
-                      onTap: (){
-                        setState(() {
-                          if(selectCyber!=1){
-                            selectCyber=1;}
-                          else{
-                            selectCyber=0;
-                          }
-                        });
-                        if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
-                          setState(() {
-                            selected=1;
-                          });
-                        }
-                        else{
-                          setState(() {
-                            selected=0;
-                          });
-                        }
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8,0,0,0),
-                      child: SizedBox(
-                        width: 130,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text('CyberSecurity',style: TextStyle(fontSize: 20)),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                        child: SizedBox(
+                          width: 130,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text('CyberSecurity',style: TextStyle(fontSize: 20)),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(

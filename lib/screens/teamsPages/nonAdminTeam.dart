@@ -5,7 +5,6 @@ import 'package:hackapp/components/Team.dart';
 import 'package:hackapp/screens/teamsPages/memberView.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class NTeamDetails extends StatefulWidget {
@@ -111,7 +110,7 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                                     'Project Description:',
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 16,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
@@ -131,7 +130,7 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                                     'Skills Required:',
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 16,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
@@ -163,7 +162,7 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                                     'Members:',
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 16,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
@@ -189,8 +188,10 @@ class _NTeamDetailsState extends State<NTeamDetails> {
                                             child: Container(
                                                 height: 45,
                                                 width: 350,
-                                                color: Color.fromRGBO(
-                                                    255, 255, 255, 0.25),
+                                                decoration: BoxDecoration(
+                                                  color: Color.fromRGBO(
+                                                      255, 255, 255, 0.25),borderRadius: BorderRadius.circular(4)
+                                                ),
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   mainAxisAlignment: MainAxisAlignment.center,

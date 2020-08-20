@@ -217,255 +217,263 @@ class _EditUserState extends State<EditUser> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(selectWeb!=1){
+                              selectWeb=1;}
+                            else{
+                              selectWeb=0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectWeb==1?kConstantBlueColor:Color(0xffD8D8D8),
                             ),
-                            onTap: (){
-                              setState(() {
-                                if(selectWeb!=1){
-                                  selectWeb=1;}
-                                else{
-                                  selectWeb=0;
-                                }
-                              });
-                            },),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Web Development',style: TextStyle(fontSize: 18),),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text('Web Development',style: TextStyle(fontSize: 18),),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(selectMobile!=1){
+                              selectMobile=1;}
+                            else{
+                              selectMobile=0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectMobile==1?kConstantBlueColor:Color(0xffD8D8D8),
                             ),
-                            onTap: (){
-                              setState(() {
-                                if(selectMobile!=1){
-                                  selectMobile=1;}
-                                else{
-                                  selectMobile=0;
-                                }
-                              });
-                            },),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Mobile App Development',style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text('Mobile App Development',style: TextStyle(fontSize: 18)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(selectDevOps!=1){
+                              selectDevOps=1;}
+                            else{
+                              selectDevOps=0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectDevOps==1?kConstantBlueColor:Color(0xffD8D8D8),
                             ),
-                            onTap: (){
-                              setState(() {
-                                if(selectDevOps!=1){
-                                  selectDevOps=1;}
-                                else{
-                                  selectDevOps=0;
-                                }
-                              });
-                            },),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Devops',style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text('Devops',style: TextStyle(fontSize: 18)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(selectML!=1){
+                              selectML=1;}
+                            else{
+                              selectML=0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectML==1?kConstantBlueColor:Color(0xffD8D8D8),
                             ),
-                            onTap: (){
-                              setState(() {
-                                if(selectML!=1){
-                                  selectML=1;}
-                                else{
-                                  selectML=0;
-                                }
-                              });
-                            },),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Machine Learning',style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text('Machine Learning',style: TextStyle(fontSize: 18)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(selectAI!=1){
+                              selectAI=1;}
+                            else{
+                              selectAI=0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectAI==1?kConstantBlueColor:Color(0xffD8D8D8),
                             ),
-                            onTap: (){
-                              setState(() {
-                                if(selectAI!=1){
-                                  selectAI=1;}
-                                else{
-                                  selectAI=0;
-                                }
-                              });
-                            },),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Artificial Intelligence',style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text('Artificial Intelligence',style: TextStyle(fontSize: 18)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(selectDesign!=1){
+                              selectDesign=1;}
+                            else{
+                              selectDesign=0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectDesign==1?kConstantBlueColor:Color(0xffD8D8D8),
                             ),
-                            onTap: (){
-                              setState(() {
-                                if(selectDesign!=1){
-                                  selectDesign=1;}
-                                else{
-                                  selectDesign=0;
-                                }
-                              });
-                            },),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Design - UI/UX',style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text('Design - UI/UX',style: TextStyle(fontSize: 18)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(selectManagement!=1){
+                              selectManagement=1;}
+                            else{
+                              selectManagement=0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectManagement==1?kConstantBlueColor:Color(0xffD8D8D8),
                             ),
-                            onTap: (){
-                              setState(() {
-                                if(selectManagement!=1){
-                                  selectManagement=1;}
-                                else{
-                                  selectManagement=0;
-                                }
-                              });
-                            },),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Management skills',style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text('Management skills',style: TextStyle(fontSize: 18)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(selectBlock!=1){
+                              selectBlock=1;}
+                            else{
+                              selectBlock=0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectBlock==1?kConstantBlueColor:Color(0xffD8D8D8),
                             ),
-                            onTap: (){
-                              setState(() {
-                                if(selectBlock!=1){
-                                  selectBlock=1;}
-                                else{
-                                  selectBlock=0;
-                                }
-                              });
-                            },),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Blockchain',style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text('Blockchain',style: TextStyle(fontSize: 18)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      child: GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            if(selectCyber!=1){
+                              selectCyber=1;}
+                            else{
+                              selectCyber=0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectCyber==1?kConstantBlueColor:Color(0xffD8D8D8),
                             ),
-                            onTap: (){
-                              setState(() {
-                                if(selectCyber!=1){
-                                  selectCyber=1;}
-                                else{
-                                  selectCyber=0;
-                                }
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('CyberSecurity',style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text('CyberSecurity',style: TextStyle(fontSize: 18)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Container(

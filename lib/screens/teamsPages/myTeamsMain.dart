@@ -5,7 +5,6 @@ import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
 import 'package:hackapp/screens/teamsPages/invitesPage.dart';
 import 'package:hackapp/screens/mainFlow/flow.dart';
-import 'package:hackapp/screens/mainFlow/myTeams.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -114,7 +113,9 @@ class _Page2State extends State<Page2> {
                                     child: Container(
                                       height: 45,
                                       width: 350,
-                                      color: Color.fromRGBO(41, 50, 65, 0.1),
+                                      decoration: BoxDecoration(
+                                        color: Color.fromRGBO(41, 50, 65, 0.1),borderRadius: BorderRadius.circular(4)
+                                      ),
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(8,0,8,0),
                                         child: Column(

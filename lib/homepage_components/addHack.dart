@@ -247,7 +247,7 @@ class _AddHackState extends State<AddHack> {
                         child: file1 == null
                             ? Container(
                                 decoration: BoxDecoration(
-                                    color: Color.fromRGBO(41, 50, 65, 0.1)),
+                                    color: Color.fromRGBO(41, 50, 65, 0.1),borderRadius: BorderRadius.circular(6)),
                                 height: SizeConfig.safeBlockVertical * 16,
                                 width: SizeConfig.blockSizeHorizontal * 140,
                                 child: Center(
@@ -258,7 +258,7 @@ class _AddHackState extends State<AddHack> {
                                 height: SizeConfig.safeBlockVertical * 16,
                                 width: SizeConfig.blockSizeHorizontal * 140,
                                 child: FittedBox(
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.contain,
                                   child: Image.file(file1),
                                 ),
                               ),

@@ -160,39 +160,50 @@ class _AcceptInviteState extends State<AcceptInvite> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.only(right: 10),
-                                            child: RaisedButton(onPressed: ()async{
+                                            child: ButtonTheme(
+                                              child: FlatButton(
+                                                onPressed: ()async{
+                                                setState(() {
+                                                  _isInAsyncCall=true;
+                                                });
+                                                if(await rejectInvite(id)==200){
+                                                  _isInAsyncCall=false;
+                                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Page2()));
+                                              }
+                                                else{
+                                                  _isInAsyncCall=false;
+                                                  final snackBar=SnackBar(content: Text('Error.Please try again later',style: TextStyle(fontFamily: 'Montserrat',color: kConstantBlueColor),),backgroundColor: Colors.white,);
+                                                  await Scaffold.of(context).showSnackBar(snackBar);
+                                                }
+                                                },child: Text('Decline',style: TextStyle(fontFamily: 'Montserrat',fontSize: 16,fontWeight: FontWeight.w500),),color: Colors.white,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                                              minWidth: 100,
+                                              height: 38,
+                                            ),
+                                          ),
+                                          ButtonTheme(
+                                            child: FlatButton(
+                                              onPressed: ()async{
                                               setState(() {
                                                 _isInAsyncCall=true;
                                               });
-                                              if(await rejectInvite(id)==200){
-                                                _isInAsyncCall=false;
+                                              if(await acceptInvite(id)==201){
+                                                setState(() {
+                                                  _isInAsyncCall=false;
+                                                });
                                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Page2()));
                                             }
                                               else{
-                                                _isInAsyncCall=false;
+                                                setState(() {
+                                                  _isInAsyncCall=false;
+                                                });
                                                 final snackBar=SnackBar(content: Text('Error.Please try again later',style: TextStyle(fontFamily: 'Montserrat',color: kConstantBlueColor),),backgroundColor: Colors.white,);
                                                 await Scaffold.of(context).showSnackBar(snackBar);
                                               }
-                                              },child: Text('Decline'),color: Colors.white,),
+                                              },child: Text('Accept',style: TextStyle(color: Colors.white,fontSize: 16,fontFamily: 'Montserrat'),),color: kConstantBlueColor,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: Colors.white,width: 2)),),
+                                         minWidth: 100, height: 38,
                                           ),
-                                          RaisedButton(onPressed: ()async{
-                                            setState(() {
-                                              _isInAsyncCall=true;
-                                            });
-                                            if(await acceptInvite(id)==201){
-                                              setState(() {
-                                                _isInAsyncCall=false;
-                                              });
-                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Page2()));
-                                          }
-                                            else{
-                                              setState(() {
-                                                _isInAsyncCall=false;
-                                              });
-                                              final snackBar=SnackBar(content: Text('Error.Please try again later',style: TextStyle(fontFamily: 'Montserrat',color: kConstantBlueColor),),backgroundColor: Colors.white,);
-                                              await Scaffold.of(context).showSnackBar(snackBar);
-                                            }
-                                            },child: Text('Accept',style: TextStyle(color: Colors.white),),color: kConstantBlueColor,),
                                         ],
                                       ),
                                     ),

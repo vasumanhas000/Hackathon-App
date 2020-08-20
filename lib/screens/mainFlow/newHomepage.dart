@@ -77,9 +77,9 @@ class _NewHomePageState extends State<NewHomePage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 18, 14, 4),
                   child: Text(
-                    truncateWithEllipsis(285, value['description']),
+                    truncateWithEllipsis(240, value['description']),
                     style: TextStyle(
-                        color: Colors.white, fontSize: 14),
+                        color: Colors.white, fontSize: 14),maxLines: 6,
                   ),
                 ),
               ],
@@ -172,7 +172,7 @@ class _NewHomePageState extends State<NewHomePage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddHack()));
-      },child: Icon(Icons.add,color: kConstantBlueColor,size: 32,),backgroundColor: Colors.white,),
+      },child: Icon(Icons.add,color: kConstantBlueColor,size: 32,),backgroundColor: Colors.white,tooltip: 'Add Hackathon',),
       body: SafeArea(
         child: Column(
           children: <Widget>[

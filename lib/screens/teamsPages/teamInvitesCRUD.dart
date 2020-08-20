@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/screens/teamsPages/teamDetails.dart';
-import 'package:hackapp/screens/teamsPages/teamInvites.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -63,14 +62,25 @@ class _InviteCRUDState extends State<InviteCRUD> {
              Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(padding: EdgeInsets.fromLTRB(22, 32, 8, 0),
-                  child: FittedBox(child: Text(user['name'],style: TextStyle(fontSize: 32,fontWeight: FontWeight.w600),)),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(22,24,0,0),
+                  child: Text('Profile',style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600,fontFamily: 'Muli'),),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
                   child: Text(
+                    'Name :',
+                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Padding(padding: EdgeInsets.fromLTRB(22, 5, 8, 0),
+                  child: FittedBox(child: Text(user['name'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
+                  child: Text(
                     'Email :',
-                    style: TextStyle(color: kConstantBlueColor, fontSize: 18,fontWeight: FontWeight.w600),
+                    style: TextStyle(color: kConstantBlueColor, fontSize: 20,fontWeight: FontWeight.w600),
                   ),
                 ),
                 Padding(
@@ -78,7 +88,7 @@ class _InviteCRUDState extends State<InviteCRUD> {
                   child: FittedBox(
                     child: Text(
                       user['email'],
-                      style: TextStyle(fontSize: 18,),
+                      style: TextStyle(fontSize: 16,),
                     ),
                     fit: BoxFit.contain,
                   ),
@@ -87,7 +97,7 @@ class _InviteCRUDState extends State<InviteCRUD> {
                   padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                   child: Text(
                     'University Name:',
-                    style: TextStyle( fontSize: 18,fontWeight: FontWeight.w600),
+                    style: TextStyle( fontSize: 20,fontWeight: FontWeight.w600),
                   ),
                 ),
                 Padding(
@@ -95,7 +105,7 @@ class _InviteCRUDState extends State<InviteCRUD> {
                   child: FittedBox(
                     child: Text(
                       user['college'],
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 16),
                     ),
                     fit: BoxFit.contain,
                   ),
@@ -104,7 +114,7 @@ class _InviteCRUDState extends State<InviteCRUD> {
                   padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                   child: Text(
                     'Year of graduation',
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
                   ),
                 ),
                 Padding(
@@ -112,7 +122,7 @@ class _InviteCRUDState extends State<InviteCRUD> {
                   child: FittedBox(
                     child: Text(
                       user['expectedGraduation'],
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 16),
                     ),
                     fit: BoxFit.contain,
                   ),
@@ -121,21 +131,21 @@ class _InviteCRUDState extends State<InviteCRUD> {
                   padding: const EdgeInsets.fromLTRB(22, 25, 8, 0),
                   child: Text(
                     'Description:',
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(22, 5, 8, 0),
                   child: Text(
                     user['bio'],
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 16),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(22, 25, 0, 0),
                   child: Text(
                     'Skills:',
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
                   ),
                 ),
                 ListView.builder(
@@ -153,7 +163,7 @@ class _InviteCRUDState extends State<InviteCRUD> {
                           padding: const EdgeInsets.fromLTRB(22, 8, 0, 0),
                           child: Text(
                             user['skills'][index],
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 16),
                           ),
                         );
                       }

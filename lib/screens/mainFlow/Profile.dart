@@ -59,171 +59,206 @@ class _ProfilePageState extends State<ProfilePage> {
       return (user);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    getUser();
-    return SafeArea(
-      child: Scaffold(
-        body: FutureBuilder(
-          future: getUser(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Center(
-                child: Container(
-                  child: SpinKitFoldingCube(
-                    size: 50,
-                    color: kConstantBlueColor,
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16,24,16,24),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      'Profile',
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Muli'
+                      ),
+                    ),
                   ),
                 ),
-              );
-            } else {
-              return ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(22,32,8,0),
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: Text(snapshot.data.name,
-                                style: TextStyle(fontSize: 32,fontWeight: FontWeight.w600)),
-                          ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Image(image: AssetImage('images/stc.png'),fit: BoxFit.contain,height: SizeConfig.safeBlockVertical*3.15,color: kConstantBlueColor,),
+                )
+              ],
+            ),
+            Expanded(
+              flex: 8,
+              child: FutureBuilder(
+                future: getUser(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.data == null) {
+                    return Center(
+                      child: Container(
+                        child: SpinKitFoldingCube(
+                          size: 50,
+                          color: kConstantBlueColor,
                         ),
-                        Padding(
-                          child: Text(
-                            'Email :',
-                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
-                          ),
-                          padding: EdgeInsets.fromLTRB(22, 30, 8, 5),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(22, 0, 8, 5),
-                          child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Text(
-                                snapshot.data.email,
-                                style: TextStyle(fontSize: 18),
-                              )),
-                        ),
-                        Padding(
-                          child: Text(
-                            'University Name :',
-                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
-                          ),
-                          padding: EdgeInsets.fromLTRB(22, 20, 8, 5),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(22, 0, 8, 5),
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: Text(
-                              snapshot.data.college,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          child: Text(
-                            'Year of graduation :',
-                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
-                          ),
-                          padding: EdgeInsets.fromLTRB(22, 20, 8, 5),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(22, 0, 8, 5),
-                          child: Text(
-                            snapshot.data.year,
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        Padding(
-                          child: Text(
-                            'Description :',
-                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
-                          ),
-                          padding: EdgeInsets.fromLTRB(22, 20, 0, 8),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(22, 0, 8, 8),
-                          child: Text(
-                            snapshot.data.bio,
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        Padding(
-                          child: Text(
-                            'Skills :',
-                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
-                          ),
-                          padding: EdgeInsets.fromLTRB(22, 20, 0, 0),
-                        ),
-                        ListView.builder(
-                            itemCount: snapshot.data.skills.length,
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index1) {
-                              if (snapshot.data.skills.length == 0) {
-                                return Padding(
-                                  padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                                  child: Text('No Skills'),
-                                );
-                              } else {
-                                return Padding(
-                                  padding: const EdgeInsets.fromLTRB(22, 8, 0, 0),
-                                  child: Text(
-                                    snapshot.data.skills[index1],
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                );
-                              }
-                            }),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0,48,24,8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                        itemCount: 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 18),
-                                child: ButtonTheme(
-                                  height: 38,
-                                  minWidth: 100,
-                                  child: FlatButton(onPressed: (){
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>EditUser(user: snapshot.data)));
-                                  },color: Colors.white,child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 4),
-                                        child: Text('Edit',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 16),),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(5,0,0,1),
-                                        child: Icon(Icons.edit,size: 18,color: kConstantBlueColor,),
-                                      ),
-                                    ],
-                                  ),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 2)),
+                                child: Text(
+                                  'Name :',
+                                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
+                                ),
+                                padding: EdgeInsets.fromLTRB(16, 0, 8, 5),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(16,0,8,5),
+                                child: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(snapshot.data.name,
+                                      style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500)),
+                                ),
+                              ),
+                              Padding(
+                                child: Text(
+                                  'Email :',
+                                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
+                                ),
+                                padding: EdgeInsets.fromLTRB(16, 20, 8, 5),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 0, 8, 5),
+                                child: FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: Text(
+                                      snapshot.data.email,
+                                      style: TextStyle(fontSize: 16),
+                                    )),
+                              ),
+                              Padding(
+                                child: Text(
+                                  'University Name :',
+                                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
+                                ),
+                                padding: EdgeInsets.fromLTRB(16, 20, 8, 5),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 0, 8, 5),
+                                child: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    snapshot.data.college,
+                                    style: TextStyle(fontSize: 16),
                                   ),
                                 ),
                               ),
-                              ButtonTheme(
-                                minWidth: 100,
-                                height: 38,
-                                child: FlatButton(onPressed: ()async{
-                                  await logOut();
-                                },color: kConstantBlueColor,child: Text('Sign Out',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                              Padding(
+                                child: Text(
+                                  'Year of graduation :',
+                                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
+                                ),
+                                padding: EdgeInsets.fromLTRB(16, 20, 8, 5),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 0, 8, 5),
+                                child: Text(
+                                  snapshot.data.year,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              Padding(
+                                child: Text(
+                                  'Description :',
+                                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
+                                ),
+                                padding: EdgeInsets.fromLTRB(16, 20, 0, 8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 0, 8, 8),
+                                child: Text(
+                                  snapshot.data.bio,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              Padding(
+                                child: Text(
+                                  'Skills :',
+                                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
+                                ),
+                                padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+                              ),
+                              ListView.builder(
+                                  itemCount: snapshot.data.skills.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (BuildContext context, int index1) {
+                                    if (snapshot.data.skills.length == 0) {
+                                      return Padding(
+                                        padding: const EdgeInsets.fromLTRB(16, 10, 0, 0),
+                                        child: Text('No Skills'),
+                                      );
+                                    } else {
+                                      return Padding(
+                                        padding: const EdgeInsets.fromLTRB(16, 8, 0, 0),
+                                        child: Text(
+                                          snapshot.data.skills[index1],
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      );
+                                    }
+                                  }),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0,48,24,8),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 18),
+                                      child: ButtonTheme(
+                                        height: 38,
+                                        minWidth: 100,
+                                        child: FlatButton(onPressed: (){
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>EditUser(user: snapshot.data)));
+                                        },color: Colors.white,child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 4),
+                                              child: Text('Edit',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 16),),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(5,0,0,1),
+                                              child: Icon(Icons.edit,size: 18,color: kConstantBlueColor,),
+                                            ),
+                                          ],
+                                        ),
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 2)),
+                                        ),
+                                      ),
+                                    ),
+                                    ButtonTheme(
+                                      minWidth: 100,
+                                      height: 38,
+                                      child: FlatButton(onPressed: ()async{
+                                        await logOut();
+                                      },color: kConstantBlueColor,child: Text('Sign Out',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
-                          ),
-                        ),
-                      ],
-                    );
-                  });
-            }
-          },
+                          );
+                        });
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
