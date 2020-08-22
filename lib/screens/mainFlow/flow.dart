@@ -17,13 +17,8 @@ class _FlowPageState extends State<FlowPage> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
   _FlowPageState(this.currentIndex);
+
   int currentIndex;
-  static List<Widget> _widgetOptions = <Widget>[
-    NewHomePage(),
-    SearchPage(),
-    MyTeams(),
-    ProfilePage(),
-  ];
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

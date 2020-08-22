@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/screens/teamsPages/nonAdminTeam.dart';
+import 'package:hackapp/screens/teamsPages/selectHack.dart';
 import 'package:hackapp/screens/teamsPages/teamDetails.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:dio/dio.dart';
@@ -52,7 +53,8 @@ class _MyTeamsState extends State<MyTeams> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){
-      },child: Icon(Icons.add,color: kConstantBlueColor,size: 32,),backgroundColor: Colors.white,tooltip: 'Create Team',),
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectHack()));
+      },child: Icon(Icons.add,color: kConstantBlueColor,size: 32,),backgroundColor: Colors.white,tooltip: 'Create Team',heroTag: null,),
       body: SafeArea(child:
             Padding(
             padding: const EdgeInsets.fromLTRB(16,24,8,0),

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +10,8 @@ import 'package:hackapp/components/sizeConfig.dart';
 import 'package:hackapp/homepage_components/addHack.dart';
 import 'package:hackapp/homepage_components/adminDetailsPage.dart';
 import 'package:hackapp/homepage_components/detailspage.dart';
-import 'package:http/http.dart' as http;
 import 'package:hackapp/components/newHacks.dart';
+
 class NewHomePage extends StatefulWidget {
   @override
   _NewHomePageState createState() => _NewHomePageState();
