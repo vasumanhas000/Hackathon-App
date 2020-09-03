@@ -90,18 +90,14 @@ class _SignUpState extends State<SignUp> {
                     """Find teams and projects to 
 collaborate during Hackathons""",
                     textAlign: TextAlign.left,
-                    style: TextStyle(color: kConstantTextColor, fontSize: 18),
+                    style: TextStyle(color: kConstantTextColor, fontSize: 17),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20,20,20,0),
                   child: TextField(
                     keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
-                      color: kConstantBlueColor,
-                      fontFamily: 'Montserrat',
-                      fontSize: 15,
-                    ),
+                    style: kFieldTextStyle,
                     decoration: kTextFieldDecoration.copyWith(hintText: 'Email',),
                     onChanged: (val){
                       setState(() {
@@ -115,11 +111,7 @@ collaborate during Hackathons""",
                   child: TextField(
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
-                    style: TextStyle(
-                      color: kConstantBlueColor,
-                      fontFamily: 'Montserrat',
-                      fontSize: 15,
-                    ),
+                    style: kFieldTextStyle,
                     decoration: kTextFieldDecoration.copyWith(hintText: 'Password'),
                     onChanged: (val){
                       setState(() {
@@ -150,7 +142,21 @@ collaborate during Hackathons""",
                           });
                           try{
                             await signUp( email, password);
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Verification()));}catch(e){
+                            setState(() {
+                              _isInAsyncCall=false;
+                            });
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>Verification()));
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'A verification email has been sent. Kindly verify and login.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                              ),
+                              backgroundColor:kConstantBlueColor ,
+                            );
+                            await Scaffold.of(context).showSnackBar(snackBar);
+                            await _auth.signOut();
+                            Navigator.pop(context);
+                            }
+                            catch(e){
                             switch (e.code) {
                               case "ERROR_INVALID_EMAIL":
                                 errorMessage = "Your email address appears to be malformed.";

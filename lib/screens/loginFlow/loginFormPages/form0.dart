@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/screens/loginFlow/loginFormPages/form1.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class Form0 extends StatefulWidget {
   Form0();
@@ -9,7 +10,32 @@ class Form0 extends StatefulWidget {
 }
 
 class _Form0State extends State<Form0> {
-String name='',college='',year='';
+String name='',college='';
+TextEditingController year=TextEditingController();
+DateTime selectedDate = DateTime.now();
+Future<Null> _selectDate(
+    BuildContext context, TextEditingController controller) async {
+  final DateTime picked = await showMonthPicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2020, 1),
+      lastDate: DateTime(2024));
+  if (picked != null && picked != selectedDate)
+    setState(() {
+      selectedDate = picked;
+      print(selectedDate);
+      List pickedL = picked.toString().split(' ');
+      List pickedList = pickedL[0].toString().split('-');
+      controller.value = TextEditingValue(
+          text:  pickedList[0]);
+    });
+}
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    year.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -83,17 +109,13 @@ String name='',college='',year='';
                 margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                 child: Text(
                   'Name :',
-                  style: TextStyle(color: Colors.black, fontSize: 18),
+                  style: kHeadingTextStyle,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                 child: TextField(
-                 style: TextStyle(
-                    color: kConstantBlueColor,
-                    fontFamily: 'Montserrat',
-                    fontSize: 15,
-                  ),
+                 style: kFieldTextStyle,
                   onChanged: (val){
                     setState(() {
                       name=val;
@@ -102,34 +124,17 @@ String name='',college='',year='';
                   decoration: kTextFieldDecoration,
                 ),
               ),
-//              Container(
-//                margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-//                child: Text(
-//                  'Contact Number:',
-//                  style: TextStyle(color: Colors.black, fontSize: 18),
-//                ),
-//              ),
-//              Padding(
-//                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-//                child: TextField(
-//                  decoration: kTextFieldDecoration,
-//                ),
-//              ),
               Container(
                 margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                 child: Text(
                   'University Name :',
-                  style: TextStyle(color: Colors.black, fontSize: 18),
+                  style: kHeadingTextStyle,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                 child: TextField(
-                  style: TextStyle(
-                    color: kConstantBlueColor,
-                    fontFamily: 'Montserrat',
-                    fontSize: 15,
-                  ),
+                  style: kFieldTextStyle,
                   onChanged: (val){
                     setState(() {
                       college=val;
@@ -142,22 +147,23 @@ String name='',college='',year='';
                 margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                 child: Text(
                   'Year of Graduation :',
-                  style: TextStyle(color: Colors.black, fontSize: 18),
+                  style: kHeadingTextStyle,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                child: TextField(
-                  style: TextStyle(
-                    color: kConstantBlueColor,
-                    fontFamily: 'Montserrat',
-                    fontSize: 15,
-                  ),
-                  keyboardType: TextInputType.datetime,
-                  onChanged: (val){
-                    year=val;
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                child: GestureDetector(
+                  onTap: (){
+                    _selectDate(context, year);
                   },
-                  decoration: kTextFieldDecoration,
+                  child: AbsorbPointer(
+                    child: TextField(
+                      style: kFieldTextStyle,
+                      keyboardType: TextInputType.datetime,
+                      controller: year,
+                      decoration: kTextFieldDecoration,
+                    ),
+                  ),
                 ),
               ),
               Hero(
@@ -182,7 +188,7 @@ String name='',college='',year='';
                              print('empty');
                            }
                            else{
-                             Navigator.push(context, MaterialPageRoute(builder: (context)=>Form1(name: name,year: year,college: college,)));
+                             Navigator.push(context, MaterialPageRoute(builder: (context)=>Form1(name: name,year: year.text,college: college,)));
                            }
                            },
                          child: Container(

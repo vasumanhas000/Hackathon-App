@@ -31,7 +31,7 @@ class _TeamDetailsState extends State<TeamDetails> {
     });
     Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
-        "https://hackportal.azurewebsites.net/teams/getteaminfo/$id",
+        "$kBaseUrl/teams/getteaminfo/$id",
         headers: headers);
     if (response.statusCode == 200) {
       var teamsJson = jsonDecode(response.body);
@@ -177,7 +177,7 @@ class _TeamDetailsState extends State<TeamDetails> {
                                   ),
                                   Padding(
                                     padding:
-                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                        const EdgeInsets.fromLTRB(0, 5, 0, 0),
                                     child: ListView.builder(
                                         itemCount: snapshot.data.members.length,
                                         shrinkWrap: true,
@@ -185,47 +185,79 @@ class _TeamDetailsState extends State<TeamDetails> {
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return GestureDetector(
-                                            onTap:index==0?(){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>MemberView(user: snapshot
-                                                  .data
-                                                  .members[index],
-                                                id: id,)));
-                                            }:(){
-                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdminMemberView(user: snapshot
-                                                  .data
-                                                  .members[index],
-                                                id: id,)));
-                                            },
+                                            onTap: index == 0
+                                                ? () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    MemberView(
+                                                                      user: snapshot
+                                                                          .data
+                                                                          .members[index],
+                                                                      id: id,
+                                                                    )));
+                                                  }
+                                                : () {
+                                                    Navigator.pushReplacement(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                AdminMemberView(
+                                                                  user: snapshot
+                                                                          .data
+                                                                          .members[
+                                                                      index],
+                                                                  id: id,
+                                                                )));
+                                                  },
                                             child: Padding(
-                                              padding: const EdgeInsets.fromLTRB(
-                                                  0, 0, 25, 10),
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 0, 25, 10),
                                               child: GestureDetector(
                                                   child: Container(
                                                       decoration: BoxDecoration(
-                                                        color: Color.fromRGBO(
-                                                            255, 255, 255, 0.25),borderRadius: BorderRadius.circular(4)
-                                                      ),
+                                                          border: Border(
+                                                              bottom: BorderSide(
+                                                                  color: Colors
+                                                                      .white))),
                                                       height: 45,
                                                       width: 350,
                                                       child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
                                                         children: <Widget>[
                                                           Padding(
-                                                            padding: const EdgeInsets.fromLTRB(16,0,8,0),
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    2, 10, 8, 0),
                                                             child: FittedBox(
-                                                              fit: BoxFit.contain,
+                                                              fit: BoxFit
+                                                                  .contain,
                                                               child: Text(
-                                                index == 0
-                                                    ? snapshot.data.members[index]
-                                                                    ["name"] +
-                                                                ' (admin)'
-                                                    : snapshot.data.members[index]
-                                                                ["name"],
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16),
-                                              ),
+                                                                index == 0
+                                                                    ? snapshot.data.members[index]
+                                                                            [
+                                                                            "name"] +
+                                                                        ' (admin)'
+                                                                    : snapshot
+                                                                            .data
+                                                                            .members[index]
+                                                                        [
+                                                                        "name"],
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        16),
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -247,16 +279,16 @@ class _TeamDetailsState extends State<TeamDetails> {
                                   ),
                                   Padding(
                                       padding: const EdgeInsets.fromLTRB(
-                                          0, 10, 0, 0),
+                                          0, 5, 0, 0),
                                       child: snapshot.data.pendingRequests
                                                   .length ==
                                               0
                                           ? Text(
-                                            'You have no pending sent requests',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12),
-                                          )
+                                              'You have no pending sent requests',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12),
+                                            )
                                           : ListView.builder(
                                               itemCount: snapshot
                                                   .data.pendingRequests.length,
@@ -274,15 +306,18 @@ class _TeamDetailsState extends State<TeamDetails> {
                                                   child: Container(
                                                     height: 45,
                                                     width: 350,
-                                                    color: Color.fromRGBO(
-                                                        255, 255, 255, 0.25),
+                                                    decoration: BoxDecoration(
+                                                        border: Border(
+                                                            bottom: BorderSide(
+                                                                color: Colors
+                                                                    .white))),
                                                     child: Column(
                                                       children: <Widget>[
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
                                                                       .fromLTRB(
-                                                                  16, 0, 8, 0),
+                                                                  2, 10, 8, 0),
                                                           child: FittedBox(
                                                               fit: BoxFit
                                                                   .contain,
@@ -343,17 +378,25 @@ class _TeamDetailsState extends State<TeamDetails> {
                                             child: Row(
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.only(left: 4),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 4),
                                                   child: Text(
                                                     'Edit',
                                                     style: TextStyle(
-                                                        color: kConstantBlueColor,
-                                                        fontFamily: 'Montserrat',fontWeight: FontWeight.w500,fontSize: 16),
+                                                        color:
+                                                            kConstantBlueColor,
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 16),
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.fromLTRB(
-                                                      5,0,0,3),
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          5, 0, 0, 3),
                                                   child: Icon(
                                                     Icons.edit,
                                                     size: 18,

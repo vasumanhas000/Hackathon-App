@@ -4,8 +4,10 @@ import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/User.dart';
 import 'package:hackapp/screens/mainFlow/flow.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hackapp/components/sizeConfig.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class EditUser extends StatefulWidget {
@@ -16,17 +18,27 @@ class EditUser extends StatefulWidget {
 }
 
 class _EditUserState extends State<EditUser> {
-  final _auth = FirebaseAuth.instance;
+  String getUrl(String url){
+    String webpage=url.trim() ;
+    if(webpage==''){
+      webpage=url.trim();
+    }
+    else if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      webpage = "http://" + url;
+    }
+    return webpage;
+  }
+  DateTime selectedDate = DateTime.now();
   String Token;
   Future updateProfile(String name,String university,String bio,String year,String github,String stack,String link,List skillList)async{
     FirebaseUser user = await _auth.currentUser();
-    Token= await user.getIdToken().then((result) {
+    Token= await user.getIdToken(refresh: true).then((result) {
       String token = result.token;
       return token;
     });
     Map<String, String> headers = {"authtoken": Token,"Content-Type": "application/json"};
     var response = await http.patch(
-        "https://hackportal.azurewebsites.net/users",
+        "$kBaseUrl/users",
         headers: headers,body: jsonEncode({
       "name":name,
       "college":university,
@@ -66,7 +78,7 @@ class _EditUserState extends State<EditUser> {
       if(i.toString().toLowerCase()=='Web Development'.toLowerCase()){
         selectWeb=1;
       }
-      if(i.toString().toLowerCase()=='App Development'.toLowerCase()){
+      if(i.toString().toLowerCase()=='Mobile App Development'.toLowerCase()){
         selectMobile=1;
       }
       if(i.toString().toLowerCase()=='DevOps'.toLowerCase()){
@@ -78,7 +90,7 @@ class _EditUserState extends State<EditUser> {
       if(i.toString().toLowerCase()=='Artificial Intelligence'.toLowerCase()){
         selectAI=1;
       }
-      if(i.toString().toLowerCase()=='Design'.toLowerCase()){
+      if(i.toString().toLowerCase()=='Design - ui/ux'.toLowerCase()){
         selectDesign=1;
       }
       if(i.toString().toLowerCase()=='Management'.toLowerCase()){
@@ -103,6 +115,27 @@ class _EditUserState extends State<EditUser> {
   _dismissKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
+  Future<Null> _selectDate(
+      BuildContext context, TextEditingController controller) async {
+    final DateTime picked = await showMonthPicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1901, 1),
+        lastDate: DateTime(2100));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        print(selectedDate);
+        List pickedL = picked.toString().split(' ');
+        List pickedList = pickedL[0].toString().split('-');
+        setState(() {
+          controller.value = TextEditingValue(
+              text:  pickedList[0]);
+        });
+
+      });
+  }
+  final _auth = FirebaseAuth.instance;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -115,17 +148,13 @@ class _EditUserState extends State<EditUser> {
     stack.dispose();
     link.dispose();
   }
-  void _moveToSignInScreen(BuildContext context) =>
+  void _moveToSignInScreen(BuildContext context) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex:3,)));
+    // Navigator.pushReplacement(context, PageTransition(child: FlowPage(currentIndex: 3,), type: PageTransitionType.upToDown));
+  }
   @override
   Widget build(BuildContext context) {
-    final name = TextEditingController(text: user.name);
-    final university = TextEditingController(text: user.college);
-    final bio = TextEditingController(text: user.bio);
-    final year = TextEditingController(text: user.year);
-    final github = TextEditingController(text: user.github);
-    final stack = TextEditingController(text: user.stack);
-    final link = TextEditingController(text: user.link);
+    SizeConfig().init(context);
     return GestureDetector(
       onTap: (){
         _dismissKeyboard(context);
@@ -147,17 +176,40 @@ class _EditUserState extends State<EditUser> {
                 itemBuilder: (BuildContext context, int index) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16,24,16,24),
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(
+                              'Edit Profile',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Muli'
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: Image(image: AssetImage('images/stc.png'),fit: BoxFit.contain,height: SizeConfig.safeBlockVertical*3.15,color: kConstantBlueColor,),
+                        )
+                      ],
+                    ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
+                      margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Name:',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: TextField(
-                        style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 15),
+                        style: kFieldTextStyle,
                         controller: name,
                         decoration: kTextFieldDecoration,
                       ),
@@ -166,13 +218,13 @@ class _EditUserState extends State<EditUser> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'University Name:',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: TextField(
-                        style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 15),
+                        style: kFieldTextStyle,
                         controller: university,
                         decoration: kTextFieldDecoration,
                       ),
@@ -181,38 +233,45 @@ class _EditUserState extends State<EditUser> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Year of graduation:',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: TextField(
-                        style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 15),
-                        controller: year,
-                        decoration: kTextFieldDecoration,
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                      child: GestureDetector(
+                        onTap: (){
+                          _selectDate(context, year);
+                        },
+                        child: AbsorbPointer(
+                          child: TextField(
+                            style: kFieldTextStyle,
+                            controller: year,
+                            decoration: kTextFieldDecoration,
+                          ),
+                        ),
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Description:',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
-                        style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 15),
-                        maxLines: 6,
+                        style: kFieldTextStyle,
+                        maxLines: 7,
                         controller: bio,
-                        decoration: kTextFieldDecoration,
+                        decoration: kBigTextFieldDecoration,
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Skills:',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
@@ -237,7 +296,7 @@ class _EditUserState extends State<EditUser> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Container(
-                                child: Text('Web Development',style: TextStyle(fontSize: 18),),
+                                child: Text('Web Development',style: kFieldTextStyle,),
                               ),
                             ),
                           ],
@@ -266,7 +325,7 @@ class _EditUserState extends State<EditUser> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Container(
-                                child: Text('Mobile App Development',style: TextStyle(fontSize: 18)),
+                                child: Text('Mobile App Development',style: kFieldTextStyle),
                               ),
                             ),
                           ],
@@ -295,7 +354,7 @@ class _EditUserState extends State<EditUser> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Container(
-                                child: Text('Devops',style: TextStyle(fontSize: 18)),
+                                child: Text('Devops',style: kFieldTextStyle),
                               ),
                             ),
                           ],
@@ -324,7 +383,7 @@ class _EditUserState extends State<EditUser> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Container(
-                                child: Text('Machine Learning',style: TextStyle(fontSize: 18)),
+                                child: Text('Machine Learning',style: kFieldTextStyle),
                               ),
                             ),
                           ],
@@ -353,7 +412,7 @@ class _EditUserState extends State<EditUser> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Container(
-                                child: Text('Artificial Intelligence',style: TextStyle(fontSize: 18)),
+                                child: Text('Artificial Intelligence',style: kFieldTextStyle),
                               ),
                             ),
                           ],
@@ -382,7 +441,7 @@ class _EditUserState extends State<EditUser> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Container(
-                                child: Text('Design - UI/UX',style: TextStyle(fontSize: 18)),
+                                child: Text('Design - UI/UX',style: kFieldTextStyle),
                               ),
                             ),
                           ],
@@ -411,7 +470,7 @@ class _EditUserState extends State<EditUser> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Container(
-                                child: Text('Management skills',style: TextStyle(fontSize: 18)),
+                                child: Text('Management skills',style: kFieldTextStyle),
                               ),
                             ),
                           ],
@@ -440,7 +499,7 @@ class _EditUserState extends State<EditUser> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Container(
-                                child: Text('Blockchain',style: TextStyle(fontSize: 18)),
+                                child: Text('Blockchain',style: kFieldTextStyle),
                               ),
                             ),
                           ],
@@ -469,7 +528,7 @@ class _EditUserState extends State<EditUser> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Container(
-                                child: Text('CyberSecurity',style: TextStyle(fontSize: 18)),
+                                child: Text('CyberSecurity',style: kFieldTextStyle),
                               ),
                             ),
                           ],
@@ -480,13 +539,13 @@ class _EditUserState extends State<EditUser> {
                       margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
                       child: Text(
                         'Github:',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: TextField(
-                        style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 15),
+                        style: kFieldTextStyle,
                         controller: github,
                         decoration: kTextFieldDecoration,
                       ),
@@ -495,13 +554,13 @@ class _EditUserState extends State<EditUser> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Stack Overflow:',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: TextField(
-                        style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 15),
+                        style: kFieldTextStyle,
                         controller: stack,
                         decoration: kTextFieldDecoration,
                       ),
@@ -510,12 +569,13 @@ class _EditUserState extends State<EditUser> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Your Website:',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: TextField(style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontSize: 15),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                      child: TextField(
+                        style: kFieldTextStyle,
                         controller: link,
                         decoration: kTextFieldDecoration,
                       ),
@@ -549,12 +609,12 @@ class _EditUserState extends State<EditUser> {
                               if(selectMobile==1){
                                 var count=0;
                                 for(var i in skillList){
-                                  if(i=='App Development'){
+                                  if(i=='Mobile App Development'){
                                     count+=1;
                                   }
                                 }
                                 if(count==0){
-                                  skillList.add('App Development');
+                                  skillList.add('Mobile App Development');
                                 }
                               }
                               if(selectDevOps==1){
@@ -593,12 +653,12 @@ class _EditUserState extends State<EditUser> {
                               if(selectDesign==1){
                                 var count=0;
                                 for(var i in skillList){
-                                  if(i=='Design'){
+                                  if(i=='Design - ui/ux'){
                                     count+=1;
                                   }
                                 }
                                 if(count==0){
-                                  skillList.add('Design');
+                                  skillList.add('Design - ui/ux');
                                 }
 
                               }
@@ -644,7 +704,7 @@ class _EditUserState extends State<EditUser> {
                               }
                               if(selectMobile!=1){
                                 for(var i in skillList){
-                                  if(i=='App Development'){
+                                  if(i=='Mobile App Development'){
                                     toRemove.add(i);
                                   }
                                 }
@@ -672,7 +732,7 @@ class _EditUserState extends State<EditUser> {
                               }
                               if(selectDesign!=1){
                                 for(var i in skillList){
-                                  if(i=='Design'){
+                                  if(i=='Design - ui/ux'){
                                     toRemove.add(i);
                                   }
                                 }
@@ -702,7 +762,7 @@ class _EditUserState extends State<EditUser> {
                               setState(() {
                                 _isInAsyncCall=true;
                               });
-                              if(await updateProfile(name.text, university.text, bio.text, year.text, github.text, stack.text, link.text, skillList)==200){
+                              if(await updateProfile(name.text, university.text, bio.text, year.text, getUrl(github.text), getUrl(stack.text), getUrl(link.text), skillList)==200){
                                 setState(() {
                                   _isInAsyncCall=false;
                                 });

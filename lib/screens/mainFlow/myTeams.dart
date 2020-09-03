@@ -31,7 +31,7 @@ class _MyTeamsState extends State<MyTeams> {
     });
     _dio.options.headers["authtoken"] = "$Token";
 //    Map<String, String> headers = {"authtoken": Token};
-    final String url= "https://hackportal.azurewebsites.net/users";
+    final String url= "$kBaseUrl/users";
     Response response = await _dio.get(
         url,options: _cacheOptions);
     if(response.statusCode==200){
@@ -41,6 +41,7 @@ class _MyTeamsState extends State<MyTeams> {
         teams: teamsJson["teamsInfo"],
       );
       print(team);
+      uid=team.id;
       return team;
     }
   }
@@ -49,11 +50,12 @@ class _MyTeamsState extends State<MyTeams> {
         ? myString
         : '${myString.substring(0, cutoff)}...';
   }
+  String uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectHack()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectHack(uid: uid,)));
       },child: Icon(Icons.add,color: kConstantBlueColor,size: 32,),backgroundColor: Colors.white,tooltip: 'Create Team',heroTag: null,),
       body: SafeArea(child:
             Padding(

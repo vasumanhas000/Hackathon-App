@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
-import 'screens/loginFlow/loginFormPages/form0.dart';
 import 'screens/loginFlow/loginPage.dart';
 import 'screens/mainFlow/flow.dart';
-import 'homepage_components/addHack.dart';
 import 'screens/mainFlow/splash.dart';
-import 'homepage_components/detailspage.dart';
+import 'screens/loginFlow/loginFormPages/form0.dart';
+
 void main() {
   runApp(HackApp());
 }
@@ -15,7 +14,7 @@ class HackApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/first',
+      initialRoute: '/',
       theme: ThemeData(
           primaryColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,
@@ -30,10 +29,9 @@ class HackApp extends StatelessWidget {
       routes: {
         '/':(context)=>SplashScreen(),
         '/first':(context)=>FlowPage(currentIndex: 0,),
+        '/third':(context)=>FlowPage(currentIndex: 2,),
         '/login':(context)=>LoginPage(),
         '/form':(context)=>Form0(),
-        '/details':(context)=>HackDetails(),
-        '/addHack':(context)=>AddHack(),
       },
     );
   }

@@ -11,6 +11,7 @@ import 'package:hackapp/homepage_components/addHack.dart';
 import 'package:hackapp/homepage_components/adminDetailsPage.dart';
 import 'package:hackapp/homepage_components/detailspage.dart';
 import 'package:hackapp/components/newHacks.dart';
+import 'package:hackapp/screens/loginFlow/loginPage.dart';
 
 class NewHomePage extends StatefulWidget {
   @override
@@ -39,11 +40,25 @@ class _NewHomePageState extends State<NewHomePage> {
     _dio.options.headers["authtoken"] = "$Token";
 //    Map<String, String> headers = {"authtoken": Token};
     Response response = await _dio.get(
-        "https://hackportal.azurewebsites.net/users",options: _cacheOptions);
+        "$kBaseUrl/users",options: _cacheOptions);
     if (response.statusCode == 200) {
       var usersJson = response.data;
       id=usersJson['_id'];}
+    else{
+      logOut();
+    }
     print(id);
+  }
+  Future logOut()async{
+    FirebaseUser user= await auth.currentUser();
+    _dioCacheManager.clearAll();
+    if(user!=null){
+      await auth.signOut();
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+    }
+    else{
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+    }
   }
   String id;
   Widget listItemBuilder(value, int index) {
@@ -112,7 +127,7 @@ class _NewHomePageState extends State<NewHomePage> {
         _dio.options.headers["authtoken"] = "$Token";
 //        Map<String, String> headers = {"authtoken": Token};
         String url = Uri.encodeFull(
-            'https://hackportal.azurewebsites.net/events/getevents/$page');
+            '$kBaseUrl/events/getevents/$page');
         Response response = await _dio.get(url);
         print(response);
         return Hackathons.fromResponse(response);

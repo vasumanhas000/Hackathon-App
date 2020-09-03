@@ -26,7 +26,7 @@ class _InviteCRUDState extends State<InviteCRUD> {
     });
     Map<String, String> headers = {"authtoken": Token,"Content-Type": "application/json"};
     var response = await http.post(
-        "https://hackportal.azurewebsites.net/teams/cancelinvite",
+        "$kBaseUrl/teams/cancelinvite",
         headers: headers,body: jsonEncode({
       "teamId":id,
       "inviteeId":userID,

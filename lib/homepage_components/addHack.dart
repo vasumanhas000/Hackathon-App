@@ -46,7 +46,7 @@ class _AddHackState extends State<AddHack> {
       "Content-Type": "application/json",
       "authtoken": Token
     };
-    String url = 'https://hackportal.azurewebsites.net/events/setevent';
+    String url = '$kBaseUrl/events/setevent';
     var response = await http.post(url,
         headers: headers,
         body: jsonEncode({
@@ -61,16 +61,25 @@ class _AddHackState extends State<AddHack> {
           'eventUrl': link,
         }));
     print(response.statusCode);
+    print(response.body);
     return response.statusCode;
   }
 
-  TextEditingController startDate=TextEditingController(), endDate=TextEditingController();
-  String name='', venue='', description='', link='';
-  int min,max;
+  TextEditingController startDate = TextEditingController(),
+      endDate = TextEditingController();
+  String name = '', venue = '', description = '', link = '';
+  int min, max;
   _dismissKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 
+  String getUrl(String url){
+    String webpage=url ;
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      webpage = "http://" + url;
+    }
+    return webpage.trim();
+  }
   DateTime selectedDate = DateTime.now();
   void _moveToSignInScreen(BuildContext context) => Navigator.pushReplacement(
       context,
@@ -88,75 +97,78 @@ class _AddHackState extends State<AddHack> {
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
-      List pickedL=  picked.toString().split(' ');
-      List pickedList= pickedL[0].toString().split('-');
-        controller.value = TextEditingValue(text: pickedList[2] +'/'+ pickedList[1]+ "/" + pickedList[0]);
+        List pickedL = picked.toString().split(' ');
+        List pickedList = pickedL[0].toString().split('-');
+        controller.value = TextEditingValue(
+            text: pickedList[2] + '/' + pickedList[1] + "/" + pickedList[0]);
       });
   }
- String getMonth(int number){
+
+  String getMonth(int number) {
     String month;
-    if(number==01){
+    if (number == 01) {
       setState(() {
-        month='January';
+        month = 'January';
       });
     }
-    if(number==02){
+    if (number == 02) {
       setState(() {
-        month='February';
+        month = 'February';
       });
     }
-    if(number==03){
+    if (number == 03) {
       setState(() {
-        month='March';
+        month = 'March';
       });
     }
-    if(number==04){
+    if (number == 04) {
       setState(() {
-        month='April';
+        month = 'April';
       });
     }
-    if(number==05){
+    if (number == 05) {
       setState(() {
-        month='May';
+        month = 'May';
       });
     }
-    if(number==06){
+    if (number == 06) {
       setState(() {
-        month='June';
+        month = 'June';
       });
     }
-    if(number==07){
+    if (number == 07) {
       setState(() {
-        month='July';
+        month = 'July';
       });
     }
-    if(number==08){
+    if (number == 08) {
       setState(() {
-        month='August';
+        month = 'August';
       });
     }
-    if(number==09){
+    if (number == 09) {
       setState(() {
-        month='September';
+        month = 'September';
       });
     }
-    if(number==10){
+    if (number == 10) {
       setState(() {
-        month='October';
+        month = 'October';
       });
     }
-    if(number==11){
+    if (number == 11) {
       setState(() {
-        month='November';
+        month = 'November';
       });
     }
-    if(number==12){
+    if (number == 12) {
       setState(() {
-        month='December';
+        month = 'December';
       });
     }
     return month;
- }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -196,13 +208,14 @@ class _AddHackState extends State<AddHack> {
                             child: Text(
                               'Add Hack',
                               style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 30,
                                   fontFamily: 'Muli',
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
                           Image(
                             image: AssetImage('images/stc.png'),
+                            color: kConstantBlueColor,
                             fit: BoxFit.contain,
                             height: SizeConfig.safeBlockVertical * 3.15,
                           )
@@ -213,19 +226,15 @@ class _AddHackState extends State<AddHack> {
                       margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
                       child: Text(
                         'Hackathon name :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: TextField(
                         keyboardType: TextInputType.text,
                         decoration: kTextFieldDecoration,
-                        style: TextStyle(
-                          color: kConstantBlueColor,
-                          fontFamily: 'Montserrat',
-                          fontSize: 15,
-                        ),
+                        style: kFieldTextStyle,
                         onChanged: (value) {
                           name = value;
                         },
@@ -235,7 +244,7 @@ class _AddHackState extends State<AddHack> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Hackathon Image :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     GestureDetector(
@@ -247,11 +256,29 @@ class _AddHackState extends State<AddHack> {
                         child: file1 == null
                             ? Container(
                                 decoration: BoxDecoration(
-                                    color: Color.fromRGBO(41, 50, 65, 0.1),borderRadius: BorderRadius.circular(6)),
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: Colors.white,
+                                    border: Border(
+                                        top: BorderSide(
+                                          color: kConstantBlueColor,
+                                          width: 0.5,
+                                        ),
+                                        bottom: BorderSide(
+                                          color: kConstantBlueColor,
+                                          width: 0.5,
+                                        ),
+                                        right: BorderSide(
+                                          color: kConstantBlueColor,
+                                          width: 0.5,
+                                        ),
+                                        left: BorderSide(
+                                          color: kConstantBlueColor,
+                                          width: 0.5,
+                                        ))),
                                 height: SizeConfig.safeBlockVertical * 16,
                                 width: SizeConfig.blockSizeHorizontal * 140,
                                 child: Center(
-                                  child: Text('Tap to add an Image'),
+                                  child: Text('Tap to add an Image',style: TextStyle(color: Color(0xff9499A0)),),
                                 ),
                               )
                             : SizedBox(
@@ -268,11 +295,11 @@ class _AddHackState extends State<AddHack> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Start Date :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: GestureDetector(
                         onTap: () {
                           _selectDate(context, startDate);
@@ -282,11 +309,7 @@ class _AddHackState extends State<AddHack> {
                             keyboardType: TextInputType.datetime,
                             decoration: kTextFieldDecoration,
                             controller: startDate,
-                            style: TextStyle(
-                              color: kConstantBlueColor,
-                              fontFamily: 'Montserrat',
-                              fontSize: 15,
-                            ),
+                            style: kFieldTextStyle
                           ),
                         ),
                       ),
@@ -295,11 +318,11 @@ class _AddHackState extends State<AddHack> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'End Date :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: GestureDetector(
                         onTap: () {
                           _selectDate(context, endDate);
@@ -308,11 +331,7 @@ class _AddHackState extends State<AddHack> {
                           child: TextField(
                             controller: endDate,
                             decoration: kTextFieldDecoration,
-                            style: TextStyle(
-                              color: kConstantBlueColor,
-                              fontFamily: 'Montserrat',
-                              fontSize: 15,
-                            ),
+                            style: kFieldTextStyle,
                           ),
                         ),
                       ),
@@ -321,19 +340,15 @@ class _AddHackState extends State<AddHack> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Minimum Team Size :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: TextField(
                         keyboardType: TextInputType.number,
                         decoration: kTextFieldDecoration,
-                        style: TextStyle(
-                          color: kConstantBlueColor,
-                          fontFamily: 'Montserrat',
-                          fontSize: 15,
-                        ),
+                        style: kFieldTextStyle,
                         onChanged: (value) {
                           min = int.parse(value);
                         },
@@ -343,19 +358,15 @@ class _AddHackState extends State<AddHack> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Maximum Team Size :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: TextField(
                         keyboardType: TextInputType.number,
                         decoration: kTextFieldDecoration,
-                        style: TextStyle(
-                          color: kConstantBlueColor,
-                          fontFamily: 'Montserrat',
-                          fontSize: 15,
-                        ),
+                        style: kFieldTextStyle,
                         onChanged: (value) {
                           max = int.parse(value);
                         },
@@ -365,17 +376,13 @@ class _AddHackState extends State<AddHack> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Venue :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: TextField(
-                        style: TextStyle(
-                          color: kConstantBlueColor,
-                          fontFamily: 'Montserrat',
-                          fontSize: 15,
-                        ),
+                        style: kFieldTextStyle,
                         decoration: kTextFieldDecoration,
                         onChanged: (value) {
                           venue = value;
@@ -386,18 +393,14 @@ class _AddHackState extends State<AddHack> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Description :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
                       child: TextField(
-                        style: TextStyle(
-                          color: kConstantBlueColor,
-                          fontFamily: 'Montserrat',
-                          fontSize: 15,
-                        ),
-                        decoration: kTextFieldDecoration,
+                        style: kFieldTextStyle,
+                        decoration: kBigTextFieldDecoration,
                         maxLines: 7,
                         onChanged: (value) {
                           description = value;
@@ -408,17 +411,13 @@ class _AddHackState extends State<AddHack> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Link to website/registration link :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: TextField(
-                        style: TextStyle(
-                          color: kConstantBlueColor,
-                          fontFamily: 'Montserrat',
-                          fontSize: 15,
-                        ),
+                        style: kFieldTextStyle,
                         decoration: kTextFieldDecoration,
                         onChanged: (value) {
                           link = value;
@@ -466,52 +465,76 @@ class _AddHackState extends State<AddHack> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4)),
                               onPressed: () async {
-                                if(name==''|| venue==''|| description==''|| link==''|| min==null || max==null){
+                                if (name == '' ||
+                                    venue == '' ||
+                                    description == '' ||
+                                    link == '' ||
+                                    min == null ||
+                                    max == null) {
                                   final snackBar = SnackBar(
                                     content: Text(
-                                      'All fields are mandatory',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                      'All fields are mandatory',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Montserrat'),
                                     ),
-                                    backgroundColor:kConstantBlueColor ,
+                                    backgroundColor: kConstantBlueColor,
                                   );
-                                  await Scaffold.of(context).showSnackBar(snackBar);
-                                }
-                                else{
-                                  if(min>max){
+                                  await Scaffold.of(context)
+                                      .showSnackBar(snackBar);
+                                } else {
+                                  if (min > max) {
                                     final snackBar = SnackBar(
                                       content: Text(
-                                        'Minimum team size cannot be larger than Maximum team size',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                        'Minimum team size cannot be larger than Maximum team size',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Montserrat'),
                                       ),
-                                      backgroundColor:kConstantBlueColor ,
+                                      backgroundColor: kConstantBlueColor,
                                     );
-                                    await Scaffold.of(context).showSnackBar(snackBar);
+                                    await Scaffold.of(context)
+                                        .showSnackBar(snackBar);
+                                  } else {
+                                    setState(() {
+                                      _isInAsyncCall = true;
+                                    });
+                                    if (await postHack(
+                                            name,
+                                            base64img,
+                                            startDate.text,
+                                            endDate.text,
+                                            venue,
+                                            description,
+                                            getUrl(link),
+                                            max,
+                                            min) ==
+                                        200) {
+                                      setState(() {
+                                        _isInAsyncCall = false;
+                                      });
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => FlowPage(
+                                                    currentIndex: 0,
+                                                  )));
+                                    }
+                                    else{
+                                      setState(() {
+                                        _isInAsyncCall=false;
+                                      });
+                                      final snackBar = SnackBar(
+                                        content: Text(
+                                          'Error.Please try again later.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                        ),
+                                        backgroundColor:kConstantBlueColor ,
+                                      );
+                                      await Scaffold.of(context).showSnackBar(snackBar);
+                                    }
                                   }
-                                  else{
-                                setState(() {
-                                  _isInAsyncCall = true;
-                                });
-                                if (await postHack(
-                                        name,
-                                        base64img,
-                                        startDate.text,
-                                        endDate.text,
-                                        venue,
-                                        description,
-                                        link,
-                                        max,
-                                        min) ==
-                                    200) {
-                                  setState(() {
-                                    _isInAsyncCall = false;
-                                  });
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => FlowPage(
-                                                currentIndex: 0,
-                                              )));
-                                }}
-                                ;
-                              }},
+                                }
+                              },
                               child: Text(
                                 'Confirm',
                                 style: TextStyle(

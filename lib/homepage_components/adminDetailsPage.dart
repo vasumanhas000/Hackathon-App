@@ -42,7 +42,7 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
     });
     Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
-        "https://hackportal.azurewebsites.net/events/geteventinfo/$id",
+        "$kBaseUrl/events/geteventinfo/$id",
         headers: headers);
     var hackathonsJson = jsonDecode(response.body);
     Hackathon hack = Hackathon(
@@ -66,7 +66,7 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
   Future deleteHack() async {
     Map<String, String> headers = {"authtoken": Token};
     var response = await http.delete(
-        'https://hackportal.azurewebsites.net/events/deleteevent/$id',
+        '$kBaseUrl/events/deleteevent/$id',
         headers: headers);
     print(response.statusCode);
     return response.statusCode;
@@ -74,7 +74,7 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
 
 
   _launchURL(String url) async {
-    String webpage ;
+    String webpage=url ;
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       webpage = "http://" + url;
     }
@@ -126,8 +126,8 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
                               child: Text(
                                 snapshot.data.name,
                                 style: TextStyle(
-                                    fontFamily: 'Muli',
-                                    fontSize: 34,
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 32,
                                     color: Colors.white),
                               ),
                             ),
@@ -138,15 +138,15 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
                                 child: Text(
                                   snapshot.data.location,
                                   style: TextStyle(
-                                      fontFamily: 'Muli',
-                                      fontSize: 24,
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 22,
                                       color: Colors.white),
                                   textAlign: TextAlign.left,
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.only(top: 10),
                               child: FittedBox(
                                 fit: BoxFit.contain,
                                 child: Text(
@@ -174,16 +174,16 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
                               child: Text(
                                 snapshot.data.description,
                                 style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
+                                    fontSize: 16, color: Colors.white),
                                 textAlign: TextAlign.left,
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 16),
                               child: Text(
-                                'Link:',
+                                'Link :',
                                 style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600),
                                 textAlign: TextAlign.left,
@@ -199,7 +199,7 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
                                   snapshot.data.url,
                                   style: TextStyle(
                                       decoration: TextDecoration.underline,
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       color: Colors.white),
                                   textAlign: TextAlign.left,
                                 ),

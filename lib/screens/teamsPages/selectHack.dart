@@ -8,8 +8,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/components/sizeConfig.dart';
 import 'package:hackapp/constants.dart';
 import 'package:hackapp/components/newHacks.dart';
+import 'package:hackapp/screens/teamsPages/createTeam.dart';
 
 class SelectHack extends StatefulWidget {
+  final String uid;
+  SelectHack({this.uid});
   @override
   _SelectHackState createState() => _SelectHackState();
 }
@@ -39,7 +42,7 @@ class _SelectHackState extends State<SelectHack> {
       _dio.options.headers["authtoken"] = "$Token";
 //        Map<String, String> headers = {"authtoken": Token};
       String url = Uri.encodeFull(
-          'https://hackportal.azurewebsites.net/events/getevents/$page');
+          '$kBaseUrl/events/getevents/$page');
       Response response = await _dio.get(url);
       print(response);
       return Hackathons.fromResponse(response);
@@ -65,35 +68,39 @@ class _SelectHackState extends State<SelectHack> {
 
   String selectedId;
   Widget listItemBuilder(value, int index) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(16, 15, 16, 8),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: <Widget>[
-                Radio(
-                    value: value['_id'],
-                    groupValue: selectedId,
-                    onChanged: (val) {
-                      setState(() {
-                        selectedId = val;
-                      });
-                    }),
-                FittedBox(
-                  fit: BoxFit.contain,
-                  child: Text(
-                    value['nameOfEvent'],
-                    style: TextStyle(color: kConstantBlueColor, fontSize: 26),
+    if (widget.uid == value['creatorId']) {
+      return SizedBox(height: 0,width: 0,);
+    } else {
+      return Padding(
+        padding: EdgeInsets.fromLTRB(16, 15, 16, 8),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: <Widget>[
+                  Radio(
+                      value: value['_id'],
+                      groupValue: selectedId,
+                      onChanged: (val) {
+                        setState(() {
+                          selectedId = val;
+                        });
+                      }),
+                  FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      value['nameOfEvent'],
+                      style: TextStyle(color: kConstantBlueColor, fontSize: 26),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   Widget errorWidgetMaker(Hackathons hackData, retryListener) {
@@ -134,32 +141,38 @@ class _SelectHackState extends State<SelectHack> {
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: Text(
-                    'Create Your Team',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Muli'),
+          Hero(
+            tag: 'Heading',
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Text(
+                        'Create Your Team',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Muli'),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Image(
-                  image: AssetImage('images/stc.png'),
-                  fit: BoxFit.contain,
-                  height: SizeConfig.safeBlockVertical * 3.15,
-                  color: kConstantBlueColor,
-                ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Image(
+                    image: AssetImage('images/stc.png'),
+                    fit: BoxFit.contain,
+                    height: SizeConfig.safeBlockVertical * 3.15,
+                    color: kConstantBlueColor,
+                  ),
+                )
+              ],
+            ),
           ),
           SizedBox(
             height: 10,
@@ -200,7 +213,7 @@ class _SelectHackState extends State<SelectHack> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
+            padding: EdgeInsets.fromLTRB(0, 32, 16, 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -208,15 +221,23 @@ class _SelectHackState extends State<SelectHack> {
                   minWidth: 100,
                   height: 38,
                   child: FlatButton(
-                    onPressed: () {},
+                    onPressed:selectedId==null||selectedId==''?(){}: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  TeamCreate(id: selectedId)));
+                    },
                     child: Text(
                       'Next',
-                      style: TextStyle(color: Colors.white,fontSize: 16,fontFamily: 'Montserrat'),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Montserrat'),
                     ),
                     color: kConstantBlueColor,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4)
-                    ),
+                        borderRadius: BorderRadius.circular(4)),
                   ),
                 ),
               ],

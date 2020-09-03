@@ -21,6 +21,13 @@ class EditHack extends StatefulWidget {
 }
 
 class _EditHackState extends State<EditHack> {
+  String getUrl(String url){
+    String webpage=url ;
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      webpage = "http://" + url;
+    }
+    return webpage.trim();
+  }
   final _auth = FirebaseAuth.instance;
   String Token;
   _EditHackState(this.hackathon);
@@ -38,7 +45,7 @@ class _EditHackState extends State<EditHack> {
       "Content-Type": "application/json",
       "authtoken": Token,
     };
-    String url = 'https://hackportal.azurewebsites.net/events/updateevent/$id';
+    String url = '$kBaseUrl/events/updateevent/$id';
     var response = await http.patch(url,
         headers: headers,
         body: jsonEncode({
@@ -53,6 +60,7 @@ class _EditHackState extends State<EditHack> {
           'eventUrl':link,
         }));
     print(response.statusCode);
+    print(response.body);
     return response.statusCode;
   }
   Future getImage() async {
@@ -213,7 +221,7 @@ class _EditHackState extends State<EditHack> {
                           child: Text(
                             'Edit Hack',
                             style: TextStyle(
-                              fontSize: 24,
+                              fontSize: 30,
                               fontFamily: 'Muli',
                               fontWeight: FontWeight.w600
                             ),
@@ -231,34 +239,30 @@ class _EditHackState extends State<EditHack> {
                     margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
                     child: Text(
                       'Hackathon Name :',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                     child: TextField(
                       keyboardType: TextInputType.text,
                       decoration: kTextFieldDecoration,
                       controller: name,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                      ),
+                      style: kFieldTextStyle,
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'Hackathon Image :',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   GestureDetector(
                     onTap: getImage,
                     child: file1==null?Padding(
                       padding: const EdgeInsets.fromLTRB(20,10,20,10),
-                      child: SizedBox(child: FittedBox(fit:BoxFit.fill,child: Image.memory(_byteImage)),height: SizeConfig.safeBlockVertical*16,width: SizeConfig.blockSizeHorizontal*140,),
+                      child: SizedBox(child: FittedBox(fit:BoxFit.contain,child: Image.memory(_byteImage)),height: SizeConfig.safeBlockVertical*16,width: SizeConfig.blockSizeHorizontal*140,),
                     ):SizedBox(
                       height: SizeConfig.safeBlockVertical * 16,
                       width: SizeConfig.blockSizeHorizontal * 140,
@@ -272,11 +276,11 @@ class _EditHackState extends State<EditHack> {
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'Start Date :',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                     child: GestureDetector(
                       onTap: (){
                         _selectDate(context, start);
@@ -286,11 +290,7 @@ class _EditHackState extends State<EditHack> {
                           keyboardType: TextInputType.datetime,
                           decoration: kTextFieldDecoration,
                           controller: start,
-                          style: TextStyle(
-                            color: kConstantBlueColor,
-                            fontFamily: 'Montserrat',
-                            fontSize: 15,
-                          ),
+                          style: kFieldTextStyle
                         ),
                       ),
                     ),
@@ -299,11 +299,11 @@ class _EditHackState extends State<EditHack> {
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'End Date :',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                     child: GestureDetector(
                       onTap: (){
                         _selectDate(context, end);
@@ -313,12 +313,7 @@ class _EditHackState extends State<EditHack> {
                           keyboardType: TextInputType.datetime,
                           decoration: kTextFieldDecoration,
                           controller: end,
-                          style: TextStyle(
-                            color: kConstantBlueColor,
-                            fontFamily: 'Montserrat',
-                            fontSize: 15,
-                          ),
-
+                          style: kFieldTextStyle,
                         ),
                       ),
                     ),
@@ -327,58 +322,46 @@ class _EditHackState extends State<EditHack> {
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'Minimum Team Size :',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       decoration: kTextFieldDecoration,
                       controller: min,
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                      ),
+                      style: kFieldTextStyle,
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'Maximum Team Size :',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       decoration: kTextFieldDecoration,
                       controller: max,
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                      ),
+                      style: kFieldTextStyle,
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'Venue :',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                     child: TextField(
                       controller: venue,
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                      ),
+                      style: kFieldTextStyle,
                       decoration: kTextFieldDecoration,
                     ),
                   ),
@@ -386,19 +369,15 @@ class _EditHackState extends State<EditHack> {
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'Description :',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: TextField(
                       controller: bio,
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                      ),
-                      decoration: kTextFieldDecoration,
+                      style: kFieldTextStyle,
+                      decoration: kBigTextFieldDecoration,
                       maxLines: 7,
                     ),
                   ),
@@ -406,18 +385,14 @@ class _EditHackState extends State<EditHack> {
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'Link to website/registration link :',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                     child: TextField(
                       controller: link,
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                      ),
+                      style: kFieldTextStyle,
                       decoration: kTextFieldDecoration,
                     ),
                   ),
@@ -460,7 +435,7 @@ class _EditHackState extends State<EditHack> {
                             }
                             }
                             else{
-                              if(await editHack(name.text, base64img, start.text, end.text, venue.text, bio.text, link.text, int.parse(max.text), int.parse(min.text), hackathon.id)==200){
+                              if(await editHack(name.text, base64img, start.text, end.text, venue.text, bio.text, getUrl(link.text), int.parse(max.text), int.parse(min.text), hackathon.id)==200){
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
                                 _isInAsyncCall=false;
                               }

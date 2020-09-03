@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'form2.dart';
 
 class Form1 extends StatefulWidget {
-  final String name,college,year;
-  Form1({this.name,this.college,this.year});
+  final String name, college, year;
+  Form1({this.name, this.college, this.year});
   @override
-  _Form1State createState() => _Form1State(this.name,this.college,this.year);
+  _Form1State createState() => _Form1State(this.name, this.college, this.year);
 }
 
 class _Form1State extends State<Form1> {
-  _Form1State(this.name,this.year,this.college);
-  String bio='',name,year,college;
+  _Form1State(this.name, this.college, this.year);
+  String bio = '', name, year, college;
   List toRemove = [];
   int selectWeb,
       selectMobile,
@@ -43,7 +42,10 @@ class _Form1State extends State<Form1> {
                         child: Container(
                           child: Text(
                             'Complete your profile',
-                            style: TextStyle(fontFamily: 'Muli', fontSize: 30,fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                                fontFamily: 'Muli',
+                                fontSize: 30,
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
@@ -96,310 +98,315 @@ class _Form1State extends State<Form1> {
                     margin: EdgeInsets.fromLTRB(20, 13, 0, 0),
                     child: Text(
                       'Brief description about yourself:',
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: TextField(
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                      ),
-                      onChanged: (val){
+                      style: kFieldTextStyle,
+                      onChanged: (val) {
                         setState(() {
-                          bio=val;
+                          bio = val;
                         });
                       },
-                      maxLines: 6,
-                      decoration: kTextFieldDecoration,
+                      maxLines: 7,
+                      decoration: kBigTextFieldDecoration,
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 13, 0, 0),
                     child: Text(
                       'Your Skills:',
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (selectWeb != 1) {
+                            selectWeb = 1;
+                          } else {
+                            selectWeb = 0;
+                          }
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
                             Icons.fiber_manual_record,
                             size: 24,
                             color: selectWeb == 1
                                 ? kConstantBlueColor
                                 : Color(0xffD8D8D8),
                           ),
-                          onTap: () {
-                            setState(() {
-                              if (selectWeb != 1) {
-                                selectWeb = 1;
-                              } else {
-                                selectWeb = 0;
-                              }
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Container(
-                            child: Text('Web Development'),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Container(
+                              child: Text(
+                                'Web Development',
+                                style: kFieldTextStyle,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (selectMobile != 1) {
+                            selectMobile = 1;
+                          } else {
+                            selectMobile = 0;
+                          }
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
                             Icons.fiber_manual_record,
                             size: 24,
                             color: selectMobile == 1
                                 ? kConstantBlueColor
                                 : Color(0xffD8D8D8),
                           ),
-                          onTap: () {
-                            setState(() {
-                              if (selectMobile != 1) {
-                                selectMobile = 1;
-                              } else {
-                                selectMobile = 0;
-                              }
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Container(
-                            child: Text('Mobile App Development'),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Container(
+                              child: Text('Mobile App Development',
+                                  style: kFieldTextStyle),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (selectDevOps != 1) {
+                            selectDevOps = 1;
+                          } else {
+                            selectDevOps = 0;
+                          }
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
                             Icons.fiber_manual_record,
                             size: 24,
                             color: selectDevOps == 1
                                 ? kConstantBlueColor
                                 : Color(0xffD8D8D8),
                           ),
-                          onTap: () {
-                            setState(() {
-                              if (selectDevOps != 1) {
-                                selectDevOps = 1;
-                              } else {
-                                selectDevOps = 0;
-                              }
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Container(
-                            child: Text('Devops'),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Container(
+                              child: Text('Devops', style: kFieldTextStyle),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (selectML != 1) {
+                            selectML = 1;
+                          } else {
+                            selectML = 0;
+                          }
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
                             Icons.fiber_manual_record,
                             size: 24,
                             color: selectML == 1
                                 ? kConstantBlueColor
                                 : Color(0xffD8D8D8),
                           ),
-                          onTap: () {
-                            setState(() {
-                              if (selectML != 1) {
-                                selectML = 1;
-                              } else {
-                                selectML = 0;
-                              }
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Container(
-                            child: Text('Machine Learning'),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Container(
+                              child: Text('Machine Learning',
+                                  style: kFieldTextStyle),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (selectAI != 1) {
+                            selectAI = 1;
+                          } else {
+                            selectAI = 0;
+                          }
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
                             Icons.fiber_manual_record,
                             size: 24,
                             color: selectAI == 1
                                 ? kConstantBlueColor
                                 : Color(0xffD8D8D8),
                           ),
-                          onTap: () {
-                            setState(() {
-                              if (selectAI != 1) {
-                                selectAI = 1;
-                              } else {
-                                selectAI = 0;
-                              }
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Container(
-                            child: Text('Artificial Intelligence'),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Container(
+                              child: Text('Artificial Intelligence',
+                                  style: kFieldTextStyle),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (selectDesign != 1) {
+                            selectDesign = 1;
+                          } else {
+                            selectDesign = 0;
+                          }
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
                             Icons.fiber_manual_record,
                             size: 24,
                             color: selectDesign == 1
                                 ? kConstantBlueColor
                                 : Color(0xffD8D8D8),
                           ),
-                          onTap: () {
-                            setState(() {
-                              if (selectDesign != 1) {
-                                selectDesign = 1;
-                              } else {
-                                selectDesign = 0;
-                              }
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Container(
-                            child: Text('Design - UI/UX'),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Container(
+                              child:
+                                  Text('Design - UI/UX', style: kFieldTextStyle),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (selectManagement != 1) {
+                            selectManagement = 1;
+                          } else {
+                            selectManagement = 0;
+                          }
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
                             Icons.fiber_manual_record,
                             size: 24,
                             color: selectManagement == 1
                                 ? kConstantBlueColor
                                 : Color(0xffD8D8D8),
                           ),
-                          onTap: () {
-                            setState(() {
-                              if (selectManagement != 1) {
-                                selectManagement = 1;
-                              } else {
-                                selectManagement = 0;
-                              }
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Container(
-                            child: Text('Management skills'),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Container(
+                              child: Text('Management skills',
+                                  style: kFieldTextStyle),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (selectBlock != 1) {
+                            selectBlock = 1;
+                          } else {
+                            selectBlock = 0;
+                          }
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
                             Icons.fiber_manual_record,
                             size: 24,
                             color: selectBlock == 1
                                 ? kConstantBlueColor
                                 : Color(0xffD8D8D8),
                           ),
-                          onTap: () {
-                            setState(() {
-                              if (selectBlock != 1) {
-                                selectBlock = 1;
-                              } else {
-                                selectBlock = 0;
-                              }
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Container(
-                            child: Text('Blockchain'),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Container(
+                              child: Text('Blockchain', style: kFieldTextStyle),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (selectCyber != 1) {
+                            selectCyber = 1;
+                          } else {
+                            selectCyber = 0;
+                          }
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
                             Icons.fiber_manual_record,
                             size: 24,
                             color: selectCyber == 1
                                 ? kConstantBlueColor
                                 : Color(0xffD8D8D8),
                           ),
-                          onTap: () {
-                            setState(() {
-                              if (selectCyber != 1) {
-                                selectCyber = 1;
-                              } else {
-                                selectCyber = 0;
-                              }
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Container(
-                            child: Text('CyberSecurity'),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Container(
+                              child:
+                                  Text('CyberSecurity', style: kFieldTextStyle),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Hero(
@@ -412,186 +419,196 @@ class _Form1State extends State<Form1> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GestureDetector(
-                              onTap: () async{
-                                if(bio==''){
+                              onTap: () async {
+                                if (bio == '') {
                                   final snackBar = SnackBar(
                                     content: Text(
-                                      'All fields are mandatory.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                      'All fields are mandatory.',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Montserrat'),
                                     ),
-                                    backgroundColor:kConstantBlueColor ,
+                                    backgroundColor: kConstantBlueColor,
                                   );
-                                  await Scaffold.of(context).showSnackBar(snackBar);
-                                }
-                                else{
-                                if (selectWeb == 1) {
-                                  var count = 0;
-                                  for (var i in skillList) {
-                                    if (i == 'Web Development') {
-                                      count += 1;
+                                  await Scaffold.of(context)
+                                      .showSnackBar(snackBar);
+                                } else {
+                                  if (selectWeb == 1) {
+                                    var count = 0;
+                                    for (var i in skillList) {
+                                      if (i == 'Web Development') {
+                                        count += 1;
+                                      }
+                                    }
+                                    if (count == 0) {
+                                      skillList.add('Web Development');
                                     }
                                   }
-                                  if (count == 0) {
-                                    skillList.add('Web Development');
-                                  }
-                                }
-                                if (selectMobile == 1) {
-                                  var count = 0;
-                                  for (var i in skillList) {
-                                    if (i == 'App Development') {
-                                      count += 1;
+                                  if (selectMobile == 1) {
+                                    var count = 0;
+                                    for (var i in skillList) {
+                                      if (i == 'Mobile App Development') {
+                                        count += 1;
+                                      }
+                                    }
+                                    if (count == 0) {
+                                      skillList.add('Mobile App Development');
                                     }
                                   }
-                                  if (count == 0) {
-                                    skillList.add('App Development');
-                                  }
-                                }
-                                if (selectDevOps == 1) {
-                                  var count = 0;
-                                  for (var i in skillList) {
-                                    if (i == 'DevOps') {
-                                      count += 1;
+                                  if (selectDevOps == 1) {
+                                    var count = 0;
+                                    for (var i in skillList) {
+                                      if (i == 'DevOps') {
+                                        count += 1;
+                                      }
+                                    }
+                                    if (count == 0) {
+                                      skillList.add('DevOps');
                                     }
                                   }
-                                  if (count == 0) {
-                                    skillList.add('DevOps');
-                                  }
-                                }
-                                if (selectML == 1) {
-                                  var count = 0;
-                                  for (var i in skillList) {
-                                    if (i == 'Machine Learning') {
-                                      count += 1;
+                                  if (selectML == 1) {
+                                    var count = 0;
+                                    for (var i in skillList) {
+                                      if (i == 'Machine Learning') {
+                                        count += 1;
+                                      }
+                                    }
+                                    if (count == 0) {
+                                      skillList.add('Machine Learning');
                                     }
                                   }
-                                  if (count == 0) {
-                                    skillList.add('Machine Learning');
-                                  }
-                                }
-                                if (selectAI == 1) {
-                                  var count = 0;
-                                  for (var i in skillList) {
-                                    if (i == 'Artificial Intelligence') {
-                                      count += 1;
+                                  if (selectAI == 1) {
+                                    var count = 0;
+                                    for (var i in skillList) {
+                                      if (i == 'Artificial Intelligence') {
+                                        count += 1;
+                                      }
+                                    }
+                                    if (count == 0) {
+                                      skillList.add('Artificial Intelligence');
                                     }
                                   }
-                                  if (count == 0) {
-                                    skillList.add('Artificial Intelligence');
-                                  }
-                                }
-                                if (selectDesign == 1) {
-                                  var count = 0;
-                                  for (var i in skillList) {
-                                    if (i == 'Design') {
-                                      count += 1;
+                                  if (selectDesign == 1) {
+                                    var count = 0;
+                                    for (var i in skillList) {
+                                      if (i == 'Design-ui/ux') {
+                                        count += 1;
+                                      }
+                                    }
+                                    if (count == 0) {
+                                      skillList.add('Design - ui/ux');
                                     }
                                   }
-                                  if (count == 0) {
-                                    skillList.add('Design');
-                                  }
-                                }
-                                if (selectManagement == 1) {
-                                  var count = 0;
-                                  for (var i in skillList) {
-                                    if (i == 'Management') {
-                                      count += 1;
+                                  if (selectManagement == 1) {
+                                    var count = 0;
+                                    for (var i in skillList) {
+                                      if (i == 'Management') {
+                                        count += 1;
+                                      }
+                                    }
+                                    if (count == 0) {
+                                      skillList.add('Management');
                                     }
                                   }
-                                  if (count == 0) {
-                                    skillList.add('Management');
-                                  }
-                                }
-                                if (selectBlock == 1) {
-                                  var count = 0;
-                                  for (var i in skillList) {
-                                    if (i == 'BlockChain') {
-                                      count += 1;
+                                  if (selectBlock == 1) {
+                                    var count = 0;
+                                    for (var i in skillList) {
+                                      if (i == 'BlockChain') {
+                                        count += 1;
+                                      }
+                                    }
+                                    if (count == 0) {
+                                      skillList.add('BlockChain');
                                     }
                                   }
-                                  if (count == 0) {
-                                    skillList.add('BlockChain');
-                                  }
-                                }
-                                if (selectCyber == 1) {
-                                  var count = 0;
-                                  for (var i in skillList) {
-                                    if (i == 'CyberSecurity') {
-                                      count += 1;
+                                  if (selectCyber == 1) {
+                                    var count = 0;
+                                    for (var i in skillList) {
+                                      if (i == 'CyberSecurity') {
+                                        count += 1;
+                                      }
+                                    }
+                                    if (count == 0) {
+                                      skillList.add('CyberSecurity');
                                     }
                                   }
-                                  if (count == 0) {
-                                    skillList.add('CyberSecurity');
-                                  }
-                                }
-                                if (selectWeb != 1) {
-                                  for (var i in skillList) {
-                                    if (i == 'Web Development') {
-                                      toRemove.add(i);
+                                  if (selectWeb != 1) {
+                                    for (var i in skillList) {
+                                      if (i == 'Web Development') {
+                                        toRemove.add(i);
+                                      }
                                     }
                                   }
-                                }
-                                if (selectMobile != 1) {
-                                  for (var i in skillList) {
-                                    if (i == 'App Development') {
-                                      toRemove.add(i);
+                                  if (selectMobile != 1) {
+                                    for (var i in skillList) {
+                                      if (i == 'Mobile App Development') {
+                                        toRemove.add(i);
+                                      }
                                     }
                                   }
-                                }
-                                if (selectDevOps != 1) {
-                                  for (var i in skillList) {
-                                    if (i == 'DevOps') {
-                                      toRemove.add(i);
+                                  if (selectDevOps != 1) {
+                                    for (var i in skillList) {
+                                      if (i == 'DevOps') {
+                                        toRemove.add(i);
+                                      }
                                     }
                                   }
-                                }
-                                if (selectML != 1) {
-                                  for (var i in skillList) {
-                                    if (i == 'Machine Learning') {
-                                      toRemove.add(i);
+                                  if (selectML != 1) {
+                                    for (var i in skillList) {
+                                      if (i == 'Machine Learning') {
+                                        toRemove.add(i);
+                                      }
                                     }
                                   }
-                                }
-                                if (selectAI != 1) {
-                                  for (var i in skillList) {
-                                    if (i == 'Artificial Intelligence') {
-                                      toRemove.add(i);
+                                  if (selectAI != 1) {
+                                    for (var i in skillList) {
+                                      if (i == 'Artificial Intelligence') {
+                                        toRemove.add(i);
+                                      }
                                     }
                                   }
-                                }
-                                if (selectDesign != 1) {
-                                  for (var i in skillList) {
-                                    if (i == 'Design') {
-                                      toRemove.add(i);
+                                  if (selectDesign != 1) {
+                                    for (var i in skillList) {
+                                      if (i == 'Design - ui/ux') {
+                                        toRemove.add(i);
+                                      }
                                     }
                                   }
-                                }
-                                if (selectManagement != 1) {
-                                  for (var i in skillList) {
-                                    if (i == 'Management') {
-                                      toRemove.add(i);
+                                  if (selectManagement != 1) {
+                                    for (var i in skillList) {
+                                      if (i == 'Management') {
+                                        toRemove.add(i);
+                                      }
                                     }
                                   }
-                                }
-                                if (selectBlock != 1) {
-                                  for (var i in skillList) {
-                                    if (i == 'BlockChain') {
-                                      toRemove.add(i);
+                                  if (selectBlock != 1) {
+                                    for (var i in skillList) {
+                                      if (i == 'BlockChain') {
+                                        toRemove.add(i);
+                                      }
                                     }
                                   }
-                                }
-                                if (selectCyber != 1) {
-                                  for (var i in skillList) {
-                                    if (i == 'CyberSecurity') {
-                                      toRemove.add(i);
+                                  if (selectCyber != 1) {
+                                    for (var i in skillList) {
+                                      if (i == 'CyberSecurity') {
+                                        toRemove.add(i);
+                                      }
                                     }
                                   }
+                                  skillList
+                                      .removeWhere((e) => toRemove.contains(e));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Form2(
+                                                name: name,
+                                                college: college,
+                                                year: year,
+                                                bio: bio,
+                                                skillList: skillList,
+                                              )));
                                 }
-                                skillList
-                                    .removeWhere((e) => toRemove.contains(e));
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Form2(name: name,college: college,year: year,bio: bio,skillList: skillList,)));
-                              }},
+                              },
                               child: Container(
                                 height: 50,
                                 width: 50,

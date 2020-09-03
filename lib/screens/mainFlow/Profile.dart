@@ -9,7 +9,6 @@ import 'package:dio/dio.dart';
 import 'package:hackapp/components/sizeConfig.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -24,6 +23,9 @@ class _ProfilePageState extends State<ProfilePage> {
     if(user!=null){
      await _auth.signOut();
      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+    }
+    else{
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
     }
   }
   DioCacheManager _dioCacheManager;
@@ -41,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _dio.options.headers["authtoken"] = "$Token";
 //    Map<String, String> headers = {"authtoken": Token};
     Response response = await _dio.get(
-        "https://hackportal.azurewebsites.net/users",options: _cacheOptions);
+        "$kBaseUrl/users",options: _cacheOptions);
     if (response.statusCode == 200) {
       var usersJson = response.data;
       User user = User(
@@ -57,6 +59,9 @@ class _ProfilePageState extends State<ProfilePage> {
         skills: usersJson["skills"],
       );
       return (user);
+    }
+    else{
+      logOut();
     }
   }
   @override

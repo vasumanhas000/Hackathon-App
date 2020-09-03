@@ -31,7 +31,7 @@ class _EditTeamState extends State<EditTeam> {
       "Content-Type": "application/json"
     };
     var response = await http.post(
-        "https://hackportal.azurewebsites.net/teams/updateteam/$id",
+        "$kBaseUrl/teams/updateteam/$id",
         headers: headers,
         body: jsonEncode({
           "teamName": name,
@@ -72,7 +72,7 @@ class _EditTeamState extends State<EditTeam> {
       if (i.toString().toLowerCase() == 'Web Development'.toLowerCase()) {
         selectWeb = 1;
       }
-      if (i.toString().toLowerCase() == 'App Development'.toLowerCase()) {
+      if (i.toString().toLowerCase() == 'Mobile App Development'.toLowerCase()) {
         selectMobile = 1;
       }
       if (i.toString().toLowerCase() == 'DevOps'.toLowerCase()) {
@@ -85,7 +85,7 @@ class _EditTeamState extends State<EditTeam> {
           'Artificial Intelligence'.toLowerCase()) {
         selectAI = 1;
       }
-      if (i.toString().toLowerCase() == 'Design'.toLowerCase()) {
+      if (i.toString().toLowerCase() == 'Design-ui/ux'.toLowerCase()) {
         selectDesign = 1;
       }
       if (i.toString().toLowerCase() == 'Management'.toLowerCase()) {
@@ -154,16 +154,13 @@ class _EditTeamState extends State<EditTeam> {
                       margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
                       child: Text(
                         'Team Name :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: TextField(
-                        style: TextStyle(
-                            color: kConstantBlueColor,
-                            fontFamily: 'Montserrat',
-                            fontSize: 15),
+                        style: kFieldTextStyle,
                         controller: name,
                         decoration: kTextFieldDecoration,
                       ),
@@ -172,316 +169,329 @@ class _EditTeamState extends State<EditTeam> {
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Project Description :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: TextField(
                         maxLines: 6,
-                        style: TextStyle(
-                            color: kConstantBlueColor,
-                            fontFamily: 'Montserrat',
-                            fontSize: 15),
+                        style: kFieldTextStyle,
                         controller: bio,
-                        decoration: kTextFieldDecoration,
+                        decoration: kBigTextFieldDecoration,
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       child: Text(
                         'Skills Required :',
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: kHeadingTextStyle,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selectWeb != 1) {
+                              selectWeb = 1;
+                            } else {
+                              selectWeb = 0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectWeb == 1
                                   ? kConstantBlueColor
                                   : Color(0xffD8D8D8),
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (selectWeb != 1) {
-                                  selectWeb = 1;
-                                } else {
-                                  selectWeb = 0;
-                                }
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text(
-                                'Web Development',
-                                style: TextStyle(fontSize: 18),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text(
+                                  'Web Development',
+                                  style: kFieldTextStyle,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selectMobile != 1) {
+                              selectMobile = 1;
+                            } else {
+                              selectMobile = 0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectMobile == 1
                                   ? kConstantBlueColor
                                   : Color(0xffD8D8D8),
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (selectMobile != 1) {
-                                  selectMobile = 1;
-                                } else {
-                                  selectMobile = 0;
-                                }
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Mobile App Development',
-                                  style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text(
+                                  'Mobile App Development',
+                                  style: kFieldTextStyle,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selectDevOps != 1) {
+                              selectDevOps = 1;
+                            } else {
+                              selectDevOps = 0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectDevOps == 1
                                   ? kConstantBlueColor
                                   : Color(0xffD8D8D8),
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (selectDevOps != 1) {
-                                  selectDevOps = 1;
-                                } else {
-                                  selectDevOps = 0;
-                                }
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child:
-                                  Text('Devops', style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text(
+                                  'DevOps',
+                                  style: kFieldTextStyle,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selectML != 1) {
+                              selectML = 1;
+                            } else {
+                              selectML = 0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectML == 1
                                   ? kConstantBlueColor
                                   : Color(0xffD8D8D8),
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (selectML != 1) {
-                                  selectML = 1;
-                                } else {
-                                  selectML = 0;
-                                }
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Machine Learning',
-                                  style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text(
+                                  "Machine Learning",
+                                  style: kFieldTextStyle,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selectAI != 1) {
+                              selectAI = 1;
+                            } else {
+                              selectAI = 0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectAI == 1
                                   ? kConstantBlueColor
                                   : Color(0xffD8D8D8),
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (selectAI != 1) {
-                                  selectAI = 1;
-                                } else {
-                                  selectAI = 0;
-                                }
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Artificial Intelligence',
-                                  style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text(
+                                  'Artificial Intelligence',
+                                  style: kFieldTextStyle,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selectDesign != 1) {
+                              selectDesign = 1;
+                            } else {
+                              selectDesign = 0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectDesign == 1
                                   ? kConstantBlueColor
                                   : Color(0xffD8D8D8),
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (selectDesign != 1) {
-                                  selectDesign = 1;
-                                } else {
-                                  selectDesign = 0;
-                                }
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Design - UI/UX',
-                                  style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text(
+                                  'Design - UI/UX',
+                                  style: kFieldTextStyle,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selectManagement != 1) {
+                              selectManagement = 1;
+                            } else {
+                              selectManagement = 0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectManagement == 1
                                   ? kConstantBlueColor
                                   : Color(0xffD8D8D8),
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (selectManagement != 1) {
-                                  selectManagement = 1;
-                                } else {
-                                  selectManagement = 0;
-                                }
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Management skills',
-                                  style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text(
+                                  'Management Skills',
+                                  style: kFieldTextStyle,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selectBlock != 1) {
+                              selectBlock = 1;
+                            } else {
+                              selectBlock = 0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectBlock == 1
                                   ? kConstantBlueColor
                                   : Color(0xffD8D8D8),
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (selectBlock != 1) {
-                                  selectBlock = 1;
-                                } else {
-                                  selectBlock = 0;
-                                }
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('Blockchain',
-                                  style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text(
+                                  'Blockchain',
+                                  style: kFieldTextStyle,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(
+                      padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (selectCyber != 1) {
+                              selectCyber = 1;
+                            } else {
+                              selectCyber = 0;
+                            }
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.fiber_manual_record,
                               size: 24,
                               color: selectCyber == 1
                                   ? kConstantBlueColor
                                   : Color(0xffD8D8D8),
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (selectCyber != 1) {
-                                  selectCyber = 1;
-                                } else {
-                                  selectCyber = 0;
-                                }
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Container(
-                              child: Text('CyberSecurity',
-                                  style: TextStyle(fontSize: 18)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Container(
+                                child: Text(
+                                  'CyberSecurity',
+                                  style: kFieldTextStyle,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -530,12 +540,12 @@ class _EditTeamState extends State<EditTeam> {
                                 if (selectMobile == 1) {
                                   var count = 0;
                                   for (var i in skillList) {
-                                    if (i == 'App Development') {
+                                    if (i == 'Mobile App Development') {
                                       count += 1;
                                     }
                                   }
                                   if (count == 0) {
-                                    skillList.add('App Development');
+                                    skillList.add('Mobile App Development');
                                   }
                                 }
                                 if (selectDevOps == 1) {
@@ -574,12 +584,12 @@ class _EditTeamState extends State<EditTeam> {
                                 if (selectDesign == 1) {
                                   var count = 0;
                                   for (var i in skillList) {
-                                    if (i == 'Design') {
+                                    if (i == 'Design - ui/ux') {
                                       count += 1;
                                     }
                                   }
                                   if (count == 0) {
-                                    skillList.add('Design');
+                                    skillList.add('Design - ui/ux');
                                   }
                                 }
                                 if (selectManagement == 1) {
@@ -624,7 +634,7 @@ class _EditTeamState extends State<EditTeam> {
                                 }
                                 if (selectMobile != 1) {
                                   for (var i in skillList) {
-                                    if (i == 'App Development') {
+                                    if (i == 'Mobile App Development') {
                                       toRemove.add(i);
                                     }
                                   }
@@ -652,7 +662,7 @@ class _EditTeamState extends State<EditTeam> {
                                 }
                                 if (selectDesign != 1) {
                                   for (var i in skillList) {
-                                    if (i == 'Design') {
+                                    if (i == 'Design - ui/ux') {
                                       toRemove.add(i);
                                     }
                                   }

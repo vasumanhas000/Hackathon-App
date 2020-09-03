@@ -33,7 +33,7 @@ class _HackDetailsState extends State<HackDetails> {
     });
     Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
-        "https://hackportal.azurewebsites.net/events/geteventinfo/$id",
+        "$kBaseUrl/events/geteventinfo/$id",
         headers: headers);
     var hackathonsJson = jsonDecode(response.body);
     Hackathon hack = Hackathon(
@@ -47,14 +47,17 @@ class _HackDetailsState extends State<HackDetails> {
         min: hackathonsJson["minimumTeamSize"],
         max: hackathonsJson["maximumTeamSize"],
         image: hackathonsJson["eventImage"],
-        creatorID: hackathonsJson['creatorId']);
+        creatorID: hackathonsJson['creatorId'],
+        teamCreated: hackathonsJson['hasTeamForEvent'],
+    );
     var arr = hack.image.split(',');
     print(arr.length);
     _byteImage = Base64Decoder().convert(arr[1]);
+    print(hack);
     return hack;
   }
   _launchURL(String url) async {
-    String webpage ;
+    String webpage=url ;
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       webpage = "http://" + url;
     }
@@ -95,27 +98,27 @@ class _HackDetailsState extends State<HackDetails> {
                           child: Text(
                             snapshot.data.name,
                             style: TextStyle(
-                                fontFamily: 'Muli',
-                                fontSize: 34,
+                                fontFamily: 'Montserrat',
+                                fontSize: 32,
                                 color: Colors.white),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 8),
+                          padding: EdgeInsets.only(top: 10),
                           child: FittedBox(
                             fit: BoxFit.contain,
                             child: Text(
                               snapshot.data.location,
                               style: TextStyle(
-                                  fontFamily: 'Muli',
-                                  fontSize: 24,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 22,
                                   color: Colors.white),
                               textAlign: TextAlign.left,
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 8),
+                          padding: EdgeInsets.only(top: 10),
                           child: FittedBox(
                             fit: BoxFit.contain,
                             child: Text(
@@ -143,16 +146,16 @@ class _HackDetailsState extends State<HackDetails> {
                           child: Text(
                             snapshot.data.description,
                             style:
-                                TextStyle(fontSize: 18, color: Colors.white),
+                                TextStyle(fontSize: 16, color: Colors.white),
                             textAlign: TextAlign.left,
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 16),
                           child: Text(
-                            'Link:',
+                            'Link :',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
                             textAlign: TextAlign.left,
@@ -160,15 +163,15 @@ class _HackDetailsState extends State<HackDetails> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            _launchURL(snapshot.data.url);
+                            _launchURL(Uri.encodeFull(snapshot.data.url));
                           },
                           child: Padding(
-                            padding: EdgeInsets.only(top: 2),
+                            padding: EdgeInsets.only(top: 4),
                             child: Text(
                               snapshot.data.url,
                               style: TextStyle(
                                   decoration: TextDecoration.underline,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: Colors.white),
                               textAlign: TextAlign.left,
                             ),
@@ -184,6 +187,16 @@ class _HackDetailsState extends State<HackDetails> {
                                 minWidth: 100,
                                 child: FlatButton(
                                   onPressed: () async {
+                                    if(snapshot.data.teamCreated==true){
+                                      final snackBar = SnackBar(
+                                        content: Text(
+                                          'You already have a team for this hackathon.',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat'),
+                                        ),
+                                        backgroundColor:Colors.white ,
+                                      );
+                                      await Scaffold.of(context).showSnackBar(snackBar);
+                                    }
+                                    else{
                                     final result = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -204,7 +217,7 @@ class _HackDetailsState extends State<HackDetails> {
                                             ? Colors.white
                                             : kConstantBlueColor,
                                       ));
-                                  },
+                                  }},
                                   color: Colors.white,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(4)),

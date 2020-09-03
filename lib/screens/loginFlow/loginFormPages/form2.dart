@@ -16,6 +16,16 @@ class Form2 extends StatefulWidget {
   _Form2State createState() => _Form2State(this.year,this.college,this.name,this.bio,this.skillList);
 }
 class _Form2State extends State<Form2> {
+  String getUrl(String url){
+    String webpage=url.trim() ;
+    if(webpage==''){
+      webpage=url.trim();
+    }
+  else if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      webpage = "http://" + url;
+    }
+    return webpage;
+  }
   final auth = FirebaseAuth.instance;
  Future postForm(String bio,String name,String year,String college,String github,String stack,String website,List skillList)async{
    FirebaseUser user = await auth.currentUser();
@@ -27,7 +37,7 @@ class _Form2State extends State<Form2> {
      "Content-Type": "application/json",
      "authtoken": Token,
    };
-   String url = 'https://hackportal.azurewebsites.net/users';
+   String url = '$kBaseUrl/users';
    var response = await http.post(url,
        headers: headers,
        body: jsonEncode({
@@ -133,17 +143,13 @@ class _Form2State extends State<Form2> {
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'Github:',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                     child: TextField(
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                      ),
+                      style: kFieldTextStyle,
                       onChanged: (val){
                         setState(() {
                           github=val;
@@ -156,17 +162,13 @@ class _Form2State extends State<Form2> {
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'Stack Overflow:',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                     child: TextField(
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                      ),
+                      style: kFieldTextStyle,
                       onChanged: (val){
                         setState(() {
                           stack=val;
@@ -179,17 +181,13 @@ class _Form2State extends State<Form2> {
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Text(
                       'Your Website:',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: kHeadingTextStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                     child: TextField(
-                      style: TextStyle(
-                        color: kConstantBlueColor,
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                      ),
+                      style: kFieldTextStyle,
                       onChanged: (val){
                         setState(() {
                           website=val;
@@ -212,7 +210,7 @@ class _Form2State extends State<Form2> {
                                 setState(() {
                                   _isInAsyncCall=true;
                                 });
-                               if(await postForm(bio, name, year, college, github, stack, website, skillList)==200){
+                               if(await postForm(bio, name, year, college, getUrl(github), getUrl(stack), getUrl(website), skillList)==200){
                                  setState(() {
                                    _isInAsyncCall=false;
                                  });

@@ -31,7 +31,7 @@ class _SignInState extends State<SignIn> {
   Future getProfile(String token)async{
     Map<String, String> headers = {"authtoken": token};
     var response = await http.get(
-        "https://hackportal.herokuapp.com/users",
+        "$kBaseUrl/users",
         headers: headers);
     print(response.body);
     print(response.statusCode);
@@ -103,7 +103,7 @@ class _SignInState extends State<SignIn> {
                           """Find teams and projects to 
 collaborate during Hackathons""",
                           textAlign: TextAlign.left,
-                          style: TextStyle(color: kConstantTextColor, fontSize: 18),
+                          style: TextStyle(color: kConstantTextColor, fontSize: 17),
                         ),
                       ),
                       Padding(
@@ -111,11 +111,7 @@ collaborate during Hackathons""",
                         child: TextField(
                           keyboardType: TextInputType.emailAddress,
                           decoration: kTextFieldDecoration.copyWith(hintText: 'Email',),
-                          style: TextStyle(
-                            color: kConstantBlueColor,
-                            fontFamily: 'Montserrat',
-                            fontSize: 15,
-                          ),
+                          style: kFieldTextStyle,
                           onChanged: (val){
                             setState(() {
                               email=val;
@@ -129,11 +125,7 @@ collaborate during Hackathons""",
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           decoration: kTextFieldDecoration.copyWith(hintText: 'Password'),
-                          style: TextStyle(
-                            color: kConstantBlueColor,
-                            fontFamily: 'Montserrat',
-                            fontSize: 15,
-                          ),
+                          style: kFieldTextStyle,
                           onChanged: (val){
                             setState(() {
                               password=val;
@@ -186,6 +178,16 @@ collaborate during Hackathons""",
                                 setState(() {
                                   _isInAsyncCall=false;
                                 });
+                              await user.sendEmailVerification();
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    'A verification email has been sent. Kindly verify and login.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                  ),
+                                  backgroundColor:kConstantBlueColor ,
+                                );
+                                await Scaffold.of(context).showSnackBar(snackBar);
+                                await _auth.signOut();
+
                                 print(false);
                               }}catch(e){
                                  switch (e.code) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackapp/constants.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:hackapp/components/sizeConfig.dart';
 
 class MemberView extends StatefulWidget {
   var user;
@@ -33,12 +34,31 @@ class _MemberViewState extends State<MemberView> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(22,24,0,0),
-                    child: Text('Profile',style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600,fontFamily: 'Muli'),),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16,24,16,24),
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text(
+                            'Profile',
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Muli'
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: Image(image: AssetImage('images/stc.png'),fit: BoxFit.contain,height: SizeConfig.safeBlockVertical*3.15,color: kConstantBlueColor,),
+                      )
+                    ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(22, 30, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(22, 14, 0, 0),
                     child: Text(
                       'Name :',
                       style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),

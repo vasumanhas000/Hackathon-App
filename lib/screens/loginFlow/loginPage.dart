@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                             """Find teams and projects to 
 collaborate during Hackathons""",
                             textAlign: TextAlign.left,
-                            style: TextStyle(color: kConstantTextColor, fontSize: 18),
+                            style: TextStyle(color: kConstantTextColor, fontSize: 17),
                           ),
                         ),
                         Padding(

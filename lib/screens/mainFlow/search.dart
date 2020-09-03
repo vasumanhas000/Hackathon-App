@@ -28,8 +28,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return SafeArea(
-      child: Scaffold(
-        body: ListView.builder(
+      child: ListView.builder(
           itemCount: 1,
           itemBuilder: (BuildContext context, int index) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -467,12 +466,12 @@ class _SearchPageState extends State<SearchPage> {
                           if(selectMobile==1){
                             var count=0;
                             for(var i in skillList){
-                              if(i=='App Dev'){
+                              if(i=='Mobile App Development'){
                                 count+=1;
                               }
                             }
                             if(count==0){
-                              skillList.add('App Development');
+                              skillList.add('Mobile App Development');
                             }
                           }
                           if(selectDevOps==1){
@@ -511,12 +510,12 @@ class _SearchPageState extends State<SearchPage> {
                           if(selectDesign==1){
                             var count=0;
                             for(var i in skillList){
-                              if(i=='Design'){
+                              if(i=='Design - ui/ux'){
                                 count+=1;
                               }
                             }
                             if(count==0){
-                              skillList.add('Design');
+                              skillList.add('Design - ui/ux');
                             }
 
                           }
@@ -562,7 +561,7 @@ class _SearchPageState extends State<SearchPage> {
                           }
                           if(selectMobile!=1){
                             for(var i in skillList){
-                              if(i=='App Development'){
+                              if(i=='Mobile App Development'){
                                 toRemove.add(i);
                               }
                             }
@@ -590,7 +589,7 @@ class _SearchPageState extends State<SearchPage> {
                           }
                           if(selectDesign!=1){
                             for(var i in skillList){
-                              if(i=='Design'){
+                              if(i=='Design - ui/ux'){
                                 toRemove.add(i);
                               }
                             }
@@ -618,6 +617,7 @@ class _SearchPageState extends State<SearchPage> {
                           }
                           skillList.removeWhere( (e) => toRemove.contains(e));
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>ResultsPage(list: skillList)));
+                          // Navigator.push(context, PageTransition(child: ResultsPage(list: skillList), type: PageTransitionType.downToUp));
                         },
                         child: Text('Search',style: TextStyle(fontSize: 22,fontFamily: 'Montserrat',color: selected==1?Colors.white:kConstantBlueColor,fontWeight: FontWeight.w600),),
                         color: selected==1?kConstantBlueColor:Colors.white,
@@ -630,7 +630,6 @@ class _SearchPageState extends State<SearchPage> {
             ],
           ),
         ),
-      ),
     );
   }
 }

@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/constants.dart';
 import 'package:http/http.dart' as http;
-import 'package:hackapp/components/userSearch.dart';
 import 'package:flutter_paginator/flutter_paginator.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -51,7 +49,7 @@ class _ResultsPageState extends State<ResultsPage> {
     try {
       Map<String, String> headers = {"authtoken": Token};
       String url = Uri.encodeFull(
-          'https://hackportal.azurewebsites.net/users/getuserprofiles/$page');
+          '$kBaseUrl/users/getuserprofiles/$page');
       http.Response response = await http.get(url,headers:headers);
       print(response);
       return Users.fromResponse(response);
@@ -66,10 +64,11 @@ class _ResultsPageState extends State<ResultsPage> {
     }
   }
     if(list.length!=0){
+      print(list);
       try {
         Map<String, String> headers = {"authtoken": Token,"Content-Type": "application/json"};
         String url = Uri.encodeFull(
-            'https://hackportal.azurewebsites.net/users/searchuserprofiles/$page');
+            '$kBaseUrl/users/searchuserprofiles/$page');
         http.Response response = await http.post(url,headers:headers,body: jsonEncode({
           "skills": list,
         }));
@@ -174,80 +173,6 @@ class _ResultsPageState extends State<ResultsPage> {
   }
   final _auth = FirebaseAuth.instance;
   String Token;
-//  Future getList(List list) async {
-//    FirebaseUser user1 = await _auth.currentUser();
-//    Token= await user1.getIdToken().then((result) {
-//      String token = result.token;
-//      return token;
-//    });
-//    Map<String, String> headers1 = {"authtoken": Token};
-//    var response1 = await http.get(
-//        "https://hackportal.azurewebsites.net/users/getuserprofile",
-//        headers: headers1);
-//    var user=jsonDecode(response1.body);
-//    if(response1.statusCode==200){
-//    if (list.length == 0) {
-//      Map<String, String> headers = {"authtoken": Token};
-//      var response = await http.get(
-//          "https://hackportal.azurewebsites.net/users/getuserprofiles/1",
-//          headers: headers);
-//      List<UserSearch> result = [];
-//      if (response.statusCode == 200) {
-//        var resultsJson = jsonDecode(response.body);
-//        for (var i in resultsJson["documents"]) {
-//          if(i['_id']!=user['_id']){
-//          UserSearch user = UserSearch(
-//            name: i["name"],
-//            email: i["email"],
-//            id: i["_id"],
-//            year: i["expectedGraduation"],
-//            college: i["college"],
-//            bio: i["bio"],
-//            github: i["githubLink"],
-//            stack: i["stackOverflowLink"],
-//            link: i["externalLink"],
-//            skills: i["skills"],
-//          );
-//          result.add(user);
-//        }}
-//      }
-//      return result;
-//    }
-//    if (list.length != 0) {
-//      Map<String, String> headers = {
-//        "authtoken": Token,
-//        "Content-Type": "application/json",
-//      };
-//      List<UserSearch> result = [];
-//      var response = await http.post(
-//          "https://hackportal.azurewebsites.net/users/searchuserprofiles/1",
-//          headers: headers,
-//          body: jsonEncode({
-//            "skills": list,
-//          }));
-//      if (response.statusCode == 200) {
-//        var resultsJson = jsonDecode(response.body);
-//        for (var i in resultsJson["documents"]) {
-//          if(i['_id']!=user['_id']){
-//          UserSearch user = UserSearch(
-//            name: i["name"],
-//            email: i["email"],
-//            id: i["_id"],
-//            year: i["expectedGraduation"],
-//            college: i["college"],
-//            bio: i["bio"],
-//            github: i["githubLink"],
-//            stack: i["stackOverflowLink"],
-//            link: i["externalLink"],
-//            skills: i["skills"],
-//          );
-//          result.add(user);
-//        }}
-//      }
-//      return result;
-//    }}
-//  }
-
   String truncateWithEllipsis(int cutoff, String myString) {
     return (myString.length <= cutoff)
         ? myString
@@ -256,41 +181,41 @@ class _ResultsPageState extends State<ResultsPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16,24,16,24),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Search Results',
-                      style: TextStyle(fontSize: 26, fontFamily: 'Muli',fontWeight: FontWeight.w600),
-                    ),
-                    Image(image: AssetImage('images/stc.png'),height: SizeConfig.blockSizeVertical*3.15,)
-                  ],
+    return SafeArea(
+        child: Scaffold(
+          body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16,24,16,24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Search Results',
+                        style: TextStyle(fontSize: 26, fontFamily: 'Muli',fontWeight: FontWeight.w600),
+                      ),
+                      Image(image: AssetImage('images/stc.png'),height: SizeConfig.blockSizeVertical*3.15,)
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                flex: 8,
-                child: Paginator.listView(
-                  key: paginatorGlobalKey,
-                  pageLoadFuture: sendUsersDataRequest,
-                  pageItemsGetter: listItemsGetter,
-                  listItemBuilder: listItemBuilder,
-                  loadingWidgetBuilder: loadingWidgetMaker,
-                  errorWidgetBuilder: errorWidgetMaker,
-                  emptyListWidgetBuilder: emptyListWidgetMaker,
-                  totalItemsGetter: totalPagesGetter,
-                  pageErrorChecker: pageErrorChecker,
-                  scrollPhysics: BouncingScrollPhysics(),
+                Expanded(
+                  flex: 8,
+                  child: Paginator.listView(
+                    key: paginatorGlobalKey,
+                    pageLoadFuture: sendUsersDataRequest,
+                    pageItemsGetter: listItemsGetter,
+                    listItemBuilder: listItemBuilder,
+                    loadingWidgetBuilder: loadingWidgetMaker,
+                    errorWidgetBuilder: errorWidgetMaker,
+                    emptyListWidgetBuilder: emptyListWidgetMaker,
+                    totalItemsGetter: totalPagesGetter,
+                    pageErrorChecker: pageErrorChecker,
+                    scrollPhysics: BouncingScrollPhysics(),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
         ),
     );
   }
