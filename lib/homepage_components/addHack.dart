@@ -87,23 +87,20 @@ class _AddHackState extends State<AddHack> {
           builder: (context) => FlowPage(
                 currentIndex: 0,
               )));
+  TextEditingController startingDate=TextEditingController();
+  TextEditingController endingDate=TextEditingController();
   Future<Null> _selectDate(
-      BuildContext context, TextEditingController controller) async {
-    final DateTime picked = await showDatePicker(
+      BuildContext context, TextEditingController controller,TextEditingController typeDate) async {
+    final DateTime pickedDate = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(1901, 1),
         lastDate: DateTime(2100));
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-        List pickedL = picked.toString().split(' ');
-        List pickedList = pickedL[0].toString().split('-');
-        controller.value = TextEditingValue(
-            text: pickedList[2] + '/' + pickedList[1] + "/" + pickedList[0]);
-      });
+    final TimeOfDay pickedTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    String date=pickedDate.toString().split(" ")[0]+" "+pickedTime.format(context).toString()+":00.000";
+    controller.value= TextEditingValue(text: pickedDate.toString().split(" ")[0]+" "+pickedTime.format(context).toString());
+    typeDate.value=TextEditingValue(text: DateTime.parse(date).toUtc().toIso8601String());
   }
-
   String getMonth(int number) {
     String month;
     if (number == 01) {
@@ -175,6 +172,8 @@ class _AddHackState extends State<AddHack> {
     super.dispose();
     startDate.dispose();
     endDate.dispose();
+    startingDate.dispose();
+    endingDate.dispose();
   }
 
   @override
@@ -302,7 +301,7 @@ class _AddHackState extends State<AddHack> {
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: GestureDetector(
                         onTap: () {
-                          _selectDate(context, startDate);
+                          _selectDate(context, startDate,startingDate);
                         },
                         child: AbsorbPointer(
                           child: TextField(
@@ -325,7 +324,7 @@ class _AddHackState extends State<AddHack> {
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: GestureDetector(
                         onTap: () {
-                          _selectDate(context, endDate);
+                          _selectDate(context, endDate,endingDate);
                         },
                         child: AbsorbPointer(
                           child: TextField(
@@ -465,6 +464,8 @@ class _AddHackState extends State<AddHack> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4)),
                               onPressed: () async {
+                                print(startingDate.text);
+                                print(endingDate.text);
                                 if (name == '' ||
                                     venue == '' ||
                                     description == '' ||
@@ -486,7 +487,7 @@ class _AddHackState extends State<AddHack> {
                                   if (min > max) {
                                     final snackBar = SnackBar(
                                       content: Text(
-                                        'Minimum team size cannot be larger than Maximum team size',
+                                        'Minimum team size cannot be greater than Maximum team size',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontFamily: 'Montserrat'),
@@ -502,8 +503,8 @@ class _AddHackState extends State<AddHack> {
                                     if (await postHack(
                                             name,
                                             base64img,
-                                            startDate.text,
-                                            endDate.text,
+                                            startingDate.text,
+                                            endingDate.text,
                                             venue,
                                             description,
                                             getUrl(link),
