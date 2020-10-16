@@ -73,7 +73,8 @@ class _UserInvitesState extends State<UserInvites> {
     print(response.statusCode);
     return response.statusCode;
   }
-   bool button =false;
+
+  bool button = false;
   String _selectedRadio;
   @override
   Widget build(BuildContext context) {
@@ -140,7 +141,12 @@ class _UserInvitesState extends State<UserInvites> {
                         } else if (snapshot.data.length == 0) {
                           return Center(
                             child: Container(
-                              child: Text("You don't have teams to choose from.",style: TextStyle(fontFamily: 'Montserrat',color: kConstantBlueColor),),
+                              child: Text(
+                                "You don't have teams to choose from.",
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: kConstantBlueColor),
+                              ),
                             ),
                           );
                         } else {
@@ -148,35 +154,51 @@ class _UserInvitesState extends State<UserInvites> {
                             itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
-                                padding: EdgeInsets.fromLTRB(16, 15, 16, 8),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-                                          Radio(
-                                              value: snapshot.data[index]
-                                                  ['_id'],
-                                              groupValue: _selectedRadio,
-                                              onChanged: (val) {
-                                                setState(() {
-                                                   button=true;
-                                                  _selectedRadio = val;
-                                                });
-                                              }),
-                                          FittedBox(
-                                            fit: BoxFit.contain,
-                                            child: Text(
-                                              snapshot.data[index]['teamName'],
-                                              style: TextStyle(
-                                                  color: kConstantBlueColor,
-                                                  fontSize: 26),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ]),
+                                padding: EdgeInsets.fromLTRB(16, 10, 16, 8),
+                                child: RadioListTile(
+                                  value: snapshot.data[index]['_id'],
+                                  groupValue: _selectedRadio,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      button = true;
+                                      _selectedRadio = val;
+                                    });
+                                  },
+                                  title: Text(
+                                    snapshot.data[index]['teamName'],
+                                    style: TextStyle(
+                                        color: kConstantBlueColor,
+                                        fontSize: 26),
+                                  ),
+                                ),
+                                // child: Column(
+                                //     crossAxisAlignment:
+                                //         CrossAxisAlignment.start,
+                                //     children: <Widget>[
+                                //       Row(
+                                //         children: <Widget>[
+                                //           Radio(
+                                //               value: snapshot.data[index]
+                                //                   ['_id'],
+                                //               groupValue: _selectedRadio,
+                                //               onChanged: (val) {
+                                //                 setState(() {
+                                //                    button=true;
+                                //                   _selectedRadio = val;
+                                //                 });
+                                //               }),
+                                //           FittedBox(
+                                //             fit: BoxFit.contain,
+                                //             child: Text(
+                                //               snapshot.data[index]['teamName'],
+                                //               style: TextStyle(
+                                //                   color: kConstantBlueColor,
+                                //                   fontSize: 26),
+                                //             ),
+                                //           ),
+                                //         ],
+                                //       ),
+                                //     ]),
                               );
                             },
                           );
@@ -185,67 +207,74 @@ class _UserInvitesState extends State<UserInvites> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 32, 16, 8),
-                  child:button==false?SizedBox(height: 0,width: 0,) :Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      ButtonTheme(
-                          minWidth: 100,
-                          height: 38,
-                          child: FlatButton(
-                            onPressed: () async {
-                              setState(() {
-                                _isInAsyncCall = true;
-                              });
-                              if (await sendInvite(_selectedRadio) == 200) {
-                                setState(() {
-                                  _isInAsyncCall = false;
-                                });
-                                print('success');
-                                Navigator.pop(
-                                    context, 'Invite was successfully sent.');
-                              } else if (await sendInvite(_selectedRadio) ==
-                                  400) {
-                                setState(() {
-                                  _isInAsyncCall = false;
-                                });
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    'User already has a team for the given hack',
+                  child: button == false
+                      ? SizedBox(
+                          height: 0,
+                          width: 0,
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            ButtonTheme(
+                                minWidth: 100,
+                                height: 38,
+                                child: FlatButton(
+                                  onPressed: () async {
+                                    setState(() {
+                                      _isInAsyncCall = true;
+                                    });
+                                    if (await sendInvite(_selectedRadio) ==
+                                        200) {
+                                      setState(() {
+                                        _isInAsyncCall = false;
+                                      });
+                                      print('success');
+                                      Navigator.pop(context,
+                                          'Invite was successfully sent.');
+                                    } else if (await sendInvite(
+                                            _selectedRadio) ==
+                                        400) {
+                                      setState(() {
+                                        _isInAsyncCall = false;
+                                      });
+                                      final snackBar = SnackBar(
+                                        content: Text(
+                                          'User already has a team for the given hack',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Montserrat'),
+                                        ),
+                                        backgroundColor: kConstantBlueColor,
+                                      );
+                                      await Scaffold.of(context)
+                                          .showSnackBar(snackBar);
+                                    } else {
+                                      final snackBar = SnackBar(
+                                        content: Text(
+                                          'Error.Please try again later.',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Montserrat'),
+                                        ),
+                                        backgroundColor: kConstantBlueColor,
+                                      );
+                                      await Scaffold.of(context)
+                                          .showSnackBar(snackBar);
+                                    }
+                                  },
+                                  child: Text(
+                                    'Send Invite',
                                     style: TextStyle(
                                         color: Colors.white,
+                                        fontSize: 16,
                                         fontFamily: 'Montserrat'),
                                   ),
-                                  backgroundColor: kConstantBlueColor,
-                                );
-                                await Scaffold.of(context)
-                                    .showSnackBar(snackBar);
-                              } else {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    'Error.Please try again later.',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Montserrat'),
-                                  ),
-                                  backgroundColor: kConstantBlueColor,
-                                );
-                                await Scaffold.of(context)
-                                    .showSnackBar(snackBar);
-                              }
-                            },
-                            child: Text(
-                              'Send Invite',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: 'Montserrat'),
-                            ),
-                            color: kConstantBlueColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4)),
-                          )),
-                    ],
-                  ),
+                                  color: kConstantBlueColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4)),
+                                )),
+                          ],
+                        ),
                 ),
               ],
             ),

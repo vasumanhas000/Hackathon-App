@@ -160,7 +160,7 @@ class _ResultsPageState extends State<ResultsPage> {
   Future getUser() async{
     Map<String, String> headers = {"authtoken": Token};
     var response = await http.get(
-        "https://hackportal.azurewebsites.net/users",
+        "$kBaseUrl/users",
         headers: headers);
     if (response.statusCode == 200) {
       var usersJson = jsonDecode(response.body);

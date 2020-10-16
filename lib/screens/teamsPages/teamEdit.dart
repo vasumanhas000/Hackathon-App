@@ -22,7 +22,7 @@ class _EditTeamState extends State<EditTeam> {
   bool _isInAsyncCall = false;
   Future updateTeam(String id, String name, String bio, List skills) async {
     FirebaseUser user = await _auth.currentUser();
-    Token= await user.getIdToken().then((result) {
+    Token = await user.getIdToken().then((result) {
       String token = result.token;
       return token;
     });
@@ -30,8 +30,7 @@ class _EditTeamState extends State<EditTeam> {
       "authtoken": Token,
       "Content-Type": "application/json"
     };
-    var response = await http.post(
-        "$kBaseUrl/teams/updateteam/$id",
+    var response = await http.post("$kBaseUrl/teams/updateteam/$id",
         headers: headers,
         body: jsonEncode({
           "teamName": name,
@@ -72,7 +71,8 @@ class _EditTeamState extends State<EditTeam> {
       if (i.toString().toLowerCase() == 'Web Development'.toLowerCase()) {
         selectWeb = 1;
       }
-      if (i.toString().toLowerCase() == 'Mobile App Development'.toLowerCase()) {
+      if (i.toString().toLowerCase() ==
+          'Mobile App Development'.toLowerCase()) {
         selectMobile = 1;
       }
       if (i.toString().toLowerCase() == 'DevOps'.toLowerCase()) {
@@ -98,10 +98,11 @@ class _EditTeamState extends State<EditTeam> {
         selectCyber = 1;
       }
     }
-     name = TextEditingController(text: team.teamName);
-     bio = TextEditingController(text: team.description);
+    name = TextEditingController(text: team.teamName);
+    bio = TextEditingController(text: team.description);
   }
-  TextEditingController name,bio;
+
+  TextEditingController name, bio;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -109,6 +110,7 @@ class _EditTeamState extends State<EditTeam> {
     name.dispose();
     bio.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -141,11 +143,18 @@ class _EditTeamState extends State<EditTeam> {
                         children: [
                           Text(
                             'Edit your team',
-                            style: TextStyle(fontFamily: 'Muli', fontSize: 30,fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                                fontFamily: 'Muli',
+                                fontSize: 30,
+                                fontWeight: FontWeight.w600),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 16),
-                            child: Image(image: AssetImage('images/stc.png'),fit: BoxFit.contain,height: SizeConfig.safeBlockVertical*3.15,),
+                            child: Image(
+                              image: AssetImage('images/stc.png'),
+                              fit: BoxFit.contain,
+                              height: SizeConfig.safeBlockVertical * 3.15,
+                            ),
                           )
                         ],
                       ),
@@ -512,9 +521,19 @@ class _EditTeamState extends State<EditTeam> {
                                           builder: (context) =>
                                               TeamDetails(id: team.teamId)));
                                 },
-                                child: Text('Cancel',style: TextStyle(color: kConstantBlueColor,fontFamily: 'Montserrat',fontWeight: FontWeight.w500,fontSize: 16),),
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      color: kConstantBlueColor,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
                                 color: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4),side: BorderSide(color: kConstantBlueColor,width: 2)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                    side: BorderSide(
+                                        color: kConstantBlueColor, width: 2)),
                               ),
                             ),
                           ),
@@ -524,7 +543,7 @@ class _EditTeamState extends State<EditTeam> {
                             child: FlatButton(
                               onPressed: () async {
                                 setState(() {
-                                  _isInAsyncCall=true;
+                                  _isInAsyncCall = true;
                                 });
                                 if (selectWeb == 1) {
                                   var count = 0;
@@ -688,41 +707,62 @@ class _EditTeamState extends State<EditTeam> {
                                     }
                                   }
                                 }
-                                skillList.removeWhere((e) => toRemove.contains(e));
-                                if (await updateTeam(team.teamId, name.text,
-                                        bio.text, skillList) ==
-                                    200) {
-                                  setState(() {
-                                    _isInAsyncCall=false;
-                                  });
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              TeamDetails(id: team.teamId)));
-                                } else {
-                                  setState(() {
-                                    _isInAsyncCall=false;
-                                  });
+                                skillList
+                                    .removeWhere((e) => toRemove.contains(e));
+                                if (name.text == '' ||
+                                    bio.text == '' ||
+                                    skillList.length == 0) {
                                   final snackBar = SnackBar(
                                     backgroundColor: kConstantBlueColor,
                                     content: Text(
-                                      'Error.Please try again later',
+                                      'Kindly fill the mandatory fields.',
                                       style: TextStyle(color: Colors.white),
                                     ),
-                                    action:
-                                        SnackBarAction(label: '', onPressed: () {}),
+                                    action: SnackBarAction(
+                                        label: '', onPressed: () {}),
                                   );
                                   Scaffold.of(context).showSnackBar(snackBar);
+                                } else {
+                                  if (await updateTeam(team.teamId, name.text,
+                                          bio.text, skillList) ==
+                                      200) {
+                                    setState(() {
+                                      _isInAsyncCall = false;
+                                    });
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TeamDetails(id: team.teamId)));
+                                  } else {
+                                    setState(() {
+                                      _isInAsyncCall = false;
+                                    });
+                                    final snackBar = SnackBar(
+                                      backgroundColor: kConstantBlueColor,
+                                      content: Text(
+                                        'Error.Please try again later',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      action: SnackBarAction(
+                                          label: '', onPressed: () {}),
+                                    );
+                                    Scaffold.of(context).showSnackBar(snackBar);
+                                  }
+                                  ;
                                 }
-                                ;
                               },
                               child: Text(
                                 'Confirm',
-                                style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontWeight: FontWeight.w500,fontSize: 16),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16),
                               ),
                               color: kConstantBlueColor,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4)),
                             ),
                           ),
                         ],

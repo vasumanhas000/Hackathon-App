@@ -19,11 +19,12 @@ class _Form2State extends State<Form2> {
   String getUrl(String url){
     String webpage=url.trim() ;
     if(webpage==''){
-      webpage=url.trim();
+      webpage=null;
     }
   else if (!url.startsWith("http://") && !url.startsWith("https://")) {
       webpage = "http://" + url;
     }
+  print(webpage);
     return webpage;
   }
   final auth = FirebaseAuth.instance;

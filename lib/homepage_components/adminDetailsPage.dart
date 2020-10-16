@@ -72,7 +72,12 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
     return response.statusCode;
   }
 
+  String getDate(String dates){
+    var date = DateTime.parse(dates);
+    String result=date.day.toString()+"/"+date.month.toString()+"/"+date.year.toString();
+    return result;
 
+  }
   _launchURL(String url) async {
     String webpage=url ;
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
@@ -150,7 +155,7 @@ class _AdminDetailsPageState extends State<AdminDetailsPage> {
                               child: FittedBox(
                                 fit: BoxFit.contain,
                                 child: Text(
-                                  snapshot.data.start + '-' + snapshot.data.end,
+                                  getDate(snapshot.data.start) + '-' + getDate(snapshot.data.end),
                                   style: TextStyle(
                                       fontFamily: 'Muli',
                                       fontSize: 22,

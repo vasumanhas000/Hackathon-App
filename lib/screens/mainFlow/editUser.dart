@@ -21,7 +21,7 @@ class _EditUserState extends State<EditUser> {
   String getUrl(String url){
     String webpage=url.trim() ;
     if(webpage==''){
-      webpage=url.trim();
+      webpage=null;
     }
     else if (!url.startsWith("http://") && !url.startsWith("https://")) {
       webpage = "http://" + url;
@@ -759,9 +759,21 @@ class _EditUserState extends State<EditUser> {
                                 }
                               }
                               skillList.removeWhere( (e) => toRemove.contains(e));
-                              setState(() {
-                                _isInAsyncCall=true;
-                              });
+                              if(name.text==''||university.text==''||bio.text==''||year.text==''){
+                                final snackBar = SnackBar(
+                                  backgroundColor: kConstantBlueColor,
+                                  content: Text(
+                                    "Kindly fill the mandatory fields.",style: TextStyle(color: Colors.white),
+                                  ),
+                                  action:
+                                  SnackBarAction(label: '', onPressed: () {}),
+                                );
+                                Scaffold.of(context).showSnackBar(snackBar);
+                              }
+                              else{
+                                setState(() {
+                                  _isInAsyncCall=true;
+                                });
                               if(await updateProfile(name.text, university.text, bio.text, year.text, getUrl(github.text), getUrl(stack.text), getUrl(link.text), skillList)==200){
                                 setState(() {
                                   _isInAsyncCall=false;
@@ -781,7 +793,7 @@ class _EditUserState extends State<EditUser> {
                                 );
                                 Scaffold.of(context).showSnackBar(snackBar);
                               };
-                            },child: Text('Confirm',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),minWidth: 100,height: 38,
+                            }},child: Text('Confirm',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat',fontSize: 16),),color: kConstantBlueColor,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),),minWidth: 100,height: 38,
                           ),
                         ],
                       ),

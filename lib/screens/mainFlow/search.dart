@@ -63,41 +63,41 @@ class _SearchPageState extends State<SearchPage> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 60, 0, 0),
-                child: GestureDetector(
-                  onTap: (){
-                    setState(() {
-                      if(selectWeb!=1){
-                        selectWeb=1;}
-                      else{
-                        selectWeb=0;
+                child: InkWell(
+                    onTap: (){
+                      setState(() {
+                        if(selectWeb!=1){
+                          selectWeb=1;}
+                        else{
+                          selectWeb=0;
+                        }
+                      });
+                      if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
+                        setState(() {
+                          selected=1;
+                        });
                       }
-                    });
-                    if(selectWeb==1||selectCyber==1||selectBlock==1||selectManagement==1||selectDesign==1||selectAI==1||selectML==1||selectDevOps==1||selectMobile==1){
-                      setState(() {
-                        selected=1;
-                      });
-                    }
-                    else{
-                      setState(() {
-                        selected=0;
-                      });
-                    }
-                  },
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.fiber_manual_record,
-                        size: 26,
-                        color: selectWeb==1?kConstantBlueColor:Color(0xffD8D8D8),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: SizedBox(width:185,child: FittedBox(fit:BoxFit.contain,child: Text('Web Development',style: TextStyle(fontSize: 20),))),
-                      ),
-                    ],
+                      else{
+                        setState(() {
+                          selected=0;
+                        });
+                      }
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.fiber_manual_record,
+                          size: 26,
+                          color: selectWeb==1?kConstantBlueColor:Color(0xffD8D8D8),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: SizedBox(width:185,child: FittedBox(fit:BoxFit.contain,child: Text('Web Development',style: TextStyle(fontSize: 20),))),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(45, 20, 0, 0),
                 child: GestureDetector(

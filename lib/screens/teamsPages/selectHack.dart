@@ -71,35 +71,41 @@ class _SelectHackState extends State<SelectHack> {
     if (widget.uid == value['creatorId']) {
       return SizedBox(height: 0,width: 0,);
     } else {
-      return Padding(
-        padding: EdgeInsets.fromLTRB(16, 15, 16, 8),
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: <Widget>[
-                  Radio(
-                      value: value['_id'],
-                      groupValue: selectedId,
-                      onChanged: (val) {
-                        setState(() {
-                          selectedId = val;
-                        });
-                      }),
-                  FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text(
-                      value['nameOfEvent'],
-                      style: TextStyle(color: kConstantBlueColor, fontSize: 26),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
+      return RadioListTile(value: value['_id'], groupValue: selectedId, onChanged: (val) {
+                          setState(() {
+                            selectedId = val;
+                          });
+                        },title: Text(value['nameOfEvent'],
+        style: TextStyle(color: kConstantBlueColor, fontSize: 26),),);
+      // return Padding(
+      //   padding: EdgeInsets.fromLTRB(16, 15, 16, 8),
+      //   child: Container(
+      //     child: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
+      //         Row(
+      //           children: <Widget>[
+      //             Radio(
+      //                 value: value['_id'],
+      //                 groupValue: selectedId,
+      //                 onChanged: (val) {
+      //                   setState(() {
+      //                     selectedId = val;
+      //                   });
+      //                 }),
+      //             FittedBox(
+      //               fit: BoxFit.contain,
+      //               child: Text(
+      //                 value['nameOfEvent'],
+      //                 style: TextStyle(color: kConstantBlueColor, fontSize: 26),
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // );
     }
   }
 
