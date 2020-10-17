@@ -199,310 +199,310 @@ class _EditTeamState extends State<EditTeam> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (selectWeb != 1) {
-                              selectWeb = 1;
-                            } else {
-                              selectWeb = 0;
-                            }
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.fiber_manual_record,
-                              size: 24,
-                              color: selectWeb == 1
-                                  ? kConstantBlueColor
-                                  : Color(0xffD8D8D8),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Container(
-                                child: Text(
-                                  'Web Development',
-                                  style: kFieldTextStyle,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectWeb != 1) {
+                                selectWeb = 1;
+                              } else {
+                                selectWeb = 0;
+                              }
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.fiber_manual_record,
+                                size: 24,
+                                color: selectWeb == 1
+                                    ? kConstantBlueColor
+                                    : Color(0xffD8D8D8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Container(
+                                  child: Text(
+                                    'Web Development',
+                                    style: kFieldTextStyle,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (selectMobile != 1) {
-                              selectMobile = 1;
-                            } else {
-                              selectMobile = 0;
-                            }
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.fiber_manual_record,
-                              size: 24,
-                              color: selectMobile == 1
-                                  ? kConstantBlueColor
-                                  : Color(0xffD8D8D8),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Container(
-                                child: Text(
-                                  'Mobile App Development',
-                                  style: kFieldTextStyle,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectMobile != 1) {
+                                selectMobile = 1;
+                              } else {
+                                selectMobile = 0;
+                              }
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.fiber_manual_record,
+                                size: 24,
+                                color: selectMobile == 1
+                                    ? kConstantBlueColor
+                                    : Color(0xffD8D8D8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Container(
+                                  child: Text(
+                                    'Mobile App Development',
+                                    style: kFieldTextStyle,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (selectDevOps != 1) {
-                              selectDevOps = 1;
-                            } else {
-                              selectDevOps = 0;
-                            }
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.fiber_manual_record,
-                              size: 24,
-                              color: selectDevOps == 1
-                                  ? kConstantBlueColor
-                                  : Color(0xffD8D8D8),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Container(
-                                child: Text(
-                                  'DevOps',
-                                  style: kFieldTextStyle,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectDevOps != 1) {
+                                selectDevOps = 1;
+                              } else {
+                                selectDevOps = 0;
+                              }
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.fiber_manual_record,
+                                size: 24,
+                                color: selectDevOps == 1
+                                    ? kConstantBlueColor
+                                    : Color(0xffD8D8D8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Container(
+                                  child: Text(
+                                    'DevOps',
+                                    style: kFieldTextStyle,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (selectML != 1) {
-                              selectML = 1;
-                            } else {
-                              selectML = 0;
-                            }
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.fiber_manual_record,
-                              size: 24,
-                              color: selectML == 1
-                                  ? kConstantBlueColor
-                                  : Color(0xffD8D8D8),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Container(
-                                child: Text(
-                                  "Machine Learning",
-                                  style: kFieldTextStyle,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectML != 1) {
+                                selectML = 1;
+                              } else {
+                                selectML = 0;
+                              }
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.fiber_manual_record,
+                                size: 24,
+                                color: selectML == 1
+                                    ? kConstantBlueColor
+                                    : Color(0xffD8D8D8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Container(
+                                  child: Text(
+                                    "Machine Learning",
+                                    style: kFieldTextStyle,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (selectAI != 1) {
-                              selectAI = 1;
-                            } else {
-                              selectAI = 0;
-                            }
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.fiber_manual_record,
-                              size: 24,
-                              color: selectAI == 1
-                                  ? kConstantBlueColor
-                                  : Color(0xffD8D8D8),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Container(
-                                child: Text(
-                                  'Artificial Intelligence',
-                                  style: kFieldTextStyle,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectAI != 1) {
+                                selectAI = 1;
+                              } else {
+                                selectAI = 0;
+                              }
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.fiber_manual_record,
+                                size: 24,
+                                color: selectAI == 1
+                                    ? kConstantBlueColor
+                                    : Color(0xffD8D8D8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Container(
+                                  child: Text(
+                                    'Artificial Intelligence',
+                                    style: kFieldTextStyle,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (selectDesign != 1) {
-                              selectDesign = 1;
-                            } else {
-                              selectDesign = 0;
-                            }
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.fiber_manual_record,
-                              size: 24,
-                              color: selectDesign == 1
-                                  ? kConstantBlueColor
-                                  : Color(0xffD8D8D8),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Container(
-                                child: Text(
-                                  'Design - UI/UX',
-                                  style: kFieldTextStyle,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectDesign != 1) {
+                                selectDesign = 1;
+                              } else {
+                                selectDesign = 0;
+                              }
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.fiber_manual_record,
+                                size: 24,
+                                color: selectDesign == 1
+                                    ? kConstantBlueColor
+                                    : Color(0xffD8D8D8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Container(
+                                  child: Text(
+                                    'Design - UI/UX',
+                                    style: kFieldTextStyle,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (selectManagement != 1) {
-                              selectManagement = 1;
-                            } else {
-                              selectManagement = 0;
-                            }
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.fiber_manual_record,
-                              size: 24,
-                              color: selectManagement == 1
-                                  ? kConstantBlueColor
-                                  : Color(0xffD8D8D8),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Container(
-                                child: Text(
-                                  'Management Skills',
-                                  style: kFieldTextStyle,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectManagement != 1) {
+                                selectManagement = 1;
+                              } else {
+                                selectManagement = 0;
+                              }
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.fiber_manual_record,
+                                size: 24,
+                                color: selectManagement == 1
+                                    ? kConstantBlueColor
+                                    : Color(0xffD8D8D8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Container(
+                                  child: Text(
+                                    'Management Skills',
+                                    style: kFieldTextStyle,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (selectBlock != 1) {
-                              selectBlock = 1;
-                            } else {
-                              selectBlock = 0;
-                            }
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.fiber_manual_record,
-                              size: 24,
-                              color: selectBlock == 1
-                                  ? kConstantBlueColor
-                                  : Color(0xffD8D8D8),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Container(
-                                child: Text(
-                                  'Blockchain',
-                                  style: kFieldTextStyle,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectBlock != 1) {
+                                selectBlock = 1;
+                              } else {
+                                selectBlock = 0;
+                              }
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.fiber_manual_record,
+                                size: 24,
+                                color: selectBlock == 1
+                                    ? kConstantBlueColor
+                                    : Color(0xffD8D8D8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Container(
+                                  child: Text(
+                                    'Blockchain',
+                                    style: kFieldTextStyle,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(45, 15, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (selectCyber != 1) {
-                              selectCyber = 1;
-                            } else {
-                              selectCyber = 0;
-                            }
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.fiber_manual_record,
-                              size: 24,
-                              color: selectCyber == 1
-                                  ? kConstantBlueColor
-                                  : Color(0xffD8D8D8),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Container(
-                                child: Text(
-                                  'CyberSecurity',
-                                  style: kFieldTextStyle,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if (selectCyber != 1) {
+                                selectCyber = 1;
+                              } else {
+                                selectCyber = 0;
+                              }
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.fiber_manual_record,
+                                size: 24,
+                                color: selectCyber == 1
+                                    ? kConstantBlueColor
+                                    : Color(0xffD8D8D8),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Container(
+                                  child: Text(
+                                    'CyberSecurity',
+                                    style: kFieldTextStyle,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 24, 24, 8),
                       child: Row(
