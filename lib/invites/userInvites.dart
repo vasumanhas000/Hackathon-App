@@ -62,7 +62,7 @@ class _UserInvitesState extends State<UserInvites> {
       "Content-Type": "application/json",
       "authtoken": Token
     };
-    String url = 'https://hackportal.azurewebsites.net/teams/sendinvite';
+    String url = '$kBaseUrl/teams/sendinvite';
     var response = await http.post(url,
         headers: headers,
         body: jsonEncode({
