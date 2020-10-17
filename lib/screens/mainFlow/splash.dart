@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hackapp/constants.dart';
 import 'package:hackapp/screens/loginFlow/loginPage.dart';
 import 'package:hackapp/components/sizeConfig.dart';
 import 'package:hackapp/screens/mainFlow/flow.dart';
+import 'package:http/http.dart' as http;
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -19,25 +21,41 @@ class _SplashScreenState extends State<SplashScreen>
   Future handleAuth() async {
     FirebaseUser user = await _auth.currentUser();
     if (user != null) {
-      Token= await user.getIdToken(refresh: true).then((result) {
+      Token = await user.getIdToken(refresh: true).then((result) {
         String token = result.token;
         print(token);
         return token;
       });
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FlowPage(currentIndex: 0,)));
-      }
-    else{
+      if (await getProfile(Token) == 200) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => FlowPage(
+                      currentIndex: 0,
+                    )));
+      } else {}
+      _auth.signOut();
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
+    } else {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
     }
-    }
+  }
 
+  Future getProfile(String token) async {
+    Map<String, String> headers = {"authtoken": token};
+    var response = await http.get("$kBaseUrl/users", headers: headers);
+    print(response.body);
+    print(response.statusCode);
+    return response.statusCode;
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 3), ()=>handleAuth());
+    Timer(Duration(seconds: 3), () => handleAuth());
     controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: 1),
@@ -73,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen>
                   children: <Widget>[
                     Center(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0,0,10,150),
+                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 150),
                         child: Container(
                           child: Image(
                             image: AssetImage('images/applogo.png'),
@@ -84,7 +102,14 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                       ),
                     ),
-                    Center(child: Text('Hack Portal',style: TextStyle(fontFamily: 'Muli',fontWeight: FontWeight.w600,fontSize: 30),)),
+                    Center(
+                        child: Text(
+                      'Hack Portal',
+                      style: TextStyle(
+                          fontFamily: 'Muli',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 30),
+                    )),
                   ],
                 ),
               ),

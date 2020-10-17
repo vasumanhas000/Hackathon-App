@@ -2,11 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackapp/components/sizeConfig.dart';
 import 'package:hackapp/constants.dart';
+import 'package:hackapp/screens/loginFlow/forgotPassword.dart';
 import 'package:hackapp/screens/loginFlow/loginFormPages/form0.dart';
-import 'package:hackapp/screens/loginFlow/signUp.dart';
 import 'package:http/http.dart' as http;
-import 'package:hackapp/screens/mainFlow/flow.dart';
-import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -138,7 +136,7 @@ collaborate during Hackathons""",
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            GestureDetector(child: Text("Don't have an account ?"),onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));},),
+                            GestureDetector(child: Text("Forgot Password ?"),onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotPassword()));},),
                             ButtonTheme(
                               child: FlatButton(onPressed: ()async{
                                 if(email==''||password==''){
