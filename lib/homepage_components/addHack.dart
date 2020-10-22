@@ -73,13 +73,14 @@ class _AddHackState extends State<AddHack> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 
-  String getUrl(String url){
-    String webpage=url ;
+  String getUrl(String url) {
+    String webpage = url;
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
       webpage = "http://" + url;
     }
     return webpage.trim();
   }
+
   DateTime selectedDate = DateTime.now();
   void _moveToSignInScreen(BuildContext context) => Navigator.pushReplacement(
       context,
@@ -87,20 +88,37 @@ class _AddHackState extends State<AddHack> {
           builder: (context) => FlowPage(
                 currentIndex: 0,
               )));
-  TextEditingController startingDate=TextEditingController();
-  TextEditingController endingDate=TextEditingController();
-  Future<Null> _selectDate(
-      BuildContext context, TextEditingController controller,TextEditingController typeDate) async {
+  TextEditingController startingDate = TextEditingController();
+  TextEditingController endingDate = TextEditingController();
+  Future<Null> _selectDate(BuildContext context,
+      TextEditingController controller, TextEditingController typeDate) async {
     final DateTime pickedDate = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(1901, 1),
         lastDate: DateTime(2100));
-    final TimeOfDay pickedTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
-    String date=pickedDate.toString().split(" ")[0]+" "+pickedTime.format(context).toString()+":00.000";
-    controller.value= TextEditingValue(text: pickedDate.toString().split(" ")[0]+" "+pickedTime.format(context).toString());
-    typeDate.value=TextEditingValue(text: DateTime.parse(date).toUtc().toIso8601String());
+    final TimeOfDay pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child,
+        );
+      },
+    );
+    String date = pickedDate.toString().split(" ")[0] +
+        " " +
+        pickedTime.format(context).toString() +
+        ":00.000";
+    controller.value = TextEditingValue(
+        text: pickedDate.toString().split(" ")[0] +
+            " " +
+            pickedTime.format(context).toString());
+    typeDate.value =
+        TextEditingValue(text: DateTime.parse(date).toUtc().toIso8601String());
   }
+
   String getMonth(int number) {
     String month;
     if (number == 01) {
@@ -277,7 +295,10 @@ class _AddHackState extends State<AddHack> {
                                 height: SizeConfig.safeBlockVertical * 16,
                                 width: SizeConfig.blockSizeHorizontal * 140,
                                 child: Center(
-                                  child: Text('Tap to add an Image',style: TextStyle(color: Color(0xff9499A0)),),
+                                  child: Text(
+                                    'Tap to add an Image',
+                                    style: TextStyle(color: Color(0xff9499A0)),
+                                  ),
                                 ),
                               )
                             : SizedBox(
@@ -292,24 +313,20 @@ class _AddHackState extends State<AddHack> {
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                      child: Text(
-                        'Start Date :',
-                        style: kHeadingTextStyle
-                      ),
+                      child: Text('Start Date :', style: kHeadingTextStyle),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: GestureDetector(
                         onTap: () {
-                          _selectDate(context, startDate,startingDate);
+                          _selectDate(context, startDate, startingDate);
                         },
                         child: AbsorbPointer(
                           child: TextField(
-                            keyboardType: TextInputType.datetime,
-                            decoration: kTextFieldDecoration,
-                            controller: startDate,
-                            style: kFieldTextStyle
-                          ),
+                              keyboardType: TextInputType.datetime,
+                              decoration: kTextFieldDecoration,
+                              controller: startDate,
+                              style: kFieldTextStyle),
                         ),
                       ),
                     ),
@@ -324,7 +341,7 @@ class _AddHackState extends State<AddHack> {
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                       child: GestureDetector(
                         onTap: () {
-                          _selectDate(context, endDate,endingDate);
+                          _selectDate(context, endDate, endingDate);
                         },
                         child: AbsorbPointer(
                           child: TextField(
@@ -520,18 +537,21 @@ class _AddHackState extends State<AddHack> {
                                               builder: (context) => FlowPage(
                                                     currentIndex: 0,
                                                   )));
-                                    }
-                                    else{
+                                    } else {
                                       setState(() {
-                                        _isInAsyncCall=false;
+                                        _isInAsyncCall = false;
                                       });
                                       final snackBar = SnackBar(
                                         content: Text(
-                                          'Error.Please try again later.',style: TextStyle(color: Colors.white,fontFamily: 'Montserrat'),
+                                          'Error.Please try again later.',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Montserrat'),
                                         ),
-                                        backgroundColor:kConstantBlueColor ,
+                                        backgroundColor: kConstantBlueColor,
                                       );
-                                      await Scaffold.of(context).showSnackBar(snackBar);
+                                      await Scaffold.of(context)
+                                          .showSnackBar(snackBar);
                                     }
                                   }
                                 }

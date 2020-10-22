@@ -33,10 +33,11 @@ class _SplashScreenState extends State<SplashScreen>
                 builder: (context) => FlowPage(
                       currentIndex: 0,
                     )));
-      } else {}
-      _auth.signOut();
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+      } else {
+        _auth.signOut();
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+      }
     } else {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginPage()));

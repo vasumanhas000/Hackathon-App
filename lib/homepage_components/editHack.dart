@@ -181,8 +181,16 @@ class _EditHackState extends State<EditHack> {
         initialDate: selectedDate,
         firstDate: DateTime(1901, 1),
         lastDate: DateTime(2100));
-    final TimeOfDay pickedTime =
-        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    final TimeOfDay pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child,
+        );
+      },
+    );
     String date = pickedDate.toString().split(" ")[0] +
         " " +
         pickedTime.format(context).toString() +
@@ -499,8 +507,7 @@ class _EditHackState extends State<EditHack> {
                               );
                               await Scaffold.of(context).showSnackBar(snackBar);
                             } else {
-                              if (int.parse(min.text) >
-                                  int.parse(max.text)) {
+                              if (int.parse(min.text) > int.parse(max.text)) {
                                 final snackBar = SnackBar(
                                   content: Text(
                                     'Minimum team size cannot be greater than Maximum team size',
